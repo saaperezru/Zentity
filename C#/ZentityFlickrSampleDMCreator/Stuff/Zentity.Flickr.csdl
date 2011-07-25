@@ -1,0 +1,6 @@
+<Schema Namespace="Zentity.Flickr" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityType Name="ImageResource" BaseType="Zentity.Core.Resource">
+    <Property Name="TagFamilia" Type="Boolean" Nullable="true" />
+    <Property Name="TagRumba" Type="Boolean" Nullable="true" />
+  </EntityType>
+</Schema>

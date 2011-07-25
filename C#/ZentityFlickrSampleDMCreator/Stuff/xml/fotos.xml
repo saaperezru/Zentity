@@ -1,0 +1,8 @@
+<Photos>
+	<Photo>
+		<Title>First Photo</Title>
+		<Description>Herp Derp First Photo</Description>
+		<TagFamilia>True</TagFamilia>
+		<TagRumba>False</TagRumba>
+	</Photo>
+</Photos>

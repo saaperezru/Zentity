@@ -1,0 +1,379 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Core" CdmEntityContainer="ZentityContext">
+    <EntitySetMapping Name="Predicates">
+      <EntityTypeMapping TypeName="IsTypeOf(Zentity.Core.Predicate)">
+        <MappingFragment StoreEntitySet="Predicate">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Uri" ColumnName="Uri" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Properties">
+      <EntityTypeMapping TypeName="IsTypeOf(Zentity.Core.Property)">
+        <MappingFragment StoreEntitySet="Property">
+          <ScalarProperty Name="Uri" ColumnName="Uri" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Relationships">
+      <EntityTypeMapping TypeName="IsTypeOf(Zentity.Core.Relationship)">
+        <MappingFragment StoreEntitySet="Relationship">
+          <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="OrdinalPosition" ColumnName="OrdinalPosition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="Zentity.Core.Relationship">
+        <ModificationFunctionMapping>
+          <InsertFunction FunctionName="Zentity.Core.Store.InsertRelationship">
+            <AssociationEnd AssociationSet="RelationshipPredicateIs" From="Relationship" To="Predicate">
+              <ScalarProperty Name="Id" ParameterName="PredicateId" />
+            </AssociationEnd>
+            <AssociationEnd AssociationSet="RelationshipIsAboutResource" From="Relationship" To="Resource">
+              <ScalarProperty Name="Id" ParameterName="ObjectResourceId" />
+            </AssociationEnd>
+            <AssociationEnd AssociationSet="ResourceHasRelationship" From="Relationship" To="Resource">
+              <ScalarProperty Name="Id" ParameterName="SubjectResourceId" />
+            </AssociationEnd>
+            <ScalarProperty Name="DateAdded" ParameterName="DateAdded" />
+            <ScalarProperty Name="OrdinalPosition" ParameterName="OrdinalPosition" />
+            <ScalarProperty Name="Id" ParameterName="Id" />
+          </InsertFunction>
+          <UpdateFunction FunctionName="Zentity.Core.Store.UpdateRelationship">
+            <AssociationEnd AssociationSet="RelationshipPredicateIs" From="Relationship" To="Predicate">
+              <ScalarProperty Name="Id" ParameterName="PredicateId" Version="Current" />
+            </AssociationEnd>
+            <AssociationEnd AssociationSet="RelationshipIsAboutResource" From="Relationship" To="Resource">
+              <ScalarProperty Name="Id" ParameterName="ObjectResourceId" Version="Current" />
+            </AssociationEnd>
+            <AssociationEnd AssociationSet="ResourceHasRelationship" From="Relationship" To="Resource">
+              <ScalarProperty Name="Id" ParameterName="SubjectResourceId" Version="Current" />
+            </AssociationEnd>
+            <ScalarProperty Name="DateAdded" ParameterName="DateAdded" Version="Current" />
+            <ScalarProperty Name="OrdinalPosition" ParameterName="OrdinalPosition" Version="Current" />
+            <ScalarProperty Name="Id" ParameterName="Id" Version="Current" />
+          </UpdateFunction>
+          <DeleteFunction FunctionName="Zentity.Core.Store.DeleteRelationship">
+            <AssociationEnd AssociationSet="RelationshipPredicateIs" From="Relationship" To="Predicate">
+              <ScalarProperty Name="Id" ParameterName="PredicateId" />
+            </AssociationEnd>
+            <AssociationEnd AssociationSet="RelationshipIsAboutResource" From="Relationship" To="Resource">
+              <ScalarProperty Name="Id" ParameterName="ObjectResourceId" />
+            </AssociationEnd>
+            <AssociationEnd AssociationSet="ResourceHasRelationship" From="Relationship" To="Resource">
+              <ScalarProperty Name="Id" ParameterName="SubjectResourceId" />
+            </AssociationEnd>
+            <ScalarProperty Name="Id" ParameterName="Id" />
+          </DeleteFunction>
+        </ModificationFunctionMapping>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RelationshipProperties">
+      <EntityTypeMapping TypeName="IsTypeOf(Zentity.Core.RelationshipProperty)">
+        <MappingFragment StoreEntitySet="RelationshipProperty">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Resources">
+      <EntityTypeMapping TypeName="Zentity.Core.Resource">
+        <MappingFragment StoreEntitySet="Resource">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Uri" ColumnName="Uri" />
+          <Condition ColumnName="Discriminator" Value="1" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="Zentity.Core.File">
+        <MappingFragment StoreEntitySet="Resource">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Uri" ColumnName="Uri" />
+          <ScalarProperty Name="FileExtension" ColumnName="FileExtension" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="MimeType" ColumnName="MimeType" />
+          <ScalarProperty Name="Checksum" ColumnName="Checksum" />
+          <Condition ColumnName="Discriminator" Value="2" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="Zentity.Core.Resource">
+        <ModificationFunctionMapping>
+          <InsertFunction FunctionName="Zentity.Core.Store.InsertResource">
+            <ScalarProperty Name="Uri" ParameterName="Uri" />
+            <ScalarProperty Name="Title" ParameterName="Title" />
+            <ScalarProperty Name="Description" ParameterName="Description" />
+            <ScalarProperty Name="DateModified" ParameterName="DateModified" />
+            <ScalarProperty Name="DateAdded" ParameterName="DateAdded" />
+            <ScalarProperty Name="Id" ParameterName="Id" />
+          </InsertFunction>
+          <UpdateFunction FunctionName="Zentity.Core.Store.UpdateResource">
+            <ScalarProperty Name="Uri" ParameterName="Uri" Version="Current" />
+            <ScalarProperty Name="Title" ParameterName="Title" Version="Current" />
+            <ScalarProperty Name="Description" ParameterName="Description" Version="Current" />
+            <ScalarProperty Name="DateModified" ParameterName="DateModified" Version="Current" />
+            <ScalarProperty Name="DateAdded" ParameterName="DateAdded" Version="Current" />
+            <ScalarProperty Name="Id" ParameterName="Id" Version="Current" />
+          </UpdateFunction>
+          <DeleteFunction FunctionName="Zentity.Core.Store.DeleteResource">
+            <ScalarProperty Name="Id" ParameterName="Id" />
+          </DeleteFunction>
+        </ModificationFunctionMapping>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="Zentity.Core.File">
+        <ModificationFunctionMapping>
+          <InsertFunction FunctionName="Zentity.Core.Store.InsertFile">
+            <ScalarProperty Name="Uri" ParameterName="Uri" />
+            <ScalarProperty Name="Title" ParameterName="Title" />
+            <ScalarProperty Name="Description" ParameterName="Description" />
+            <ScalarProperty Name="DateModified" ParameterName="DateModified" />
+            <ScalarProperty Name="DateAdded" ParameterName="DateAdded" />
+            <ScalarProperty Name="Id" ParameterName="Id" />
+            <ScalarProperty Name="Size" ParameterName="Size" />
+            <ScalarProperty Name="MimeType" ParameterName="MimeType" />
+            <ScalarProperty Name="FileExtension" ParameterName="FileExtension" />
+            <ScalarProperty Name="Checksum" ParameterName="Checksum" />
+          </InsertFunction>
+          <UpdateFunction FunctionName="Zentity.Core.Store.UpdateFile">
+            <ScalarProperty Name="Uri" ParameterName="Uri" Version="Current" />
+            <ScalarProperty Name="Title" ParameterName="Title" Version="Current" />
+            <ScalarProperty Name="Description" ParameterName="Description" Version="Current" />
+            <ScalarProperty Name="DateModified" ParameterName="DateModified" Version="Current" />
+            <ScalarProperty Name="DateAdded" ParameterName="DateAdded" Version="Current" />
+            <ScalarProperty Name="Id" ParameterName="Id" Version="Current" />
+            <ScalarProperty Name="Size" ParameterName="Size" Version="Current" />
+            <ScalarProperty Name="MimeType" ParameterName="MimeType" Version="Current" />
+            <ScalarProperty Name="FileExtension" ParameterName="FileExtension" Version="Current" />
+            <ScalarProperty Name="Checksum" ParameterName="Checksum" Version="Current" />
+          </UpdateFunction>
+          <DeleteFunction FunctionName="Zentity.Core.Store.DeleteFile">
+            <ScalarProperty Name="Id" ParameterName="Id" />
+          </DeleteFunction>
+        </ModificationFunctionMapping>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="Zentity.Flickr.ImageResource">
+        <MappingFragment StoreEntitySet="Resource">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Uri" ColumnName="Uri" />
+          <Condition ColumnName="Discriminator" Value="41" />
+          <ScalarProperty Name="TagFamilia" ColumnName="cdb4cc27-b665-468b-9cef-67c86aedf711" />
+          <ScalarProperty Name="TagRumba" ColumnName="90b0548d-c692-45e5-becf-1f9c799b3fef" />
+        </MappingFragment>
+        <ModificationFunctionMapping>
+          <InsertFunction FunctionName="Zentity.Core.Store.Insert1104cf412a7e43e3bf5812c9cbb04d1b">
+            <ScalarProperty Name="TagFamilia" ParameterName="TagFamilia" />
+            <ScalarProperty Name="TagRumba" ParameterName="TagRumba" />
+            <ScalarProperty Name="Title" ParameterName="Title" />
+            <ScalarProperty Name="DateModified" ParameterName="DateModified" />
+            <ScalarProperty Name="Id" ParameterName="Id" />
+            <ScalarProperty Name="DateAdded" ParameterName="DateAdded" />
+            <ScalarProperty Name="Uri" ParameterName="Uri" />
+            <ScalarProperty Name="Description" ParameterName="Description" />
+          </InsertFunction>
+          <UpdateFunction FunctionName="Zentity.Core.Store.Update1104cf412a7e43e3bf5812c9cbb04d1b">
+            <ScalarProperty Name="TagFamilia" ParameterName="TagFamilia" Version="Current" />
+            <ScalarProperty Name="TagRumba" ParameterName="TagRumba" Version="Current" />
+            <ScalarProperty Name="Title" ParameterName="Title" Version="Current" />
+            <ScalarProperty Name="DateModified" ParameterName="DateModified" Version="Current" />
+            <ScalarProperty Name="Id" ParameterName="Id" Version="Current" />
+            <ScalarProperty Name="DateAdded" ParameterName="DateAdded" Version="Current" />
+            <ScalarProperty Name="Uri" ParameterName="Uri" Version="Current" />
+            <ScalarProperty Name="Description" ParameterName="Description" Version="Current" />
+          </UpdateFunction>
+          <DeleteFunction FunctionName="Zentity.Core.Store.Delete1104cf412a7e43e3bf5812c9cbb04d1b">
+            <ScalarProperty Name="Id" ParameterName="Id" />
+          </DeleteFunction>
+        </ModificationFunctionMapping>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ResourceProperties">
+      <EntityTypeMapping TypeName="IsTypeOf(Zentity.Core.ResourceProperty)">
+        <MappingFragment StoreEntitySet="ResourceProperty">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PredicateProperties">
+      <EntityTypeMapping TypeName="IsTypeOf(Zentity.Core.PredicateProperty)">
+        <MappingFragment StoreEntitySet="PredicateProperty">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="RelationshipPredicateIs" TypeName="Zentity.Core.RelationshipPredicateIs" StoreEntitySet="Relationship">
+      <EndProperty Name="Predicate">
+        <ScalarProperty Name="Id" ColumnName="PredicateId" />
+      </EndProperty>
+      <EndProperty Name="Relationship">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ResourcePropertyIs" TypeName="Zentity.Core.ResourcePropertyIs" StoreEntitySet="ResourceProperty">
+      <EndProperty Name="Property">
+        <ScalarProperty Name="Id" ColumnName="PropertyId" />
+      </EndProperty>
+      <EndProperty Name="ResourceProperty">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PredicatePropertyIs" TypeName="Zentity.Core.PredicatePropertyIs" StoreEntitySet="PredicateProperty">
+      <EndProperty Name="Property">
+        <ScalarProperty Name="Id" ColumnName="PropertyId" />
+      </EndProperty>
+      <EndProperty Name="PredicateProperty">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TripletPropertyIs" TypeName="Zentity.Core.TripletPropertyIs" StoreEntitySet="RelationshipProperty">
+      <EndProperty Name="Property">
+        <ScalarProperty Name="Id" ColumnName="PropertyId" />
+      </EndProperty>
+      <EndProperty Name="RelationshipProperty">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RelationshipHasProperty" TypeName="Zentity.Core.RelationshipHasProperty" StoreEntitySet="RelationshipProperty">
+      <EndProperty Name="Relationship">
+        <ScalarProperty Name="Id" ColumnName="TripletId" />
+      </EndProperty>
+      <EndProperty Name="RelationshipProperty">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RelationshipIsAboutResource" TypeName="Zentity.Core.RelationshipIsAboutResource" StoreEntitySet="Relationship">
+      <EndProperty Name="Resource">
+        <ScalarProperty Name="Id" ColumnName="ObjectResourceId" />
+      </EndProperty>
+      <EndProperty Name="Relationship">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ResourceHasRelationship" TypeName="Zentity.Core.ResourceHasRelationship" StoreEntitySet="Relationship">
+      <EndProperty Name="Resource">
+        <ScalarProperty Name="Id" ColumnName="SubjectResourceId" />
+      </EndProperty>
+      <EndProperty Name="Relationship">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ResourceHasProperty" TypeName="Zentity.Core.ResourceHasProperty" StoreEntitySet="ResourceProperty">
+      <EndProperty Name="Resource">
+        <ScalarProperty Name="Id" ColumnName="ResourceId" />
+      </EndProperty>
+      <EndProperty Name="ResourceProperty">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PredicateHasProperty" TypeName="Zentity.Core.PredicateHasProperty" StoreEntitySet="PredicateProperty">
+      <EndProperty Name="Predicate">
+        <ScalarProperty Name="Id" ColumnName="PredicateId" />
+      </EndProperty>
+      <EndProperty Name="PredicateProperty">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ResourceHasFile" TypeName="Zentity.Core.ResourceHasFile" StoreEntitySet="ResourceHasFile">
+      <EndProperty Name="Resource">
+        <ScalarProperty Name="Id" ColumnName="SubjectResourceId" />
+      </EndProperty>
+      <EndProperty Name="File">
+        <ScalarProperty Name="Id" ColumnName="ObjectResourceId" />
+      </EndProperty>
+      <ModificationFunctionMapping>
+        <InsertFunction FunctionName="Zentity.Core.Store.InsertResourceHasFile">
+          <EndProperty Name="Resource">
+            <ScalarProperty Name="Id" ParameterName="SubjectResourceId" />
+          </EndProperty>
+          <EndProperty Name="File">
+            <ScalarProperty Name="Id" ParameterName="ObjectResourceId" />
+          </EndProperty>
+        </InsertFunction>
+        <DeleteFunction FunctionName="Zentity.Core.Store.DeleteResourceHasFile">
+          <EndProperty Name="Resource">
+            <ScalarProperty Name="Id" ParameterName="SubjectResourceId" />
+          </EndProperty>
+          <EndProperty Name="File">
+            <ScalarProperty Name="Id" ParameterName="ObjectResourceId" />
+          </EndProperty>
+        </DeleteFunction>
+      </ModificationFunctionMapping>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="DeleteFile" FunctionName="Zentity.Core.Store.DeleteFile" />
+    <FunctionImportMapping FunctionImportName="DeleteRelationship" FunctionName="Zentity.Core.Store.DeleteRelationship" />
+    <FunctionImportMapping FunctionImportName="DeleteResource" FunctionName="Zentity.Core.Store.DeleteResource" />
+    <FunctionImportMapping FunctionImportName="InsertFile" FunctionName="Zentity.Core.Store.InsertFile" />
+    <FunctionImportMapping FunctionImportName="InsertRelationship" FunctionName="Zentity.Core.Store.InsertRelationship" />
+    <FunctionImportMapping FunctionImportName="InsertResource" FunctionName="Zentity.Core.Store.InsertResource" />
+    <FunctionImportMapping FunctionImportName="UpdateFile" FunctionName="Zentity.Core.Store.UpdateFile" />
+    <FunctionImportMapping FunctionImportName="UpdateRelationship" FunctionName="Zentity.Core.Store.UpdateRelationship" />
+    <FunctionImportMapping FunctionImportName="UpdateResource" FunctionName="Zentity.Core.Store.UpdateResource" />
+    <FunctionImportMapping FunctionImportName="DeleteResourceHasFile" FunctionName="Zentity.Core.Store.DeleteResourceHasFile" />
+    <FunctionImportMapping FunctionImportName="InsertResourceHasFile" FunctionName="Zentity.Core.Store.InsertResourceHasFile" />
+    <EntitySetMapping Name="FlattenedFiles">
+      <EntityTypeMapping TypeName="Zentity.Core.FlattenedFile">
+        <ModificationFunctionMapping>
+          <InsertFunction FunctionName="Zentity.Core.Store.InsertFile">
+            <ScalarProperty Name="Size" ParameterName="Size" />
+            <ScalarProperty Name="MimeType" ParameterName="MimeType" />
+            <ScalarProperty Name="FileExtension" ParameterName="FileExtension" />
+            <ScalarProperty Name="Checksum" ParameterName="Checksum" />
+            <ScalarProperty Name="Uri" ParameterName="Uri" />
+            <ScalarProperty Name="Title" ParameterName="Title" />
+            <ScalarProperty Name="Description" ParameterName="Description" />
+            <ScalarProperty Name="DateModified" ParameterName="DateModified" />
+            <ScalarProperty Name="DateAdded" ParameterName="DateAdded" />
+            <ScalarProperty Name="Id" ParameterName="Id" />
+          </InsertFunction>
+          <UpdateFunction FunctionName="Zentity.Core.Store.UpdateFile">
+            <ScalarProperty Name="Size" ParameterName="Size" Version="Current" />
+            <ScalarProperty Name="MimeType" ParameterName="MimeType" Version="Current" />
+            <ScalarProperty Name="FileExtension" ParameterName="FileExtension" Version="Current" />
+            <ScalarProperty Name="Checksum" ParameterName="Checksum" Version="Current" />
+            <ScalarProperty Name="Uri" ParameterName="Uri" Version="Current" />
+            <ScalarProperty Name="Title" ParameterName="Title" Version="Current" />
+            <ScalarProperty Name="Description" ParameterName="Description" Version="Current" />
+            <ScalarProperty Name="DateModified" ParameterName="DateModified" Version="Current" />
+            <ScalarProperty Name="DateAdded" ParameterName="DateAdded" Version="Current" />
+            <ScalarProperty Name="Id" ParameterName="Id" Version="Current" />
+          </UpdateFunction>
+          <DeleteFunction FunctionName="Zentity.Core.Store.DeleteFile">
+            <ScalarProperty Name="Id" ParameterName="Id" />
+          </DeleteFunction>
+        </ModificationFunctionMapping>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(Zentity.Core.FlattenedFile)">
+        <MappingFragment StoreEntitySet="FlattenedFile">
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="MimeType" ColumnName="MimeType" />
+          <ScalarProperty Name="FileExtension" ColumnName="FileExtension" />
+          <ScalarProperty Name="Checksum" ColumnName="Checksum" />
+          <ScalarProperty Name="Uri" ColumnName="Uri" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="Insert1104cf412a7e43e3bf5812c9cbb04d1b" FunctionName="Zentity.Core.Store.Insert1104cf412a7e43e3bf5812c9cbb04d1b" />
+    <FunctionImportMapping FunctionImportName="Update1104cf412a7e43e3bf5812c9cbb04d1b" FunctionName="Zentity.Core.Store.Update1104cf412a7e43e3bf5812c9cbb04d1b" />
+    <FunctionImportMapping FunctionImportName="Delete1104cf412a7e43e3bf5812c9cbb04d1b" FunctionName="Zentity.Core.Store.Delete1104cf412a7e43e3bf5812c9cbb04d1b" />
+  </EntityContainerMapping>
+</Mapping>

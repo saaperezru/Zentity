@@ -1,0 +1,399 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Zentity.Core.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="Core">
+    <EntitySet Name="Predicate" EntityType="Zentity.Core.Store.Predicate" store:Type="Tables" Schema="Core" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="PredicateProperty" EntityType="Zentity.Core.Store.PredicateProperty" store:Type="Tables" Schema="Core" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="Property" EntityType="Zentity.Core.Store.Property" store:Type="Tables" Schema="Core" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="Relationship" EntityType="Zentity.Core.Store.Relationship" store:Type="Tables" Schema="Core" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="RelationshipProperty" EntityType="Zentity.Core.Store.RelationshipProperty" store:Type="Tables" Schema="Core" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="Resource" EntityType="Zentity.Core.Store.Resource" store:Type="Tables" Schema="Core" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="ResourceProperty" EntityType="Zentity.Core.Store.ResourceProperty" store:Type="Tables" Schema="Core" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="FlattenedFile" EntityType="Zentity.Core.Store.FlattenedFile">
+      <DefiningQuery> 
+              SELECT [Id]
+                    ,[DateAdded]
+                    ,[DateModified]
+                    ,[Description]
+                    ,[Title]
+                    ,[Uri]
+                    ,[Checksum]
+                    ,[FileExtension]
+                    ,[MimeType]
+                    ,[Size]
+              FROM [Core].[Resource]
+              WHERE Discriminator = 2
+            </DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="PredicateHasProperty" Association="Zentity.Core.Store.PredicateHasProperty">
+      <End Role="Predicate" EntitySet="Predicate" />
+      <End Role="PredicateProperty" EntitySet="PredicateProperty" />
+    </AssociationSet>
+    <AssociationSet Name="PredicatePropertyIs" Association="Zentity.Core.Store.PredicatePropertyIs">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="PredicateProperty" EntitySet="PredicateProperty" />
+    </AssociationSet>
+    <AssociationSet Name="RelationshipHasProperty" Association="Zentity.Core.Store.RelationshipHasProperty">
+      <End Role="Relationship" EntitySet="Relationship" />
+      <End Role="RelationshipProperty" EntitySet="RelationshipProperty" />
+    </AssociationSet>
+    <AssociationSet Name="RelationshipIsAboutResource" Association="Zentity.Core.Store.RelationshipIsAboutResource">
+      <End Role="Resource" EntitySet="Resource" />
+      <End Role="Relationship" EntitySet="Relationship" />
+    </AssociationSet>
+    <AssociationSet Name="RelationshipPredicateIs" Association="Zentity.Core.Store.RelationshipPredicateIs">
+      <End Role="Predicate" EntitySet="Predicate" />
+      <End Role="Relationship" EntitySet="Relationship" />
+    </AssociationSet>
+    <AssociationSet Name="ResourceHasProperty" Association="Zentity.Core.Store.ResourceHasProperty">
+      <End Role="Resource" EntitySet="Resource" />
+      <End Role="ResourceProperty" EntitySet="ResourceProperty" />
+    </AssociationSet>
+    <AssociationSet Name="ResourceHasRelationship" Association="Zentity.Core.Store.ResourceHasRelationship">
+      <End Role="Resource" EntitySet="Resource" />
+      <End Role="Relationship" EntitySet="Relationship" />
+    </AssociationSet>
+    <AssociationSet Name="ResourcePropertyIs" Association="Zentity.Core.Store.ResourcePropertyIs">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="ResourceProperty" EntitySet="ResourceProperty" />
+    </AssociationSet>
+    <AssociationSet Name="TripletPropertyIs" Association="Zentity.Core.Store.TripletPropertyIs">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="RelationshipProperty" EntitySet="RelationshipProperty" />
+    </AssociationSet>
+    <EntitySet Name="ResourceHasFile" EntityType="Zentity.Core.Store.ResourceHasFile" store:Type="Views" store:Schema="Core" store:Name="ResourceHasFile" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <AssociationSet Name="FK_ResourceHasFile_Resource" Association="Zentity.Core.Store.FK_ResourceHasFile_Resource">
+      <End Role="ResourceHasFile" EntitySet="ResourceHasFile" />
+      <End Role="Resource" EntitySet="Resource" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ResourceHasFile_File" Association="Zentity.Core.Store.FK_ResourceHasFile_File">
+      <End Role="ResourceHasFile" EntitySet="ResourceHasFile" />
+      <End Role="File" EntitySet="Resource" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Predicate">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Uri" Type="nvarchar" MaxLength="1024" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PredicateProperty">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="PredicateId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="PropertyId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Property">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Uri" Type="nvarchar" MaxLength="1024" />
+  </EntityType>
+  <EntityType Name="Relationship">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="SubjectResourceId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ObjectResourceId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="PredicateId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="OrdinalPosition" Type="int" />
+    <Property Name="DateAdded" Type="datetime" />
+  </EntityType>
+  <EntityType Name="RelationshipProperty">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TripletId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="PropertyId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Resource">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Discriminator" Type="int" Nullable="false" />
+    <Property Name="DateAdded" Type="datetime" />
+    <Property Name="DateModified" Type="datetime" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="Title" Type="nvarchar" MaxLength="425" />
+    <Property Name="Uri" Type="nvarchar" MaxLength="1024" />
+    <Property Name="Checksum" Type="nvarchar" MaxLength="256" />
+    <Property Name="FileExtension" Type="nvarchar" MaxLength="128" />
+    <Property Name="MimeType" Type="nvarchar" MaxLength="128" />
+    <Property Name="Size" Type="bigint" />
+    <Property Name="cdb4cc27-b665-468b-9cef-67c86aedf711" Type="bit" Nullable="true" />
+    <Property Name="90b0548d-c692-45e5-becf-1f9c799b3fef" Type="bit" Nullable="true" />
+  </EntityType>
+  <EntityType Name="FlattenedFile">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="DateAdded" Type="datetime" />
+    <Property Name="DateModified" Type="datetime" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="Title" Type="nvarchar" MaxLength="425" />
+    <Property Name="Uri" Type="nvarchar" MaxLength="1024" />
+    <Property Name="Checksum" Type="nvarchar" MaxLength="256" />
+    <Property Name="FileExtension" Type="nvarchar" MaxLength="128" />
+    <Property Name="MimeType" Type="nvarchar" MaxLength="128" />
+    <Property Name="Size" Type="bigint" />
+  </EntityType>
+  <EntityType Name="ResourceProperty">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ResourceId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="PropertyId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="PredicateHasProperty">
+    <End Role="Predicate" Type="Zentity.Core.Store.Predicate" Multiplicity="1" />
+    <End Role="PredicateProperty" Type="Zentity.Core.Store.PredicateProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Predicate">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PredicateProperty">
+        <PropertyRef Name="PredicateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RelationshipHasProperty">
+    <End Role="Relationship" Type="Zentity.Core.Store.Relationship" Multiplicity="1" />
+    <End Role="RelationshipProperty" Type="Zentity.Core.Store.RelationshipProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Relationship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RelationshipProperty">
+        <PropertyRef Name="TripletId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RelationshipIsAboutResource">
+    <End Role="Resource" Type="Zentity.Core.Store.Resource" Multiplicity="1" />
+    <End Role="Relationship" Type="Zentity.Core.Store.Relationship" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Resource">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Relationship">
+        <PropertyRef Name="ObjectResourceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RelationshipPredicateIs">
+    <End Role="Predicate" Type="Zentity.Core.Store.Predicate" Multiplicity="1" />
+    <End Role="Relationship" Type="Zentity.Core.Store.Relationship" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Predicate">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Relationship">
+        <PropertyRef Name="PredicateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ResourceHasProperty">
+    <End Role="Resource" Type="Zentity.Core.Store.Resource" Multiplicity="1" />
+    <End Role="ResourceProperty" Type="Zentity.Core.Store.ResourceProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Resource">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ResourceProperty">
+        <PropertyRef Name="ResourceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ResourceHasRelationship">
+    <End Role="Resource" Type="Zentity.Core.Store.Resource" Multiplicity="1" />
+    <End Role="Relationship" Type="Zentity.Core.Store.Relationship" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Resource">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Relationship">
+        <PropertyRef Name="SubjectResourceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PredicatePropertyIs">
+    <End Role="Property" Type="Zentity.Core.Store.Property" Multiplicity="1" />
+    <End Role="PredicateProperty" Type="Zentity.Core.Store.PredicateProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PredicateProperty">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ResourcePropertyIs">
+    <End Role="Property" Type="Zentity.Core.Store.Property" Multiplicity="1" />
+    <End Role="ResourceProperty" Type="Zentity.Core.Store.ResourceProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ResourceProperty">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TripletPropertyIs">
+    <End Role="Property" Type="Zentity.Core.Store.Property" Multiplicity="1" />
+    <End Role="RelationshipProperty" Type="Zentity.Core.Store.RelationshipProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RelationshipProperty">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ResourceHasFile">
+    <Key>
+      <PropertyRef Name="SubjectResourceId" />
+      <PropertyRef Name="ObjectResourceId" />
+    </Key>
+    <Property Name="SubjectResourceId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ObjectResourceId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_ResourceHasFile_Resource">
+    <End Role="ResourceHasFile" Type="Zentity.Core.Store.ResourceHasFile" Multiplicity="*" />
+    <End Role="Resource" Type="Zentity.Core.Store.Resource" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Resource">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ResourceHasFile">
+        <PropertyRef Name="SubjectResourceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ResourceHasFile_File">
+    <End Role="ResourceHasFile" Type="Zentity.Core.Store.ResourceHasFile" Multiplicity="*" />
+    <End Role="File" Type="Zentity.Core.Store.Resource" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="File">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ResourceHasFile">
+        <PropertyRef Name="ObjectResourceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="DeleteFile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Core">
+    <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
+  </Function>
+  <Function Name="DeleteRelationship" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Core">
+    <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="SubjectResourceId" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="ObjectResourceId" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="PredicateId" Type="uniqueidentifier" Mode="In" />
+  </Function>
+  <Function Name="DeleteResource" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Core">
+    <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
+  </Function>
+  <Function Name="DeleteResourceHasFile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Core">
+    <Parameter Name="SubjectResourceId" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="ObjectResourceId" Type="uniqueidentifier" Mode="In" />
+  </Function>
+  <Function Name="InsertFile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Core">
+    <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="DateAdded" Type="datetime" Mode="In" />
+    <Parameter Name="DateModified" Type="datetime" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Title" Type="nvarchar" Mode="In" />
+    <Parameter Name="Uri" Type="nvarchar" Mode="In" />
+    <Parameter Name="Checksum" Type="nvarchar" Mode="In" />
+    <Parameter Name="FileExtension" Type="nvarchar" Mode="In" />
+    <Parameter Name="MimeType" Type="nvarchar" Mode="In" />
+    <Parameter Name="Size" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="InsertRelationship" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Core">
+    <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="SubjectResourceId" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="ObjectResourceId" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="PredicateId" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="OrdinalPosition" Type="int" Mode="In" />
+    <Parameter Name="DateAdded" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="InsertResource" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Core">
+    <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="DateAdded" Type="datetime" Mode="In" />
+    <Parameter Name="DateModified" Type="datetime" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Title" Type="nvarchar" Mode="In" />
+    <Parameter Name="Uri" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="InsertResourceHasFile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Core">
+    <Parameter Name="SubjectResourceId" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="ObjectResourceId" Type="uniqueidentifier" Mode="In" />
+  </Function>
+  <Function Name="UpdateFile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Core">
+    <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="DateAdded" Type="datetime" Mode="In" />
+    <Parameter Name="DateModified" Type="datetime" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Title" Type="nvarchar" Mode="In" />
+    <Parameter Name="Uri" Type="nvarchar" Mode="In" />
+    <Parameter Name="Checksum" Type="nvarchar" Mode="In" />
+    <Parameter Name="FileExtension" Type="nvarchar" Mode="In" />
+    <Parameter Name="MimeType" Type="nvarchar" Mode="In" />
+    <Parameter Name="Size" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="UpdateRelationship" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Core">
+    <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="SubjectResourceId" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="ObjectResourceId" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="PredicateId" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="OrdinalPosition" Type="int" Mode="In" />
+    <Parameter Name="DateAdded" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="UpdateResource" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Core">
+    <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="DateAdded" Type="datetime" Mode="In" />
+    <Parameter Name="DateModified" Type="datetime" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Title" Type="nvarchar" Mode="In" />
+    <Parameter Name="Uri" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Insert1104cf412a7e43e3bf5812c9cbb04d1b" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Core">
+    <Parameter Name="TagFamilia" Type="bit" Mode="In" />
+    <Parameter Name="TagRumba" Type="bit" Mode="In" />
+    <Parameter Name="Title" Type="nvarchar" Mode="In" />
+    <Parameter Name="DateModified" Type="datetime" Mode="In" />
+    <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="DateAdded" Type="datetime" Mode="In" />
+    <Parameter Name="Uri" Type="nvarchar" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="Update1104cf412a7e43e3bf5812c9cbb04d1b" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Core">
+    <Parameter Name="TagFamilia" Type="bit" Mode="In" />
+    <Parameter Name="TagRumba" Type="bit" Mode="In" />
+    <Parameter Name="Title" Type="nvarchar" Mode="In" />
+    <Parameter Name="DateModified" Type="datetime" Mode="In" />
+    <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="DateAdded" Type="datetime" Mode="In" />
+    <Parameter Name="Uri" Type="nvarchar" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="Delete1104cf412a7e43e3bf5812c9cbb04d1b" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Core">
+    <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
+  </Function>
+</Schema>

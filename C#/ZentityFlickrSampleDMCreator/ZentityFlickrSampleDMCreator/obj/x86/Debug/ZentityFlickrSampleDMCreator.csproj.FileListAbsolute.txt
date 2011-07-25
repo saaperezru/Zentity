@@ -1,0 +1,22 @@
+c:\users\tuareg\documents\visual studio 2010\Projects\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\users\tuareg\documents\visual studio 2010\Projects\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\bin\Debug\ZentityFlickrSampleDMCreator.exe.config
+c:\users\tuareg\documents\visual studio 2010\Projects\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\bin\Debug\ZentityFlickrSampleDMCreator.exe
+c:\users\tuareg\documents\visual studio 2010\Projects\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\bin\Debug\ZentityFlickrSampleDMCreator.pdb
+c:\users\tuareg\documents\visual studio 2010\Projects\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\bin\Debug\Zentity.Core.dll
+c:\users\tuareg\documents\visual studio 2010\Projects\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\obj\x86\Debug\ZentityFlickrSampleDMCreator.exe
+c:\users\tuareg\documents\visual studio 2010\Projects\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\obj\x86\Debug\ZentityFlickrSampleDMCreator.pdb
+C:\Users\tuareg\documents\visual studio 2010\Projects\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\bin\Debug\Zentity.Flickr.dll
+C:\Users\tuareg\documents\visual studio 2010\Projects\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\bin\Debug\Zentity.Rdf.dll
+C:\Users\informed\Dropbox2\Dropbox\zentity\scripts\C#\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\bin\Debug\ZentityFlickrSampleDMCreator.exe.config
+C:\Users\informed\Dropbox2\Dropbox\zentity\scripts\C#\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\obj\x86\Debug\ZentityFlickrSampleDMCreator.exe
+C:\Users\informed\Dropbox2\Dropbox\zentity\scripts\C#\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\obj\x86\Debug\ZentityFlickrSampleDMCreator.pdb
+C:\Users\informed\Dropbox2\Dropbox\zentity\scripts\C#\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\bin\Debug\ZentityFlickrSampleDMCreator.exe
+C:\Users\informed\Dropbox2\Dropbox\zentity\scripts\C#\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\bin\Debug\ZentityFlickrSampleDMCreator.pdb
+C:\Users\informed\Dropbox2\Dropbox\zentity\scripts\C#\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\bin\Debug\Zentity.Rdf.dll
+C:\Users\informed\Dropbox2\Dropbox\zentity\scripts\C#\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Administrator\Dropbox\zentity\scripts\C#\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\bin\Debug\ZentityFlickrSampleDMCreator.exe.config
+C:\Users\Administrator\Dropbox\zentity\scripts\C#\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\obj\x86\Debug\ZentityFlickrSampleDMCreator.exe
+C:\Users\Administrator\Dropbox\zentity\scripts\C#\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\obj\x86\Debug\ZentityFlickrSampleDMCreator.pdb
+C:\Users\informed\Dropbox\zentity\scripts\C#\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\bin\Debug\ZentityFlickrSampleDMCreator.exe.config
+C:\Users\informed\Dropbox\zentity\scripts\C#\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\obj\x86\Debug\ZentityFlickrSampleDMCreator.exe
+C:\Users\informed\Dropbox\zentity\scripts\C#\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\obj\x86\Debug\ZentityFlickrSampleDMCreator.pdb

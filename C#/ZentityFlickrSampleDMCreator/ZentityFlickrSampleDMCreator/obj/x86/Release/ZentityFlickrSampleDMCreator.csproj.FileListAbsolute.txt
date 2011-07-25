@@ -1,0 +1,9 @@
+c:\users\tuareg\documents\visual studio 2010\Projects\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\bin\Release\ZentityFlickrSampleDMCreator.exe.config
+c:\users\tuareg\documents\visual studio 2010\Projects\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\bin\Release\ZentityFlickrSampleDMCreator.exe
+c:\users\tuareg\documents\visual studio 2010\Projects\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\bin\Release\ZentityFlickrSampleDMCreator.pdb
+c:\users\tuareg\documents\visual studio 2010\Projects\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\bin\Release\Zentity.Core.dll
+c:\users\tuareg\documents\visual studio 2010\Projects\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\obj\x86\Release\ResolveAssemblyReference.cache
+c:\users\tuareg\documents\visual studio 2010\Projects\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\obj\x86\Release\ZentityFlickrSampleDMCreator.exe
+c:\users\tuareg\documents\visual studio 2010\Projects\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\obj\x86\Release\ZentityFlickrSampleDMCreator.pdb
+C:\Users\tuareg\documents\visual studio 2010\Projects\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\bin\Release\Zentity.Flickr.dll
+C:\Users\tuareg\Documents\Visual Studio 2010\Projects\ZentityFlickrSampleDMCreator\ZentityFlickrSampleDMCreator\bin\Release\Zentity.Rdf.dll

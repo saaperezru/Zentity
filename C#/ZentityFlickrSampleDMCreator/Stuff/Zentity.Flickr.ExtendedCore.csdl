@@ -1,0 +1,525 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Zentity.Core" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="ZentityContext">
+    <Documentation>
+      <Summary>Represents the context to interact with the repository.</Summary>
+    </Documentation>
+    <EntitySet Name="Predicates" EntityType="Zentity.Core.Predicate">
+      <Documentation>
+        <Summary>A set of all the Predicate objects in the repository.</Summary>
+      </Documentation>
+    </EntitySet>
+    <EntitySet Name="PredicateProperties" EntityType="Zentity.Core.PredicateProperty">
+      <Documentation>
+        <Summary>A set of all the PredicateProperty objects in the repository.</Summary>
+      </Documentation>
+    </EntitySet>
+    <EntitySet Name="Properties" EntityType="Zentity.Core.Property">
+      <Documentation>
+        <Summary>A set of all the Property objects in the repository.</Summary>
+      </Documentation>
+    </EntitySet>
+    <EntitySet Name="Relationships" EntityType="Zentity.Core.Relationship">
+      <Documentation>
+        <Summary>A set of all the Relationship objects in the repository.</Summary>
+      </Documentation>
+    </EntitySet>
+    <EntitySet Name="RelationshipProperties" EntityType="Zentity.Core.RelationshipProperty">
+      <Documentation>
+        <Summary>A set of all the RelationshipProperty objects in the repository.</Summary>
+      </Documentation>
+    </EntitySet>
+    <EntitySet Name="Resources" EntityType="Zentity.Core.Resource">
+      <Documentation>
+        <Summary>A set of all the Resources in the repository.</Summary>
+      </Documentation>
+    </EntitySet>
+    <EntitySet Name="ResourceProperties" EntityType="Zentity.Core.ResourceProperty">
+      <Documentation>
+        <Summary>A set of all the ResourceProperty objects in the repository.</Summary>
+      </Documentation>
+    </EntitySet>
+    <AssociationSet Name="RelationshipPredicateIs" Association="Zentity.Core.RelationshipPredicateIs">
+      <End Role="Predicate" EntitySet="Predicates" />
+      <End Role="Relationship" EntitySet="Relationships" />
+    </AssociationSet>
+    <AssociationSet Name="ResourcePropertyIs" Association="Zentity.Core.ResourcePropertyIs">
+      <End Role="Property" EntitySet="Properties" />
+      <End Role="ResourceProperty" EntitySet="ResourceProperties" />
+    </AssociationSet>
+    <AssociationSet Name="PredicatePropertyIs" Association="Zentity.Core.PredicatePropertyIs">
+      <End Role="Property" EntitySet="Properties" />
+      <End Role="PredicateProperty" EntitySet="PredicateProperties" />
+    </AssociationSet>
+    <AssociationSet Name="TripletPropertyIs" Association="Zentity.Core.TripletPropertyIs">
+      <End Role="Property" EntitySet="Properties" />
+      <End Role="RelationshipProperty" EntitySet="RelationshipProperties" />
+    </AssociationSet>
+    <AssociationSet Name="RelationshipHasProperty" Association="Zentity.Core.RelationshipHasProperty">
+      <End Role="Relationship" EntitySet="Relationships" />
+      <End Role="RelationshipProperty" EntitySet="RelationshipProperties" />
+    </AssociationSet>
+    <AssociationSet Name="RelationshipIsAboutResource" Association="Zentity.Core.RelationshipIsAboutResource">
+      <End Role="Resource" EntitySet="Resources" />
+      <End Role="Relationship" EntitySet="Relationships" />
+    </AssociationSet>
+    <AssociationSet Name="ResourceHasRelationship" Association="Zentity.Core.ResourceHasRelationship">
+      <End Role="Resource" EntitySet="Resources" />
+      <End Role="Relationship" EntitySet="Relationships" />
+    </AssociationSet>
+    <AssociationSet Name="ResourceHasProperty" Association="Zentity.Core.ResourceHasProperty">
+      <End Role="Resource" EntitySet="Resources" />
+      <End Role="ResourceProperty" EntitySet="ResourceProperties" />
+    </AssociationSet>
+    <AssociationSet Name="PredicateHasProperty" Association="Zentity.Core.PredicateHasProperty">
+      <End Role="Predicate" EntitySet="Predicates" />
+      <End Role="PredicateProperty" EntitySet="PredicateProperties" />
+    </AssociationSet>
+    <AssociationSet Name="ResourceHasFile" Association="Zentity.Core.ResourceHasFile">
+      <End Role="Resource" EntitySet="Resources" />
+      <End Role="File" EntitySet="Resources" />
+    </AssociationSet>
+    <FunctionImport Name="DeleteFile">
+      <Parameter Name="Id" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteRelationship">
+      <Parameter Name="Id" Mode="In" Type="Guid" />
+      <Parameter Name="SubjectResourceId" Mode="In" Type="Guid" />
+      <Parameter Name="ObjectResourceId" Mode="In" Type="Guid" />
+      <Parameter Name="PredicateId" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteResource">
+      <Parameter Name="Id" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="InsertFile">
+      <Parameter Name="Id" Mode="In" Type="Guid" />
+      <Parameter Name="DateAdded" Mode="In" Type="DateTime" />
+      <Parameter Name="DateModified" Mode="In" Type="DateTime" />
+      <Parameter Name="Description" Mode="In" Type="String" />
+      <Parameter Name="Title" Mode="In" Type="String" />
+      <Parameter Name="Uri" Mode="In" Type="String" />
+      <Parameter Name="Checksum" Mode="In" Type="String" />
+      <Parameter Name="FileExtension" Mode="In" Type="String" />
+      <Parameter Name="MimeType" Mode="In" Type="String" />
+      <Parameter Name="Size" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="InsertRelationship">
+      <Parameter Name="Id" Mode="In" Type="Guid" />
+      <Parameter Name="SubjectResourceId" Mode="In" Type="Guid" />
+      <Parameter Name="ObjectResourceId" Mode="In" Type="Guid" />
+      <Parameter Name="PredicateId" Mode="In" Type="Guid" />
+      <Parameter Name="OrdinalPosition" Mode="In" Type="Int32" />
+      <Parameter Name="DateAdded" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="InsertResource">
+      <Parameter Name="Id" Mode="In" Type="Guid" />
+      <Parameter Name="DateAdded" Mode="In" Type="DateTime" />
+      <Parameter Name="DateModified" Mode="In" Type="DateTime" />
+      <Parameter Name="Description" Mode="In" Type="String" />
+      <Parameter Name="Title" Mode="In" Type="String" />
+      <Parameter Name="Uri" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateFile">
+      <Parameter Name="Id" Mode="In" Type="Guid" />
+      <Parameter Name="DateAdded" Mode="In" Type="DateTime" />
+      <Parameter Name="DateModified" Mode="In" Type="DateTime" />
+      <Parameter Name="Description" Mode="In" Type="String" />
+      <Parameter Name="Title" Mode="In" Type="String" />
+      <Parameter Name="Uri" Mode="In" Type="String" />
+      <Parameter Name="Checksum" Mode="In" Type="String" />
+      <Parameter Name="FileExtension" Mode="In" Type="String" />
+      <Parameter Name="MimeType" Mode="In" Type="String" />
+      <Parameter Name="Size" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateRelationship">
+      <Parameter Name="Id" Mode="In" Type="Guid" />
+      <Parameter Name="SubjectResourceId" Mode="In" Type="Guid" />
+      <Parameter Name="ObjectResourceId" Mode="In" Type="Guid" />
+      <Parameter Name="PredicateId" Mode="In" Type="Guid" />
+      <Parameter Name="OrdinalPosition" Mode="In" Type="Int32" />
+      <Parameter Name="DateAdded" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateResource">
+      <Parameter Name="Id" Mode="In" Type="Guid" />
+      <Parameter Name="DateAdded" Mode="In" Type="DateTime" />
+      <Parameter Name="DateModified" Mode="In" Type="DateTime" />
+      <Parameter Name="Description" Mode="In" Type="String" />
+      <Parameter Name="Title" Mode="In" Type="String" />
+      <Parameter Name="Uri" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteResourceHasFile">
+      <Parameter Name="SubjectResourceId" Mode="In" Type="Guid" />
+      <Parameter Name="ObjectResourceId" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="InsertResourceHasFile">
+      <Parameter Name="SubjectResourceId" Mode="In" Type="Guid" />
+      <Parameter Name="ObjectResourceId" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <EntitySet Name="FlattenedFiles" EntityType="Zentity.Core.FlattenedFile" />
+    <FunctionImport Name="Insert1104cf412a7e43e3bf5812c9cbb04d1b">
+      <Parameter Name="TagFamilia" Type="Boolean" Mode="In" />
+      <Parameter Name="TagRumba" Type="Boolean" Mode="In" />
+      <Parameter Name="Title" Type="String" Mode="In" />
+      <Parameter Name="DateModified" Type="DateTime" Mode="In" />
+      <Parameter Name="Id" Type="Guid" Mode="In" />
+      <Parameter Name="DateAdded" Type="DateTime" Mode="In" />
+      <Parameter Name="Uri" Type="String" Mode="In" />
+      <Parameter Name="Description" Type="String" Mode="In" />
+    </FunctionImport>
+    <FunctionImport Name="Update1104cf412a7e43e3bf5812c9cbb04d1b">
+      <Parameter Name="TagFamilia" Type="Boolean" Mode="In" />
+      <Parameter Name="TagRumba" Type="Boolean" Mode="In" />
+      <Parameter Name="Title" Type="String" Mode="In" />
+      <Parameter Name="DateModified" Type="DateTime" Mode="In" />
+      <Parameter Name="Id" Type="Guid" Mode="In" />
+      <Parameter Name="DateAdded" Type="DateTime" Mode="In" />
+      <Parameter Name="Uri" Type="String" Mode="In" />
+      <Parameter Name="Description" Type="String" Mode="In" />
+    </FunctionImport>
+    <FunctionImport Name="Delete1104cf412a7e43e3bf5812c9cbb04d1b">
+      <Parameter Name="Id" Type="Guid" Mode="In" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="Predicate">
+    <Documentation>
+      <Summary>Represents the nature of relationships between two resources. </Summary>
+    </Documentation>
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" a:SetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets the Id value that uniquely identifies the Predicate. </Summary>
+      </Documentation>
+    </Property>
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false">
+      <Documentation>
+        <Summary>Gets or sets the Name for this predicate. </Summary>
+      </Documentation>
+    </Property>
+    <Property Name="Uri" Type="String" Nullable="false" MaxLength="1024" Unicode="true" FixedLength="false">
+      <Documentation>
+        <Summary>Gets or sets the URI for this predicate. </Summary>
+      </Documentation>
+    </Property>
+    <NavigationProperty Name="Relationships" Relationship="Zentity.Core.RelationshipPredicateIs" FromRole="Predicate" ToRole="Relationship" a:SetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets the resource-to-resource relationships that use this predicate. </Summary>
+      </Documentation>
+    </NavigationProperty>
+    <NavigationProperty Name="Properties" Relationship="Zentity.Core.PredicateHasProperty" FromRole="Predicate" ToRole="PredicateProperty" a:SetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets the properties of this predicate. </Summary>
+      </Documentation>
+    </NavigationProperty>
+  </EntityType>
+  <EntityType Name="Property">
+    <Documentation>
+      <Summary>Represents a characteristic of a resource in the repository. </Summary>
+    </Documentation>
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" a:SetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets the Id value that uniquely identifies the property. </Summary>
+      </Documentation>
+    </Property>
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false">
+      <Documentation>
+        <Summary>Gets or sets the name of the property. </Summary>
+      </Documentation>
+    </Property>
+    <NavigationProperty Name="PredicateProperties" Relationship="Zentity.Core.PredicatePropertyIs" FromRole="Property" ToRole="PredicateProperty" a:SetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets the PredicateProperty objects that use this property. </Summary>
+      </Documentation>
+    </NavigationProperty>
+    <NavigationProperty Name="ResourceProperties" Relationship="Zentity.Core.ResourcePropertyIs" FromRole="Property" ToRole="ResourceProperty" a:SetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets the ResourceProperty objects that use this property. </Summary>
+      </Documentation>
+    </NavigationProperty>
+    <NavigationProperty Name="RelationshipProperties" Relationship="Zentity.Core.TripletPropertyIs" FromRole="Property" ToRole="RelationshipProperty" a:SetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets the RelationshipProperty objects that use this property. </Summary>
+      </Documentation>
+    </NavigationProperty>
+    <Property Name="Uri" Type="String" Nullable="true">
+      <Documentation>
+        <Summary>Gets or sets the Uri of the property. </Summary>
+      </Documentation>
+    </Property>
+  </EntityType>
+  <EntityType Name="Relationship">
+    <Documentation>
+      <Summary>Represents a relationship between two resources. </Summary>
+    </Documentation>
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" a:SetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets the Id value that uniquely identifies the relationship. </Summary>
+      </Documentation>
+    </Property>
+    <Property Name="OrdinalPosition" Type="Int32">
+      <Documentation>
+        <Summary>Gets or sets the ordinal position field. This field can be used by applications for ordering the relationships. For example, if the resource is 'authored by' to two persons, this property can be used to identify in what order did those persons authored the resource. </Summary>
+      </Documentation>
+    </Property>
+    <NavigationProperty Name="Predicate" Relationship="Zentity.Core.RelationshipPredicateIs" FromRole="Relationship" ToRole="Predicate" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets or sets the predicate of the relationship. </Summary>
+      </Documentation>
+    </NavigationProperty>
+    <NavigationProperty Name="Properties" Relationship="Zentity.Core.RelationshipHasProperty" FromRole="Relationship" ToRole="RelationshipProperty" a:SetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets the properties of this relationship. </Summary>
+      </Documentation>
+    </NavigationProperty>
+    <NavigationProperty Name="Object" Relationship="Zentity.Core.RelationshipIsAboutResource" FromRole="Relationship" ToRole="Resource" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets or sets the object resource of this relationship. </Summary>
+      </Documentation>
+    </NavigationProperty>
+    <NavigationProperty Name="Subject" Relationship="Zentity.Core.ResourceHasRelationship" FromRole="Relationship" ToRole="Resource" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets or sets the subject resource of this relationship. </Summary>
+      </Documentation>
+    </NavigationProperty>
+    <Property Name="DateAdded" Type="DateTime" Nullable="true">
+      <Documentation>
+        <Summary>Gets or sets the date on which this relationship was added to the repository.</Summary>
+      </Documentation>
+    </Property>
+  </EntityType>
+  <EntityType Name="RelationshipProperty">
+    <Documentation>
+      <Summary>The RelationshipProperty object provides a value for a Property on a Relationship. </Summary>
+    </Documentation>
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" a:SetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets the Id value that uniquely identifies the RelationshipProperty. </Summary>
+      </Documentation>
+    </Property>
+    <Property Name="Value" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false">
+      <Documentation>
+        <Summary>The value of this RelationshipProperty. </Summary>
+      </Documentation>
+    </Property>
+    <NavigationProperty Name="Property" Relationship="Zentity.Core.TripletPropertyIs" FromRole="RelationshipProperty" ToRole="Property" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets or sets the Property whose value is provided by this RelationshipProperty. </Summary>
+      </Documentation>
+    </NavigationProperty>
+    <NavigationProperty Name="Relationship" Relationship="Zentity.Core.RelationshipHasProperty" FromRole="RelationshipProperty" ToRole="Relationship" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets or sets the Relationship to which this RelationshipProperty belongs. </Summary>
+      </Documentation>
+    </NavigationProperty>
+  </EntityType>
+  <EntityType Name="Resource">
+    <Documentation>
+      <Summary>Represents a resource, usually the research output of an organization. </Summary>
+      <LongDescription>Represents a resource, usually the research output of an organization. </LongDescription>
+    </Documentation>
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets the Id value that uniquely identifies the Resource. </Summary>
+      </Documentation>
+    </Property>
+    <Property Name="DateAdded" Type="DateTime">
+      <Documentation>
+        <Summary>Gets or sets the date on which the Resource was added in the repository. </Summary>
+      </Documentation>
+    </Property>
+    <Property Name="DateModified" Type="DateTime">
+      <Documentation>
+        <Summary>Gets or sets the date on which the Resource was last modified. </Summary>
+      </Documentation>
+    </Property>
+    <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false">
+      <Documentation>
+        <Summary>Gets or sets the description of the Resource. </Summary>
+      </Documentation>
+    </Property>
+    <Property Name="Title" Type="String" MaxLength="425" Unicode="true" FixedLength="false">
+      <Documentation>
+        <Summary>Gets or sets the title of the Resource. </Summary>
+      </Documentation>
+    </Property>
+    <Property Name="Uri" Type="String" MaxLength="1024" Unicode="true" FixedLength="false">
+      <Documentation>
+        <Summary>Gets or sets the URI of the Resource. </Summary>
+      </Documentation>
+    </Property>
+    <NavigationProperty Name="RelationshipsAsObject" Relationship="Zentity.Core.RelationshipIsAboutResource" FromRole="Resource" ToRole="Relationship" a:SetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets the relationships in which this resource participates as object.</Summary>
+      </Documentation>
+    </NavigationProperty>
+    <NavigationProperty Name="RelationshipsAsSubject" Relationship="Zentity.Core.ResourceHasRelationship" FromRole="Resource" ToRole="Relationship" a:SetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets the relationships in which this resource participates as subject.</Summary>
+      </Documentation>
+    </NavigationProperty>
+    <NavigationProperty Name="ResourceProperties" Relationship="Zentity.Core.ResourceHasProperty" FromRole="Resource" ToRole="ResourceProperty" a:SetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets the collection of ResourceProperty objects for this resource.</Summary>
+      </Documentation>
+    </NavigationProperty>
+    <NavigationProperty Name="Files" Relationship="Zentity.Core.ResourceHasFile" FromRole="Resource" ToRole="File" a:SetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets a collection of associated File objects with this resource.</Summary>
+      </Documentation>
+    </NavigationProperty>
+  </EntityType>
+  <EntityType Name="ResourceProperty">
+    <Documentation>
+      <Summary>The ResourceProperty object provides a value for a Property on a Resource. </Summary>
+    </Documentation>
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" a:SetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets the Id value that uniquely identifies the ResourceProperty. </Summary>
+      </Documentation>
+    </Property>
+    <Property Name="Value" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false">
+      <Documentation>
+        <Summary>Gets or sets the value of this ResourceProperty. </Summary>
+      </Documentation>
+    </Property>
+    <NavigationProperty Name="Property" Relationship="Zentity.Core.ResourcePropertyIs" FromRole="ResourceProperty" ToRole="Property" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets or sets the Property whose value is provided by this ResourceProperty. </Summary>
+      </Documentation>
+    </NavigationProperty>
+    <NavigationProperty Name="Resource" Relationship="Zentity.Core.ResourceHasProperty" FromRole="ResourceProperty" ToRole="Resource" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets or sets the Resource to which this ResourceProperty belongs. </Summary>
+      </Documentation>
+    </NavigationProperty>
+  </EntityType>
+  <EntityType Name="PredicateProperty">
+    <Documentation>
+      <Summary>The PredicateProperty object provides a value for a Property on a Predicate. </Summary>
+    </Documentation>
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" a:SetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets the Id value that uniquely identifies the PredicateProperty. </Summary>
+      </Documentation>
+    </Property>
+    <Property Name="Value" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false">
+      <Documentation>
+        <Summary>Gets or sets the value of this PredicateProperty. </Summary>
+      </Documentation>
+    </Property>
+    <NavigationProperty Name="Property" Relationship="Zentity.Core.PredicatePropertyIs" FromRole="PredicateProperty" ToRole="Property" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets or sets the Property whose value is provided by this PredicateProperty. </Summary>
+      </Documentation>
+    </NavigationProperty>
+    <NavigationProperty Name="Predicate" Relationship="Zentity.Core.PredicateHasProperty" FromRole="PredicateProperty" ToRole="Predicate" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets or sets the Predicate to which this PredicateProperty belongs. </Summary>
+      </Documentation>
+    </NavigationProperty>
+  </EntityType>
+  <Association Name="RelationshipPredicateIs">
+    <End Role="Predicate" Type="Zentity.Core.Predicate" Multiplicity="1" />
+    <End Role="Relationship" Type="Zentity.Core.Relationship" Multiplicity="*" />
+  </Association>
+  <Association Name="ResourcePropertyIs">
+    <End Role="Property" Type="Zentity.Core.Property" Multiplicity="1" />
+    <End Role="ResourceProperty" Type="Zentity.Core.ResourceProperty" Multiplicity="*" />
+  </Association>
+  <Association Name="PredicatePropertyIs">
+    <End Role="Property" Type="Zentity.Core.Property" Multiplicity="1" />
+    <End Role="PredicateProperty" Type="Zentity.Core.PredicateProperty" Multiplicity="*" />
+  </Association>
+  <Association Name="TripletPropertyIs">
+    <End Role="Property" Type="Zentity.Core.Property" Multiplicity="1" />
+    <End Role="RelationshipProperty" Type="Zentity.Core.RelationshipProperty" Multiplicity="*" />
+  </Association>
+  <Association Name="RelationshipHasProperty">
+    <End Role="Relationship" Type="Zentity.Core.Relationship" Multiplicity="1" />
+    <End Role="RelationshipProperty" Type="Zentity.Core.RelationshipProperty" Multiplicity="*" />
+  </Association>
+  <Association Name="RelationshipIsAboutResource">
+    <End Role="Resource" Type="Zentity.Core.Resource" Multiplicity="1" />
+    <End Role="Relationship" Type="Zentity.Core.Relationship" Multiplicity="*" />
+  </Association>
+  <Association Name="ResourceHasRelationship">
+    <End Role="Resource" Type="Zentity.Core.Resource" Multiplicity="1" />
+    <End Role="Relationship" Type="Zentity.Core.Relationship" Multiplicity="*" />
+  </Association>
+  <Association Name="ResourceHasProperty">
+    <End Role="Resource" Type="Zentity.Core.Resource" Multiplicity="1" />
+    <End Role="ResourceProperty" Type="Zentity.Core.ResourceProperty" Multiplicity="*" />
+  </Association>
+  <Association Name="PredicateHasProperty">
+    <End Role="Predicate" Type="Zentity.Core.Predicate" Multiplicity="1" />
+    <End Role="PredicateProperty" Type="Zentity.Core.PredicateProperty" Multiplicity="*" />
+  </Association>
+  <EntityType Name="File" BaseType="Zentity.Core.Resource">
+    <Documentation>
+      <Summary>Represents a binary file. </Summary>
+    </Documentation>
+    <Property Name="Checksum" Type="String" Nullable="true">
+      <Documentation>
+        <Summary>Gets or sets the hash value of file data. </Summary>
+      </Documentation>
+    </Property>
+    <Property Name="FileExtension" Type="String" Nullable="true">
+      <Documentation>
+        <Summary>Gets or sets the extension of file. This property value is used for full text indexing purposes.</Summary>
+      </Documentation>
+    </Property>
+    <Property Name="MimeType" Type="String" Nullable="true">
+      <Documentation>
+        <Summary>Gets or sets the MIME type of file. </Summary>
+      </Documentation>
+    </Property>
+    <Property Name="Size" Type="Int64" Nullable="true">
+      <Documentation>
+        <Summary>Gets or sets the size of file. </Summary>
+      </Documentation>
+    </Property>
+    <NavigationProperty Name="Resources" Relationship="Zentity.Core.ResourceHasFile" FromRole="File" ToRole="Resource" a:SetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+      <Documentation>
+        <Summary>Gets the associated resources with this File.</Summary>
+      </Documentation>
+    </NavigationProperty>
+  </EntityType>
+  <EntityType Name="FlattenedFile" m:HasStream="true" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Guid" Name="Id" Nullable="false" />
+    <Property Type="DateTime" Name="DateAdded" />
+    <Property Type="DateTime" Name="DateModified" />
+    <Property Type="String" Name="Description" FixedLength="false" MaxLength="Max" Unicode="true" />
+    <Property Type="String" Name="Title" FixedLength="false" MaxLength="425" Unicode="true" />
+    <Property Type="String" Name="Uri" FixedLength="false" MaxLength="1024" Unicode="true" />
+    <Property Type="String" Name="Checksum" Nullable="true" />
+    <Property Type="String" Name="FileExtension" Nullable="true" />
+    <Property Type="String" Name="MimeType" Nullable="true" />
+    <Property Type="Int64" Name="Size" Nullable="true" />
+  </EntityType>
+  <Association Name="ResourceHasFile">
+    <End Role="Resource" Type="Zentity.Core.Resource" Multiplicity="*" />
+    <End Role="File" Type="Zentity.Core.File" Multiplicity="*" />
+  </Association>
+</Schema>
