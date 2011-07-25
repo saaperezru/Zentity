@@ -1,0 +1,17 @@
+function main(path,datasetName,url,r,iter,type,beginFrom,concepts,images)
+
+	min = 8;
+	errorMin = 40;
+	file = load(strcat(path,'/data/','Tt_iter_',num2str(min),'.mat'));
+	Tt = file.Tt;
+	
+	file = load(strcat(path,'/data/','Iv_iter_',num2str(min),'.mat'));
+	Iv = file.Iv;
+
+	file = load(strcat(path,'/data/','imgIds_iter_',num2str(min),'.mat'));
+	imgIdsTraining = file.imgIdsTraining;
+	clear file;
+	printClustersHTML(r, dataset, path, errorMin);
+	printHTML(dataset, path, url, Tt, Iv, imgIdsTraining, concepts, images, r);
+	
+end
