@@ -1,5 +1,0 @@
-ID: 743 865 195
-Pass: 9cxx82
-IP: 168.176.86.82
-http://localhost:9090/VisualExplorer/Pivot/Viewer.aspx?Id=e4091a61-40f1-4eee-8b76-0bae64c10dac&Uri=http%3a%2f%2flocalhost%3a9090%2fVisualExplorer%2fcollections%2fZentity.Flickr.ImageResource%2fImageResource.cxml
-IPEQUIPO: 168.176.87.47
