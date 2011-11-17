@@ -47,26 +47,26 @@ class ControlTypeLatentTopic:
     def __init__(self, id, name, abreviature, LD, H, F1, W1, F2, W2):
         
         #Review matrix type.
-        if not ControlTypeLatentTopic.correctClass(H):
-            print "Error-class H"
+        if not self.correctClass(H):
+            print "Error-class"
             return None
-        if not ControlTypeLatentTopic.correctClass(F1):
-            print "Error-class F"
+        if not self.correctClass(F1):
+            print "Error-class"
             return None
-        if not ControlTypeLatentTopic.correctClass(W1):
-            print "Error-class W"
+        if not self.correctClass(W1):
+            print "Error-class"
             return None
         if F2!=None:
-            if not ControlTypeLatentTopic.correctClass(F2):
+            if not self.correctClass(F2):
                 print "Error-class"
                 return None
         if W2!=None:
-            if not ControlTypeLatentTopic.correctClass(W2):
+            if not self.correctClass(W2):
                 print "Error-class"
                 return None
 
         #Review the dimensions of each matrix.
-        if ControlTypeLatentTopic.correctDimensions(LD, H, F1, W1, F2, W2):
+        if not self.correctDimensions(LD, H, F1, W1, F2, W2):
             print "Error-shape"
             return None
 
@@ -77,19 +77,24 @@ class ControlTypeLatentTopic:
 	#ControlLatentTopics creation.
         if F2!=None and W2!=None:
             for i in xrange(H.shape[0]):
-		HT=ControlTypeLatentTopic.normalize(H[i])
-                CLT=ControlLatentTopic(i,HT,F1[:,i],W1[:,i],F2[:,i],W2[:,i],self)
+		HN=self.normalize(H[i]).tolist()[0]
+                F1S=self.sortVector(np.transpose(F1)[i]).tolist()[0]
+                W1S=self.sortVector(np.transpose(W1)[i]).tolist()[0]
+                F2S=self.sortVector(np.transpose(F2)[i]).tolist()[0]
+                W2S=self.sortVector(np.transpose(W2)[i]).tolist()[0]
+                CLT=ControlLatentTopic(i, HN, np.transpose(F1)[i].tolist()[0], F1S.reverse(), np.transpose(W1)[i].tolist()[0], W1S.reverse(),np.transpose(F2)[i].tolist()[0], F2S.reverse(),np.transpose(W2)[i].tolist()[0], W2S.reverse(), self)
                 self.__arrayControlLatentTopics.append(CLT)
         else:
             for i in xrange(H.shape[0]):
-                HT=ControlTypeLatentTopic.normalize(H[i])
-                CLT=ControlLatentTopic(i,HT,F1[:,i],W1[:,i],None,None,self)
+                HN=self.normalize(H[i]).tolist()[0]
+                F1S=self.sortVector(np.transpose(F1)[i]).tolist()[0]
+                W1S=self.sortVector(np.transpose(W1)[i]).tolist()[0]
+                CLT=ControlLatentTopic(i, HN, np.transpose(F1)[i].tolist()[0], F1S.reverse(), np.transpose(W1)[i].tolist()[0], W1S.reverse(), None, None, None, None, self)
                 self.__arrayControlLatentTopics.append(CLT)
                 
 
-  
-    @staticmethod  
-    def correctDimensions(LD, H, F1, W1, F2, W2):
+    
+    def correctDimensions(self, LD, H, F1, W1, F2, W2):
         """ Check if the matrix dimensions are related to each.
             return:
                 True if the dimensions between matrix are ok, False otherwise. 
@@ -108,8 +113,7 @@ class ControlTypeLatentTopic:
 
     
     
-    @staticmethod
-    def correctClass(M):
+    def correctClass(self, M):
         """ Check the type of the parameter.
             return:
                 True if the parameter M is a matrix or an array, False otherwise. 
@@ -121,25 +125,41 @@ class ControlTypeLatentTopic:
 
 
 
-    @staticmethod
-    def normalize(M):
+    def normalize(self, M):
         """ Normalize M vector.
             return:
                 M vector with |M|=1. 
+        """ 
+        if self.correctClass(M):
+            s=sum(M)
+	    Mt=M/s
+	    return Mt
+        else:
+            print "Error-class"
+            return None
+
+
+
+    def sortVector(self, M):
+        """ Sort the index of a M vector depending on M.
+            return:
+                Vector with the sorted index. 
         """
-        s=sum(M)
-	M=M/s
-	return M    
+        if self.correctClass(M):
+            return M.argsort() 
+        else:
+            print "Error-class"
+            return None
+        
 
 
 
-    @staticmethod
-    def createDictionary(LD):
+    def createDictionary(self, LD):
         """ Create a dictionary mapping between the list of documents and his position.
             Where the key is LD[i] and the object is the number i, which is the id-column of the 
             ith document of the representation matrix.   
         """
-        x=xrange(len(LD))
+        x=range(len(LD))
         return  dict(zip(LD, x))
 
     
@@ -167,32 +187,18 @@ class ControlTypeLatentTopic:
 
     
 
-    def getLatentTopicsForWord(self,identificador):
-        """ Return a sorted list of ControlLatenTopics. The other depends of the belong degree of the Latent Topic to the word.
-        """
-        return sorted(self.__arrayControlLatentTopics, key=lambda ControlLatentTopic:  ControlLatentTopic.getWordValue(identificador), reverse=True)
-    
-    
-
-    def getMostImportantLatentTopicForWord(self,identificador):
-        """ Return a ControlLatenTopics with the highest belong degree of the Latent Topics to the word.
-        """
-	return max(self.__arrayControlLatentTopics, key=lambda ControlLatentTopic: ControlLatentTopic.getWordValue(identificador))
-
-    
-
-    def copyControlArrayLatentTopics(selfs):
+    def copyControlArrayLatentTopics(self):
         """ Return a copy of the list of ControlLatenTopics.
         """
-        copy=__arrayControlLatentTopics[:]
+        copy=self.__arrayControlLatentTopics[:]
         return copy
 
-    
 
-    def getControlArrayLatentTopics(selfs):
+
+    def getControlArrayLatentTopics(self):
         """ Return the list of ControlLatenTopics.
         """
-        return __arrayControlLatentTopics
+        return self.__arrayControlLatentTopics
 
     
 
@@ -203,7 +209,7 @@ class ControlTypeLatentTopic:
 
     
 
-    def setTypeLatantTopicId(self, ids):
+    def setTypeLatantTopicId(selsf, ids):
         """ Change the TypeLatentTopic id.
         """
         self.__typeLatentTopic.setId(ids)
@@ -223,10 +229,30 @@ class ControlTypeLatentTopic:
         self.__typeLatentTopic.setAbreviature(Abreviature)
 
 
+    def getTypeLatantTopicId(self):
+        """ Get the TypeLatentTopic id.
+        """
+        return self.__typeLatentTopic.getId()
+    
+    
+
+    def getTypeLatantTopicName(self):
+        """ Get the TypeLatentTopic name.
+        """
+        return self.__typeLatentTopic.getName()
+    
+    
+
+    def getTypeLatantTopicAbreviature(self):
+        """ Get the TypeLatentTopic abreviature.
+        """
+        return self.__typeLatentTopic.getAbreviature()
+
+
 
 class ControlLatentTopic:
     """  	
-    ControlLatentTopic(id, H, F1, W1, F2, W2, CTLT)
+    ControlLatentTopic(id, H, IH, F1, IF1, W1, IW1, F2, IF2, W2, IW2, CTLT)
     
     RESUME
 
@@ -242,11 +268,11 @@ class ControlLatentTopic:
     F1: array or matrix, 
         Basis of the Latent Topic.
     W1: array or matrix, 
-        Basis of the Latent Topic in terms of the documnets.
+        Basis of the Latent Topic in terms of the documents.
     F2: array or matrix, 
         Basis of the Latent Topic on the Asymmetric Factorization.
     W2: array or matrix, 
-        Basis of the Latent Topic in terms of the documnets on the Asymmetric Factorization.
+        Basis of the Latent Topic in terms of the documents on the Asymmetric Factorization.
 	
     Attributes
     ----------
@@ -256,39 +282,65 @@ class ControlLatentTopic:
     Example
     -------
     """   
-    def __init__(self, id, H, F1, W1, F2, W2, CTLT):
-        self.__latentTopic=LatentTopic(id, "", H, F1, W1, F2, W2)
+    def __init__(self, id, H, F1, IF1, W1, IW1, F2, IF2, W2, IW2, CTLT):
+        self.__latentTopic=LatentTopic(id, "", H, F1, IF1, W1, IW1, F2, IF2, W2, IW2)
         self.__controlTypeLatentTopic=CTLT
 
     
 
-    def getBelongingDegree(self,Img):
+    def getBelongingDegree(self,identificador):
         """ Return the belong degree of the document, -1 if the document is not on the dictionary.
-            That means the document was not on the inicial list of documents.
+            That means the document was not on the initial list of documents.
         """
-        id=self.__controlTypeLatentTopic.self.getDictionary(identificador)
+        id=self.__controlTypeLatentTopic.getDictionary(identificador)
         if id!=None:
-            return str(round(self.__latentTopic.getBelongingVector(id),6))
+            return self.__latentTopic.getBelongingVector(id)
         else:
             return -1
-    
-    
 
-    def getWordValue(self,Id):
-        """ Return the belong degree of the word, it depends of the position represented by the id.
-            That means the document was not on the inicial list of documents.
+
+
+    def getModalResume(self, type=True):
         """
-        if id>=0 and id<self.__controlTypeLatentTopic.getSizeDictionary():
-            return str(round(self.__latentTopic.getRepresentativewords(id),6))
+        return a sorted index list of the array representativeWords or resumeWords.
+        """
+        if type:
+            return self.__latentTopic.getSortedIndexRepresentativeWords()
         else:
-            return -1
+            return self.__latentTopic.getSortedIndexResumeWords()
 
     
 
+    def getDocumentResume(self, type=True):
+        """
+        return a sorted index list of the array representativeDocuments or resumeDocuments.
+        """
+        if type:
+            return self.__latentTopic.getSortedIndexRepresentativeDocuments()
+        else:
+            return self.__latentTopic.getSortedIndexResumeDocuments()
+        
+
+    
     def setLatantTopicName(self, name):
         """ Change the LatentTopic name.
         """
         self.__latentTopic.setName(name)
+
+
+
+    def getLatantTopicName(self):
+        """ Change the LatentTopic name.
+        """
+        return self.__latentTopic.getId()
+
+
+
+    def getLatantTopicId(self):
+        """ Change the LatentTopic name.
+        """
+        return self.__latentTopic.getName()
+
 
 
 
@@ -309,7 +361,7 @@ class LTRelation:
     def createMatrix(LD,LT1,LT2):
         """
 		Create and return a matrix M(ControlLatentTopic list(LT1) vs ControlLatentTopic list(LT2)) 
-                where each i,j position is the number of documents where the ith latent topic was the most important
+                where each i,j s is the number of documents where the ith latent topic was the most important
                 in the LT1 list, and the jth latent topic was the most important in the LT2 list.
    	        
                 If for a document the belonging degree is not define this does not count.
@@ -320,10 +372,10 @@ class LTRelation:
 	matirx = np.zeros((x,y))
         
 	for data in LD:
-            CLT=LTRelation.getMostImportantLatentTopic(data.getId(), LT1)
+            CLT=LTRelation.getMostImportantLatentTopic(data, LT1)
             if CLT!=None:
                 i= LT1.index(CLT)
-                CLT=LTRelation.getMostImportantLatentTopic(data.getId(), LT2)
+                CLT=LTRelation.getMostImportantLatentTopic(data, LT2)
                 if CLT!=None:
                     j= LT2.index(CLT)
                     matirx[i,j]=matirx[i,j]+1
@@ -337,9 +389,9 @@ class LTRelation:
 	    Return the most important latent topic in the LT  list for a id document.
             If for a document the belonging degree is not define return None.  
         """ 
-        CLT=min(LT1, key=lambda ControlLatentTopic: ControlLatentTopic.getBelongingDegree(id))
+        CLT=min(LT, key=lambda ControlLatentTopic: ControlLatentTopic.getBelongingDegree(id))
         if CLT.getBelongingDegree(id)>=0:
-            return max(LT1, key=lambda ControlLatentTopic: ControlLatentTopic.getBelongingDegree(id))
+            return max(LT, key=lambda ControlLatentTopic: ControlLatentTopic.getBelongingDegree(id))
         else:
             return None
 
@@ -349,20 +401,17 @@ class LTRelation:
     def imagePrint( path, M, escale):
         """
 	    Make an image with the M matrix  
-        """ 
-        if not ControlTypeLatentTopic.correctClass(M):
-            print "Error-class M"
-        else: 
-            X=LTRelation.escalar(M, escale)
-            figsize=(array(X.shape)/100.0)[::-1]
-            rcParams.update({'figure.figsize':figsize})
-            fig = figure(figsize=figsize)
-            axes([0,0,1,1]) # Make the plot occupy the whole canvas
-            axis('off')
-            fig.set_size_inches(figsize)
-            imshow(X,origin='lower', cmap=cm.gray)
-            savefig(path, facecolor='black', edgecolor='black', dpi=100)
-            close(fig)
+        """  
+        X=LTRelation.escalar(M, escale)
+        figsize=(array(X.shape)/100.0)[::-1]
+        rcParams.update({'figure.figsize':figsize})
+        fig = figure(figsize=figsize)
+        axes([0,0,1,1]) # Make the plot occupy the whole canvas
+        axis('off')
+        fig.set_size_inches(figsize)
+        imshow(X,origin='lower', cmap=cm.gray)
+        savefig(path, facecolor='black', edgecolor='black', dpi=100)
+        close(fig)
         
     
 

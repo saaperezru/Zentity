@@ -1,29 +1,21 @@
-import numpy as np
-import pymf
-import InterfazNMF as IN
+import numpy as npimport pymfimport InterfazNMF as IN
 
 
-a=np.random.rand(3,4)
-b=np.random.rand(5,4)
-nmf_mdl = pymf.CNMF(a, num_bases=2, niter=10)
-nmf_mdl.initialization()
-nmf_mdl.factorize()
+a=np.random.rand(3,4)nmf_mdl = pymf.CNMF(a, num_bases=2, niter=10)nmf_mdl.initialization()nmf_mdl.factorize()LD=["perro","gato","arana","sapo"]H=np.matrix(nmf_mdl.H)F=np.matrix(nmf_mdl.W)W=np.matrix(nmf_mdl.G)
+CTLT=IN.crateTypeLatentTopic(1,"","",LD,H,F,W)
 
-nmf_mdl2 = pymf.CNMF(b, num_bases=2, niter=10)
-nmf_mdl2.initialization()
-nmf_mdl2.factorize()
+CLT=CTLT.getControlArrayLatentTopics()
 
-LD=range(4)
-H=np.matrix(nmf_mdl.H)
-W=np.matrix(nmf_mdl.W)
-F=np.matrix(nmf_mdl.G)
+LS=CTLT.getLatentTopicsForImg("perro")
+print LS[0].getBelongingDegree("perro")
+print LS[1].getBelongingDegree("perro")
 
-H2=np.matrix(nmf_mdl2.H)
-W2=np.matrix(nmf_mdl2.W)
-F2=np.matrix(nmf_mdl2.G)
+lss=CTLT.getMostImportantLatentTopicForImg("perro")
+print lss.getBelongingDegree("perro")
+
+
+CCLT=CTLT.copyControlArrayLatentTopics()
 
 
 
-cTLT,cTLT2=IN.crateTypeLatentTopic(1,"name1","abreviature1",LD,H,F,W,None,None,2,"name2","abreviature2",H2,F2,W2,None,None)
 
-ARRAY=cTLT.copyControlArrayLatentTopics()

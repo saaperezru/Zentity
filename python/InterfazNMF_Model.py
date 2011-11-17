@@ -13,14 +13,22 @@ class LatentTopic:
             Name of the LatentTopic.
         belongingVector: array or matrix, 
             Vector of belonging degrees of each Document to the Latent Topic.
-        representativewords: array or matrix, 
+        representativeWords: array or matrix, 
             Basis of the Latent Topic.
+        sortedIndexRepresentativeWords: array or matrix, 
+            Vector of position index of the representativeWords in decreasing order.
         representativeDocuments: array or matrix, 
-            Basis of the Latent Topic in terms of the documnets.
+            Basis of the Latent Topic in terms of the documents.
+        sortedIndexRepresentativeDocuments: array or matrix, 
+            Vector of position index of the representativeDocuments in decreasing order.
         resumeWords: array or matrix, 
             Basis of the Latent Topic on the Asymmetric Factorization.
+        sortedIndexResumeWords: array or matrix, 
+            Vector of position index of the resumeWords in decreasing order.
         resumeDocuments: array or matrix, 
-            Basis of the Latent Topic in terms of the documnets on the Asymmetric Factorization.
+            Basis of the Latent Topic in terms of the documents on the Asymmetric Factorization.
+        sortedIndexResumeDocuments: array or matrix, 
+            Vector of position index of the resumeDocuments in decreasing order.
 	
         Attributes
         ----------
@@ -30,23 +38,35 @@ class LatentTopic:
             Name of the LatentTopic.
         belongingVector: array or matrix, 
             Vector of belonging degrees of each Document to the Latent Topic.
-        representativewords: array or matrix, 
+        representativeWords: array or matrix, 
             Basis of the Latent Topic.
+        sortedIndexRepresentativeWords: array or matrix, 
+            Vector of position index of the representativeWords in decreasing order.
         representativeDocuments: array or matrix, 
-            Basis of the Latent Topic in terms of the documnets.
+            Basis of the Latent Topic in terms of the documents.
+        sortedIndexRepresentativeDocuments: array or matrix, 
+            Vector of position index of the representativeDocuments in decreasing order.
         resumeWords: array or matrix, 
             Basis of the Latent Topic on the Asymmetric Factorization.
+        sortedIndexResumeWords: array or matrix, 
+            Vector of position index of the resumeWords in decreasing order.
         resumeDocuments: array or matrix, 
-            Basis of the Latent Topic in terms of the documnets on the Asymmetric Factorization.	
+            Basis of the Latent Topic in terms of the documents on the Asymmetric Factorization.
+        sortedIndexResumeDocuments: array or matrix, 
+            Vector of position index of the resumeDocuments in decreasing order.	
     """   
-    def __init__(self, ids, name, belongingVector, representativewords, representativeDocuments,ResumeWords,ResumeDocuments):
+    def __init__(self, ids, name, belongingVector, representativeWords, sortedIndexRepresentativeWords, representativeDocuments, sortedIndexRepresentativeDocuments, resumeWords, sortedIndexResumeWords, resumeDocuments, sortedIndexResumeDocuments):
         self.__id = ids
         self.__name = name
         self.__belongingVector = belongingVector
-        self.__representativewords=representativewords
-        self.__representativeDocuments=representativeDocuments
-	self.__resumeWords=ResumeWords
-	self.__resumeDocuments=ResumeDocuments
+        self.__representativeWords = representativeWords
+        self.__sortedIndexRepresentativeWords = sortedIndexRepresentativeWords
+        self.__representativeDocuments = representativeDocuments
+        self.__sortedIndexRepresentativeDocuments = sortedIndexRepresentativeDocuments
+	self.__resumeWords = resumeWords
+        self.__sortedIndexResumeWords = sortedIndexResumeWords
+	self.__resumeDocuments = resumeDocuments
+        self.__sortedIndexResumeDocuments = sortedIndexResumeDocuments
         
     
     
@@ -56,15 +76,23 @@ class LatentTopic:
     def getName(self):
         return self.__name
     def getBelongingVector(self, id):
-        return self.__belongingVector.get(id)
-    def getRepresentativewords(self, id):
-        return self.__representativewords.get(id)
+        return self.__belongingVector[id]
+    def getRepresentativeWords(self, id):
+        return self.__representativeWords[id]
+    def getSortedIndexRepresentativeWords(self):
+        return self.__sortedIndexRepresentativeWords
     def getRepresentativeDocuments(self, id):
-        return self.__representativeDocuments.get(id)
+        return self.__representativeDocuments[id]
+    def getSortedIndexRepresentativeDocuments(self):
+        return self.__sortedIndexRepresentativeDocuments
     def getResumeWords(self, id):
-        return self.__resumeWords.get(id)
+        return self.__resumeWords[id]
+    def getSortedIndexResumeWords(self):
+        return self.__sortedIndexResumeWords
     def getResumeDocuments(self,id):
-        return self.__resumeDocuments.get(id)
+        return self.__resumeDocuments[id]
+    def getSortedIndexResumeDocuments(self):
+        return self.__sortedIndexResumeDocuments
 
     
    
@@ -100,7 +128,7 @@ class TypeLatentTopic:
         abreviature: String
             Abreviature of the TypeLatentTopic.
         Dictionary: dict
-            Dictionay of Documents where the key is the id of the document and the object is the position of the document on the matrixes.   
+            Dictionary of Documents where the key is the id of the document and the object is the position of the document on the matrixes.   
     """
     def __init__(self,ids,name,abreviature,Dictionary):
         self.__id = ids
@@ -116,7 +144,7 @@ class TypeLatentTopic:
     def getName(self):
         return self.__name
     def getAbreviature(self):
-        return self.__nabreviature
+        return self.__abreviature
     def getDictionary(self,id):
         return self.__Dictionary.get(id)
     
@@ -133,7 +161,7 @@ class TypeLatentTopic:
     def setId(self,ids):
         self.__id=ids
     def setName(self,name):
-        self.__namse=name
+        self.__name=name
     def setAbreviature(self,Abreviature):
         self.__abreviature=Abreviature
 
