@@ -1,19 +1,33 @@
 class DataModelModule:
-    def __init__(self,nombre):
-        self.nombre=nombre
+    def __init__(self,name,resources,codeStoragePath,zxmlFilesStoragePath=""):
+    """Builds a DataModel Module with no ResourceTypes at all
+    
+      Attributes
+      ----------
+
+        - name  --  Data Model Module Name, this must be unique among other DMM in the Zentity instance to be used.
+        - codeStoragePath -- A valid path for a folder in which code and binaries will be stored.
+        - zxmlFilesStoragePath -- A valid path for a folder in which the generated unified files will be stored. Default : empty
+
+    """
+        self.name=name
         self.resourceTypes = []
+        self.codeStoragePath = codeStoragePath
+        self.zxmlFilesStoragePath = zxmlStoragePath
     
     def addResourceType(self,resourceType):
+      """Adds a resource type to the Data Model Module but returns nothing"""
         self.resourceTypes.append(resourceType)
     
     def getResourceTypes(self):
+      """Returns the array of resourceTypes associated with this DMM."""
         return self.resourceTypes
     
     def getNombre(self):
         return self.nombre
 
 class ResourceType:
-    def __init__(self,name,scalarProperties,uniqueP,imgP,EstructuraXML,Instancias):
+    def __init__(self,name,scalarProperties,EstructuraXML,Instancias):
         self.scalarProperties = scalarProperties
         self.name = name
         #self.uniqueProperty = scalarProperties[uniqueP]
