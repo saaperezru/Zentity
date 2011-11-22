@@ -42,7 +42,7 @@ class SyNMF(NMF):
         # iterate over H
         for i in xrange(self._niter):
             # update H
-            self.H = self.H * (1 - self.b + self.b * (np.dot(self.data[:,:], self.H)) / ( np.dot(self.H,np.dot(self.H.T,self.H))))
+            self.H = self.H * (1 - self.b + self.b * (np.dot(self.W, self.H)) / ( np.dot(self.H,np.dot(self.H.T,self.H))))
             self.ferr[i] = self.frobenius_norm()
             self._print_cur_status('iteration ' + str(i+1) + '/' + str(self._niter) + ' Fro:' + str(self.ferr[i]))
             if i > 1:
