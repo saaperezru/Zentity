@@ -1,48 +1,16 @@
 
 
-__version__ = "$Revision: 8 $"
-
 import numpy as np
-
-from nmf import NMF
-from kmeans import Kmeans
+from pymf import NMF
+from pymf import Kmeans
 
 
 __all__ = ["CNMF"]
 
 class SyNMF(NMF):
-	"""  	
-	SyNMF(data, num_bases=4, niter=100, show_progress=True, compW=True)
 	
-	
-	Symmetric NMF. Factorize a data matrix into two matrices s.t.
-	F = | data - H*H' |  is minimal.	
-	
-	Parameters
-	----------
-	data : array_like
-		the input data
-	num_bases: int, optional 
-		Number of bases to compute (column rank of W and row rank of H). 
-		4 (default)
-	niter: int, optional
-		Number of iterations of the alternating optimization.
-		100 (default)
-	show_progress: bool, optional
-		Print some extra information
-		False (default)
-	
-	Attributes
-	---------
-		H : "num bases x num_samples" matrix of coefficients
-		ferr : frobenius norm (after calling .factorize())
-	
-		"""
-
-	_VINFO = 'pymf-synmf v0.1'
-	
-	def __init__(self, data, num_bases=4, niter=100, show_progress=False, b):
-		NMF.__init__(self, data, num_bases=num_bases, niter=niter, show_progress=show_progress, compW=False)
+	def __init__(self, data, W, b, num_bases=4, niter=100):
+		NMF.__init__(self, data, num_bases=num_bases, niter=niter, show_progress=False , compW=False)
                 self.b=b
 	
 	

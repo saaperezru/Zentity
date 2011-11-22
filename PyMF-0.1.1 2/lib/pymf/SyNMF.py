@@ -16,7 +16,7 @@ class SyNMF(NMF):
 	
 	
 	Symmetric NMF. Factorize a data matrix into two matrices s.t.
-	F = | data - H'*H |  is minimal.	
+	F = | data - H*H' |  is minimal.	
 	
 	Parameters
 	----------
