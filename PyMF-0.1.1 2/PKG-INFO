@@ -1,0 +1,11 @@
+Metadata-Version: 1.1
+Name: PyMF
+Version: 0.1.1
+Summary: Python Matrix Factorization Module
+Home-page: http://code.google.com/p/pymf/
+Author: Christian Thurau
+Author-email: cthurau@googlemail.com
+License: OSI Approved :: GNU General Public License (GPL)
+Description: UNKNOWN
+Platform: UNKNOWN
+Requires: cvxopt

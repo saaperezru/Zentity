@@ -2,7 +2,9 @@ class LatentTopic:
     """  	
         ControlLatentTopic(id, H, F1, W1, F2, W2, CTLT)
     
-        RESUME
+        Entity that keep the structure and attributes of each of the latent topics, 
+        includes: belonging degree of each document, 
+        vector representation of this and the resulting vectors by the asymmetric factorization.
 
 	
         Parameters
@@ -72,40 +74,35 @@ class LatentTopic:
     
     #Getters for each attributes
     def getId(self):
+        """ Returns the LatentTopic Id.
+        """
         return self.__id
     def getName(self):
+        """ Returns the LatentTopic Name.
+        """
         return self.__name
     def getBelongingVector(self, id):
+        """ Returns the belonging degree of a document in the LatentTopic.
+        """
         return self.__belongingVector[id]
     def getRepresentativeWords(self, id):
+        """ Returns the belonging degree of a word to the LatentTopic.
+        """
         return self.__representativeWords[id]
     def getSortedIndexRepresentativeWords(self):
+        """ Returns a sort vector of indices in decrease order depending on the values of the representativeWords vector.
+        """
         return self.__sortedIndexRepresentativeWords
-    def getRepresentativeDocuments(self, id):
-        return self.__representativeDocuments[id]
-    def getSortedIndexRepresentativeDocuments(self):
-        return self.__sortedIndexRepresentativeDocuments
-    def getResumeWords(self, id):
-        return self.__resumeWords[id]
-    def getSortedIndexResumeWords(self):
-        return self.__sortedIndexResumeWords
-    def getResumeDocuments(self,id):
-        return self.__resumeDocuments[id]
-    def getSortedIndexResumeDocuments(self):
-        return self.__sortedIndexResumeDocuments
+    def getRepresentativeDocuments(self, id):        """ Returns the belonging degree of a document to the LatentTopic depending on the W matrix.        """        return self.__representativeDocuments[id]    def getSortedIndexRepresentativeDocuments(self):        """ Returns a sort vector of indices in decrease order depending on the values of the representativeDocuments vector.        """        return self.__sortedIndexRepresentativeDocuments    def getResumeWords(self, id):        """ Returns the belonging degree of a word to the LatentTopic depending on the F matrix in the asymmetric factorization.        """        return self.__resumeWords[id]    def getSortedIndexResumeWords(self):        """ Returns a sort vector of indices in decrease order depending on the values of the resumeWords vector.        """        return self.__sortedIndexResumeWords    def getResumeDocuments(self,id):        """ Returns the belonging degree of a document to the LatentTopic depending on the W matrix in the asymmetric factorization.        """        return self.__resumeDocuments[id]    def getSortedIndexResumeDocuments(self):        """ Returns a sort vector of indices in decrease order depending on the values of the resumeDocuments vector.        """        return self.__sortedIndexResumeDocuments           #set method for the only attribute that can change.    def setName(self,name):        """ Safe the LatentTopic Id.        """        self.__name=name   
 
-    
-   
-    #set method for the only attribute that can change.
-    def setName(self,name):
-        self.__name=name
-   
 
 class TypeLatentTopic:
     """
         ControlTypeLatentTopic(id, name, abreviature, LD, H, F1, W1, F2, W2)
     
-        RESUME
+        This will save the dictionary class of documents for a modality
+        and link all resulting Latent Topics for this modality, 
+        as well as save information needed to work with it.
 	
         Parameters
         ----------
@@ -134,46 +131,52 @@ class TypeLatentTopic:
         self.__id = ids
         self.__name = name
         self.__abreviature=abreviature
-        self.__Dictionary =Dictionary
+        self.__dictionary =Dictionary
 
 
 
     #Getters for each attributes
     def getId(self):
+        """ Returns the TypeLatentTopic Id.
+        """
         return self.__id
     def getName(self):
+        """ Returns the TypeLatentTopic name.
+        """
         return self.__name
     def getAbreviature(self):
+        """ Returns the TypeLatentTopic Abreviature.
+        """
         return self.__abreviature
     def getDictionary(self,id):
-        return self.__Dictionary.get(id)
+        """ Given the id key returns the object on the dictionary.
+        """
+        return self.__dictionary.get(id)
     
 
 
     def getSizeDictionary(self):
         """ Return the size of the dictionary. 
         """
-        return len(self.__Dictionary)
+        return len(self.__dictionary)
     
     
 
     #Setters
     def setId(self,ids):
+        """ Safe the TypeLatentTopic Id.
+        """
         self.__id=ids
     def setName(self,name):
+        """ Safe the TypeLatentTopic name.
+        """
         self.__name=name
     def setAbreviature(self,Abreviature):
+        """ Safe the TypeLatentTopic Abreviature.
+        """
         self.__abreviature=Abreviature
 
 
 
-class Document:
-    def __init__(self,ids):
-        self.__id = ids
-        
-    def getId(self):
-        return self.__id
-    def setId(self,ids):
-        self.__id=ids
 
 

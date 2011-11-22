@@ -8,7 +8,8 @@ class ControlTypeLatentTopic:
     """  	
     ControlTypeLatentTopic(id, name, abreviature, LD, H, F1, W1, F2, W2)
     
-    RESUME
+    Control entity whose function is to be a layer between the user and TypeLatentTopic model, 
+    also it will be the only thing the user can see and use to access and work with the model.
 
     Asymmetric Factorization
     X  = F1*H = X*W1*H
@@ -254,7 +255,8 @@ class ControlLatentTopic:
     """  	
     ControlLatentTopic(id, H, IH, F1, IF1, W1, IW1, F2, IF2, W2, IW2, CTLT)
     
-    RESUME
+    Control entity whose function is to be a layer between the user and LatentTopic model, 
+    also it will be the only thing the user can see and use to access and work with the model.
 
 	
     Parameters
@@ -360,12 +362,13 @@ class LTRelation:
     @staticmethod
     def createMatrix(LD,LT1,LT2):
         """
-		Create and return a matrix M(ControlLatentTopic list(LT1) vs ControlLatentTopic list(LT2)) 
-                where each i,j s is the number of documents where the ith latent topic was the most important
-                in the LT1 list, and the jth latent topic was the most important in the LT2 list.
+           Create and return a matrix M(ControlLatentTopic list(LT1) vs ControlLatentTopic list(LT2)) 
+           where each i,j s is the number of documents where the ith latent topic was the most important
+           in the LT1 list, and the jth latent topic was the most important in the LT2 list.
    	        
-                If for a document the belonging degree is not define this does not count.
-        """    
+           If for a document the belonging degree is not define this does not count.
+
+	"""    
 	x=len(LT1)
         y=len(LT2)
         
@@ -418,7 +421,7 @@ class LTRelation:
     @staticmethod
     def escalar(M,scale):
         """
-	    scale the size of the M matrix to a bigger one.  
+	    Scale the size of the M matrix to a bigger one.  
         """ 
         Mt = np.zeros((M.shape[0]*scale,M.shape[1]*scale))
         for i in range(M.shape[0]):
