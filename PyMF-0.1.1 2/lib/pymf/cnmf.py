@@ -123,6 +123,52 @@ class CNMF(NMF):
 	def updateH(self):
 		pass
 	
+        def factorize2(self,K):
+		""" Perform factorization s.t. data = WH using the standard multiplicative 
+		update rule for Non-negative matrix factorization.
+		"""	
+		def separate_positive(m):
+			return (np.abs(m) + m)/2.0 
+		
+		def separate_negative(m):
+			return (np.abs(m) - m)/2.0 
+			
+		XtX = K.dot(self.data[:,:])
+		XtX_pos = separate_positive(XtX)
+		XtX_neg = separate_negative(XtX)
+							
+		# iterate over W and H
+		for i in xrange(self._niter):
+			# update H
+                        if self._compH:
+			    H_x_WT = np.dot(self.H.T, self.G.T)
+				
+			    XtX_neg_x_W = np.dot(XtX_neg, self.G)
+			    XtX_pos_x_W = np.dot(XtX_pos, self.G)
+		
+			    ha = XtX_pos_x_W + np.dot(H_x_WT, XtX_neg_x_W)
+			    hb = XtX_neg_x_W + np.dot(H_x_WT, XtX_pos_x_W) + 10**-9
+			    self.H = (self.H.T*np.sqrt(ha/hb)).T
+		
+			# update W			
+			if self._compW:
+				HT_x_H = np.dot(self.H, self.H.T)
+				wa = np.dot(XtX_pos, self.H.T) + np.dot(XtX_neg_x_W, HT_x_H)
+				wb = np.dot(XtX_neg, self.H.T) + np.dot(XtX_pos_x_W, HT_x_H) + 10**-9
+			
+				self.G *= np.sqrt(wa/wb)
+				self.W = np.dot(self.data[:,:], self.G)
+								
+			self.ferr[i] = self.frobenius_norm()
+
+			self._print_cur_status('iteration ' + str(i+1) + '/' + str(self._niter) + ' Fro:' + str(self.ferr[i]))
+
+			if i > 1:
+				if self.converged(i):					
+					self.ferr = self.ferr[:i]					
+					break
+
+
 	def factorize(self):
 		""" Perform factorization s.t. data = WH using the standard multiplicative 
 		update rule for Non-negative matrix factorization.
