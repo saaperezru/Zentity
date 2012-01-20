@@ -1,3 +1,161 @@
+class Documents:
+     
+    def __init__(self, id, tags, selected):
+        self.__id = id
+        self.__tags = tags
+        self.__selected = selected   
+    
+    #Getters for each attributes
+    def getId(self):
+        """ Returns the LatentTopic Id.
+        """
+        return self.__id
+    def getTags(self):
+        """ Returns the Tags of the document.
+        """
+        return self.__tags
+    def getSelected(self):
+        """ Returns True if the document is selected, False otherwise.
+        """
+        return self.__selected
+    
+   
+    #set method for the only attribute that can change.
+    def setSelected(self, selected):
+        """ Save selected variable.
+        """
+        self.__selected = selected
+   
+
+
+class Collection:
+     
+    def __init__(self, documents, selectedTextualLatentTopics, selectedVisualLatentTopics, textualFeatures,modelName, documentsPath):
+        self.__documents = documents
+        self.__selectedTextualLatentTopics = selectedTextualLatentTopics
+        self.__selectedVisualLatentTopics = selectedVisualLatentTopics
+        self.__textualFeatures = textualFeatures 
+        self.__modelName = modelName
+        self.__documentsPath = documentsPath   
+    
+    #Getters for each attributes
+    def getDocuments(self):
+        """ Returns the complete array of documents.
+        """
+        return self.__documents
+    def getSelectedTextualLatentTopics(self):
+        """ Returns the selected latent topics.
+        """
+        return self.__selectedTextualLatentTopics
+    def getSelectedVisualLatentTopics(self):
+        """ Returns the selected latent topics.
+        """
+        return self.__selectedVisualLatentTopics
+    def getTextualFeatures(self):
+        """ Returns the textual words used.
+        """
+        return self.__textualFeatures
+    def getModelName(self):
+        """ Returns the model name.
+        """
+        return self.__modelName
+    def getDocumentsPath(self):
+        """ Returns the images path in string format.
+        """
+        return self.__documentsPath
+    
+   
+    #set method for the only attribute that can change.
+    def setModelName(self, modelName):
+        """ Save modelName variable.
+        """
+        self.__modelName = modelName
+    def setSelectedTextualLatentTopics(self, selectedTextualLatentTopics):
+        """ Save selectedTextualLatentTopics variable.
+        """
+        self.__selectedTextualLatentTopics = selectedTextualLatentTopics
+    def setSelectedVisualLatentTopics(self, selectedVisualLatentTopics):
+        """ Save selectedVisualLatentTopics variable.
+        """
+        self.__selectedVisualLatentTopics = selectedVisualLatentTopics
+
+class CollectionParameters:
+     
+    def __init__(self):
+        self.__documentListPath = None
+        self.__documentListVariableName = None
+        self.__textualFeaturesPath = None
+        self.__textualFeaturesVariableName = None
+        self.__termDocumentMatrixPath = None
+        self.__termDocumentMatrixVariableName = None
+        self.__documentsPath = None
+        
+    
+    #Getters for each attributes
+    def getDocumentListPath(self):
+        """ Returns the path of the document list.
+        """
+        return self.__documentListPath
+    def getDocumentListVariableName(self):
+        """ Returns the name of the document list variable.
+        """
+        return self.__documentListVariableName
+    def getTextualFeaturesPath(self):
+        """ Returns the path of the textual words.
+        """
+        return self.__textualFeaturesPath
+    def getTextualFeaturesVariableName(self):
+        """ Returns the variable name of the textualFeatures matrix.
+        """
+        return self.__textualFeaturesVariableName
+    def getTermDocumentMatrixPath(self):
+        """ Returns the path of the term vs Document Matrix.
+        """
+        return self.__termDocumentMatrixPath
+    def getTermDocumentMatrixVariableName(self):
+        """ Returns the variable name of the term vs Document matrix.
+        """
+        return self.__termDocumentMatrixVariableName
+    def getDocumentsPath(self):
+        """ Returns the path of the documents folder.
+        """
+        return self.__documentsPath
+    
+   
+    #set method for the only attribute that can change.
+    def setDocumentListPath(self, documentListPath):
+        """ Save documentListPath variable.
+        """
+        self.__documentListPath = documentListPath
+    def setDocumentListVariableName(self, documentListVariableName):
+        """ Save documentListVariableName variable.
+        """
+        self.__documentListVariableName = documentListVariableName
+    def setTextualFeaturesPath(self, textualFeaturesPath):
+        """ Save textualFeaturesPath variable.
+        """
+        self.__textualFeaturesPath = textualFeaturesPath
+    def setTextualFeaturesVariableName(self, textualFeaturesVariableName):
+        """ Save textualFeaturesVariableName variable.
+        """
+        self.__textualFeaturesVariableName = textualFeaturesVariableName
+    def setTermDocumentMatrixPath(self, termDocumentMatrixPath):
+        """ Save termDocumentMatrixPath variable.
+        """
+        self.__termDocumentMatrixPath = termDocumentMatrixPath
+    def setTermDocumentMatrixVariableName(self, termDocumentMatrixVariableName):
+        """ Save termDocumentMatrixVariableName variable.
+        """
+        self.__termDocumentMatrixVariableName = termDocumentMatrixVariableName
+    def setDocumentsPath(self, documentsPath):
+        """ Save termDocumentMatrixPath variable.
+        """
+        self.__documentsPath = documentsPath
+
+
+
+#old version
+
 import scipy.io as sio
 from numpy import *
 from os.path import join

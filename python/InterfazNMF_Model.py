@@ -1,6 +1,6 @@
 class LatentTopic:
     """  	
-        ControlLatentTopic(id, H, F1, W1, F2, W2, CTLT)
+        LatentTopic(self, ids, name, belongingVector, representativeWords, sortedIndexRepresentativeWords, representativeDocuments, sortedIndexRepresentativeDocuments, resumeWords, sortedIndexResumeWords, resumeDocuments, sortedIndexResumeDocuments)
     
         Entity that keep the structure and attributes of each of the latent topics, 
         includes: belonging degree of each document, 
@@ -65,9 +65,9 @@ class LatentTopic:
         self.__sortedIndexRepresentativeWords = sortedIndexRepresentativeWords
         self.__representativeDocuments = representativeDocuments
         self.__sortedIndexRepresentativeDocuments = sortedIndexRepresentativeDocuments
-	self.__resumeWords = resumeWords
+	    self.__resumeWords = resumeWords
         self.__sortedIndexResumeWords = sortedIndexResumeWords
-	self.__resumeDocuments = resumeDocuments
+	    self.__resumeDocuments = resumeDocuments
         self.__sortedIndexResumeDocuments = sortedIndexResumeDocuments
         
     
@@ -93,12 +93,44 @@ class LatentTopic:
         """ Returns a sort vector of indices in decrease order depending on the values of the representativeWords vector.
         """
         return self.__sortedIndexRepresentativeWords
-    def getRepresentativeDocuments(self, id):        """ Returns the belonging degree of a document to the LatentTopic depending on the W matrix.        """        return self.__representativeDocuments[id]    def getSortedIndexRepresentativeDocuments(self):        """ Returns a sort vector of indices in decrease order depending on the values of the representativeDocuments vector.        """        return self.__sortedIndexRepresentativeDocuments    def getResumeWords(self, id):        """ Returns the belonging degree of a word to the LatentTopic depending on the F matrix in the asymmetric factorization.        """        return self.__resumeWords[id]    def getSortedIndexResumeWords(self):        """ Returns a sort vector of indices in decrease order depending on the values of the resumeWords vector.        """        return self.__sortedIndexResumeWords    def getResumeDocuments(self,id):        """ Returns the belonging degree of a document to the LatentTopic depending on the W matrix in the asymmetric factorization.        """        return self.__resumeDocuments[id]    def getSortedIndexResumeDocuments(self):        """ Returns a sort vector of indices in decrease order depending on the values of the resumeDocuments vector.        """        return self.__sortedIndexResumeDocuments           #set method for the only attribute that can change.    def setName(self,name):        """ Safe the LatentTopic Id.        """        self.__name=name   
+    def getRepresentativeDocuments(self, id):
+        """ Returns the belonging degree of a document to the LatentTopic depending on the W matrix.
+        """
+        return self.__representativeDocuments[id]
+    def getSortedIndexRepresentativeDocuments(self):
+        """ Returns a sort vector of indices in decrease order depending on the values of the representativeDocuments vector.
+        """
+        return self.__sortedIndexRepresentativeDocuments
+    def getResumeWords(self, id):
+        """ Returns the belonging degree of a word to the LatentTopic depending on the F matrix in the asymmetric factorization.
+        """
+        return self.__resumeWords[id]
+    def getSortedIndexResumeWords(self):
+        """ Returns a sort vector of indices in decrease order depending on the values of the resumeWords vector.
+        """
+        return self.__sortedIndexResumeWords
+    def getResumeDocuments(self,id):
+        """ Returns the belonging degree of a document to the LatentTopic depending on the W matrix in the asymmetric factorization.
+        """
+        return self.__resumeDocuments[id]
+    def getSortedIndexResumeDocuments(self):
+        """ Returns a sort vector of indices in decrease order depending on the values of the resumeDocuments vector.
+        """
+        return self.__sortedIndexResumeDocuments
+
+    
+   
+    #set method for the only attribute that can change.
+    def setName(self,name):
+        """ Safe the LatentTopic Id.
+        """
+        self.__name=name
+   
 
 
 class TypeLatentTopic:
     """
-        ControlTypeLatentTopic(id, name, abreviature, LD, H, F1, W1, F2, W2)
+        TypeLatentTopic(self,ids,name,abreviature,Dictionary)
     
         This will save the dictionary class of documents for a modality
         and link all resulting Latent Topics for this modality, 

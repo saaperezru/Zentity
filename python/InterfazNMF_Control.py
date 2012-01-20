@@ -54,9 +54,13 @@ class ControlTypeLatentTopic:
         if not self.correctClass(F1):
             print "Error-class"
             return None
-        if not self.correctClass(W1):
+        if not self.correctClass(LD):
             print "Error-class"
             return None
+        if W1!=None:
+            if not self.correctClass(W1):
+                print "Error-class"
+                return None
         if F2!=None:
             if not self.correctClass(F2):
                 print "Error-class"
@@ -75,23 +79,26 @@ class ControlTypeLatentTopic:
         self.__arrayControlLatentTopics=[]
         self.__typeLatentTopic=TypeLatentTopic(id, name, abreviature, self.createDictionary(LD))
 
-	#ControlLatentTopics creation.
-        if F2!=None and W2!=None:
-            for i in xrange(H.shape[0]):
-		HN=self.normalize(H[i]).tolist()[0]
-                F1S=self.sortVector(np.transpose(F1)[i]).tolist()[0]
-                W1S=self.sortVector(np.transpose(W1)[i]).tolist()[0]
-                F2S=self.sortVector(np.transpose(F2)[i]).tolist()[0]
-                W2S=self.sortVector(np.transpose(W2)[i]).tolist()[0]
-                CLT=ControlLatentTopic(i, HN, np.transpose(F1)[i].tolist()[0], F1S.reverse(), np.transpose(W1)[i].tolist()[0], W1S.reverse(),np.transpose(F2)[i].tolist()[0], F2S.reverse(),np.transpose(W2)[i].tolist()[0], W2S.reverse(), self)
-                self.__arrayControlLatentTopics.append(CLT)
-        else:
-            for i in xrange(H.shape[0]):
-                HN=self.normalize(H[i]).tolist()[0]
-                F1S=self.sortVector(np.transpose(F1)[i]).tolist()[0]
-                W1S=self.sortVector(np.transpose(W1)[i]).tolist()[0]
-                CLT=ControlLatentTopic(i, HN, np.transpose(F1)[i].tolist()[0], F1S.reverse(), np.transpose(W1)[i].tolist()[0], W1S.reverse(), None, None, None, None, self)
-                self.__arrayControlLatentTopics.append(CLT)
+	    #ControlLatentTopics creation.
+        for i in xrange(H.shape[0]):
+            belongingVector = self.normalize(H[i]).tolist()[0]
+            representativeWords = np.transpose(F1)[i].tolist()[0]
+            sortedIndexRepresentativeWords = self.sortVector(np.transpose(F1)[i]).tolist()[0].reverse()
+            if W1!= None
+                representativeDocuments = np.transpose(W1)[i].tolist()[0] 
+                sortedIndexRepresentativeDocuments = self.sortVector(np.transpose(W1)[i]).tolist()[0].reverse()
+            else
+                W1S = None
+            if F2!=None
+                F2S = self.sortVector(np.transpose(F2)[i]).tolist()[0]
+            else
+                F2S = None
+            if W2!=None
+                W2S = self.sortVector(np.transpose(W2)[i]).tolist()[0]
+            else
+                W2S = None    
+            CLT=ControlLatentTopic(i, belongingVector, representativeWords, sortedIndexRepresentativeWords, representativeDocuments, sortedIndexRepresentativeDocuments,np.transpose(F2)[i].tolist()[0], F2S.reverse(),np.transpose(W2)[i].tolist()[0], W2S.reverse(), self)
+            self.__arrayControlLatentTopics.append(CLT)
                 
 
     
@@ -100,17 +107,30 @@ class ControlTypeLatentTopic:
             return:
                 True if the dimensions between matrix are ok, False otherwise. 
         """
-        if(F2!=None and W2!=None):
-            if min(H.shape[0],F1.shape[1],W1.shape[1],F2.shape[1],W2.shape[1])!=max(H.shape[0],F1.shape[1],W1.shape[1],F2.shape[1],W2.shape[1]):
-                return False
-            if min(H.shape[1],W1.shape[0],W2.shape[0],len(LD))!=max(H.shape[1],W1.shape[0],W2.shape[0],len(LD)):
-                return False    
-        else:
-            if min(H.shape[0],F1.shape[1],W1.shape[1])!=max(H.shape[0],F1.shape[1],W1.shape[1]):
-                return False
-            if min(H.shape[1],W1.shape[0],len(LD))!=max(H.shape[1],W1.shape[0],len(LD)):
-                return False
-        return True
+        mi = min(H.shape[0],F1.shape[1])
+        ma = max(H.shape[0],F1.shape[1])
+        if(W1!=None)
+            mi = min(mi,W1.shape[1])
+            ma = max(ma,W1.shape[1])
+        if(F2!=None)
+            mi = min(mi,F2.shape[1])
+            ma = max(ma,F2.shape[1])
+        if(W2!=None)
+            mi = min(mi,W2.shape[1])
+            ma = max(ma,W2.shape[1])
+        if(mi!=ma)
+            return false
+        mi = min(H.shape[1],LD.shape[0])
+        ma = max(H.shape[1],LD.shape[0])
+        if(W1!=None)
+            mi = min(mi,W1.shape[0])
+            ma = max(ma,W1.shape[0])
+        if(W2!=None)
+            mi = min(mi,W2.shape[0])
+            ma = max(ma,W2.shape[0])
+        if(mi!=ma)
+            return false
+        return true
 
     
     
@@ -160,7 +180,7 @@ class ControlTypeLatentTopic:
             Where the key is LD[i] and the object is the number i, which is the id-column of the 
             ith document of the representation matrix.   
         """
-        x=range(len(LD))
+        x=range(LD.shape[0])
         return  dict(zip(LD, x))
 
     
