@@ -21,17 +21,24 @@ class ControlCollection:
     
     def __init__(self,colectionParameters):
         self.__controlZentity = None
+        
         #Latent Topics creation
         documentList = ControlMatrix.InstanceMatrix(colectionParameters.getDocumentListPath(), colectionParameters.getDocumentListVariableName())
-        #FALTA CREAR LAS MATRICES
-        
+        textualF = ControlMatrix.InstanceMatrix(colectionParameters.getTextualFPath(), colectionParameters.getTextualFVariableName())
+        textualH = ControlMatrix.InstanceMatrix(colectionParameters.getTextualHPath(), colectionParameters.getTextualHVariableName())
+        textualVisualF = ControlMatrix.InstanceMatrix(colectionParameters.getTextualVisualFPath(), colectionParameters.getTextualVisualFVariableName())
         self.__controlNMFTextual = ControlNMF(self,textualF,textualH, textualVisualF, documents, 1, "Textual", "Tex")
-        self.__controlNMFVisual = ControlNMF(self,VisualF,VisualH, VisualtextualF, documents, 2, "Visual", "Vis")
+        
+        visualF = ControlMatrix.InstanceMatrix(colectionParameters.getVisualFPath(), colectionParameters.getVisualFVariableName())
+        visualH = ControlMatrix.InstanceMatrix(colectionParameters.getVisualHPath(), colectionParameters.getVisualHVariableName())
+        visualTextualF = ControlMatrix.InstanceMatrix(colectionParameters.getVisualTextualFPath(), colectionParameters.getVisualTextualFVariableName())
+        self.__controlNMFVisual = ControlNMF(self, visualF, visualH, visualTextualF, documents, 2, "Visual", "Vis")
         
         #Collection creation
         textualFeatures = ControlMatrix.InstanceMatrix(colectionParameters.getTextualFeaturesPath(), colectionParameters.getTextualFeaturesVariableName())
         termDocumentMatrix = ControlMatrix.InstanceMatrix(colectionParameters.geTtermDocumentMatrixPath(), colectionParameters.getTermDocumentMatrixVariableName())
         documents = []
+        
         for i in xrange(0, documentList.shape[0]):
             tags = []
             for j in xrange(0, textualFeatures.shape[0]):

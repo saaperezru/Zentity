@@ -89,8 +89,20 @@ class CollectionParameters:
         self.__termDocumentMatrixPath = None
         self.__termDocumentMatrixVariableName = None
         self.__documentsPath = None
+        self.__textualFPath = None
+        self.__textualFVariableName = None
+        self.__textualHPath = None
+        self.__textualHVariableName = None
+        self.__textualVisualFPath = None
+        self.__textualVisualFVariableName = None
+        self.__visualFPath = None
+        self.__visualFVariableName = None
+        self.__visualHPath = None
+        self.__visualHVariableName = None
+        self.__visualTextualFPath = None
+        self.__visualTextualFVariableName = None
         
-    
+        
     #Getters for each attributes
     def getDocumentListPath(self):
         """ Returns the path of the document list.
@@ -120,6 +132,54 @@ class CollectionParameters:
         """ Returns the path of the documents folder.
         """
         return self.__documentsPath
+    def getTextualFPath(self):
+        """ Returns the path of the textual F matrix.
+        """
+        return self.__textualFPath
+    def getTextualFVariableName(self):
+        """ Returns the variable name of the textual F matrix.
+        """
+        return self.__textualFVariableName
+    def getTextualHPath(self):
+        """ Returns the path of the textual H matrix.
+        """
+        return self.__textualHPath
+    def getTextualHVariableName(self):
+        """ Returns the variable name of the textual H matrix.
+        """
+        return self.__textualHVariableName
+    def getTextualVisualFPath(self):
+        """ Returns the path of the visual matrix F in the asymmetric NMF.
+        """
+        return self.__textualVisualFPath
+    def getTextualVisualFVariableName(self):
+        """ Returns the variable name of the visual matrix F in the asymmetric NMF.
+        """
+        return self.__textualVisualFVariableName
+    def getVisualFPath(self):
+        """ Returns the path of the visual F matrix.
+        """
+        return self.__visualFPath
+    def getVisualFVariableName(self):
+        """ Returns the variable name of the visual F matrix.
+        """
+        return self.__visualFVariableName
+    def getVisualHPath(self):
+        """ Returns the path of the visual H matrix.
+        """
+        return self.__visualHPath
+    def getVisualHVariableName(self):
+        """ Returns the variable name of the visual H matrix.
+        """
+        return self.__visualHVariableName
+    def getVisualTextualFPath(self):
+        """ Returns the path of the textual matrix F in the asymmetric NMF.
+        """
+        return self.__visualTextualFPath
+    def getVisualTextualFVariableName(self):
+        """ Returns the variable name of the textual matrix F in the asymmetric NMF.
+        """
+        return self.__visualTextualFVariableName
     
    
     #set method for the only attribute that can change.
@@ -151,6 +211,54 @@ class CollectionParameters:
         """ Save termDocumentMatrixPath variable.
         """
         self.__documentsPath = documentsPath
+    def setTextualFPath(self, textualFPath):
+        """ Save textualFPathvariable variable.
+        """
+        self.__textualFPath = textualFPath
+    def setTextualFVariableName(self, textualFVariableName):
+        """ Save textualFVariableName variable.
+        """
+        self.__textualFVariableName = textualFVariableName
+    def setTextualHPath(self, textualHPath):
+        """ Save textualHPathvariable variable.
+        """
+        self.__textualHPath = textualHPath
+    def setTextualHVariableName(self, textualHVariableName):
+        """ Save textualFVariableName variable.
+        """
+        self.__textualHVariableName = textualHVariableName
+    def setTextualVisualFPath(self, textualVisualFPath):
+        """ Save textualVisualFPath variable.
+        """
+        self.__textualVisualFPath = textualVisualFPath
+    def setTextualVisualFVariableName(self, textualVisualFVariableName):
+        """ Save textualVisualFVariableName variable.
+        """
+        self.__textualVisualFVariableName = textualVisualFVariableName
+    def setVisualFPath(self, visualFPath):
+        """ Save visualFPathvariable variable.
+        """
+        self.__visualFPath = visualFPath
+    def setVisualFVariableName(self, visualFVariableName):
+        """ Save visualFVariableName variable.
+        """
+        self.__visualFVariableName = visualFVariableName
+    def setVisualHPath(self, visualHPath):
+        """ Save visualHPathvariable variable.
+        """
+        self.__visualHPath = visualHPath
+    def setVisualHVariableName(self, visualHVariableName):
+        """ Save visualFVariableName variable.
+        """
+        self.__visualHVariableName = visualHVariableName
+    def setVisualTextualFPath(self, visualTextualFPath):
+        """ Save visualtextualFPath variable.
+        """
+        self.__visualTextualFPath = visualTextualFPath
+    def setVisualTextualFVariableName(self, visualTextualFVariableName):
+        """ Save textualVisualFVariableName variable.
+        """
+        self.__visualTextualFVariableName = visualTextualFVariableName
 
 
 
