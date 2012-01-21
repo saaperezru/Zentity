@@ -19,41 +19,59 @@ class ControlCollection:
         self.__controlNMFVisual = None
         self.__collection = None
     
-    def __init__(self,colectionParameters):
-        self.__controlZentity = None
+    def beginCollection(self,colectionParameters):
+        try:
+            self.__controlZentity = None
         
-        #Latent Topics creation
-        documentList = ControlMatrix.InstanceMatrix(colectionParameters.getDocumentListPath(), colectionParameters.getDocumentListVariableName())
-        textualF = ControlMatrix.InstanceMatrix(colectionParameters.getTextualFPath(), colectionParameters.getTextualFVariableName())
-        textualH = ControlMatrix.InstanceMatrix(colectionParameters.getTextualHPath(), colectionParameters.getTextualHVariableName())
-        textualVisualF = ControlMatrix.InstanceMatrix(colectionParameters.getTextualVisualFPath(), colectionParameters.getTextualVisualFVariableName())
-        self.__controlNMFTextual = ControlNMF(self,textualF,textualH, textualVisualF, documents, 1, "Textual", "Tex")
+            #Latent Topics creation
+            documentList = ControlMatrix.InstanceMatrix(colectionParameters.getDocumentListPath(), colectionParameters.getDocumentListVariableName())
+            textualF = ControlMatrix.InstanceMatrix(colectionParameters.getTextualFPath(), colectionParameters.getTextualFVariableName())
+            textualH = ControlMatrix.InstanceMatrix(colectionParameters.getTextualHPath(), colectionParameters.getTextualHVariableName())
+            textualVisualF = ControlMatrix.InstanceMatrix(colectionParameters.getTextualVisualFPath(), colectionParameters.getTextualVisualFVariableName())
+            self.__controlNMFTextual = ControlNMF(self,textualF,textualH, textualVisualF, documents, 1, "Textual", "Tex")
         
-        visualF = ControlMatrix.InstanceMatrix(colectionParameters.getVisualFPath(), colectionParameters.getVisualFVariableName())
-        visualH = ControlMatrix.InstanceMatrix(colectionParameters.getVisualHPath(), colectionParameters.getVisualHVariableName())
-        visualTextualF = ControlMatrix.InstanceMatrix(colectionParameters.getVisualTextualFPath(), colectionParameters.getVisualTextualFVariableName())
-        self.__controlNMFVisual = ControlNMF(self, visualF, visualH, visualTextualF, documents, 2, "Visual", "Vis")
+            visualF = ControlMatrix.InstanceMatrix(colectionParameters.getVisualFPath(), colectionParameters.getVisualFVariableName())
+            visualH = ControlMatrix.InstanceMatrix(colectionParameters.getVisualHPath(), colectionParameters.getVisualHVariableName())
+            visualTextualF = ControlMatrix.InstanceMatrix(colectionParameters.getVisualTextualFPath(), colectionParameters.getVisualTextualFVariableName())
+            self.__controlNMFVisual = ControlNMF(self, visualF, visualH, visualTextualF, documents, 2, "Visual", "Vis")
         
-        #Collection creation
-        textualFeatures = ControlMatrix.InstanceMatrix(colectionParameters.getTextualFeaturesPath(), colectionParameters.getTextualFeaturesVariableName())
-        termDocumentMatrix = ControlMatrix.InstanceMatrix(colectionParameters.geTtermDocumentMatrixPath(), colectionParameters.getTermDocumentMatrixVariableName())
-        documents = []
+            #Collection creation
+            textualFeatures = ControlMatrix.InstanceMatrix(colectionParameters.getTextualFeaturesPath(), colectionParameters.getTextualFeaturesVariableName())
+            termDocumentMatrix = ControlMatrix.InstanceMatrix(colectionParameters.geTtermDocumentMatrixPath(), colectionParameters.getTermDocumentMatrixVariableName())
+            documents = []
         
-        for i in xrange(0, documentList.shape[0]):
-            tags = []
-            for j in xrange(0, textualFeatures.shape[0]):
-                if(termDocumentMatrix[j,i]==1):
-                    tags.add(textualFeatures[j])
-            d = Document(documentList[i],tags,True)
-            documents.append(d)
+            for i in xrange(0, documentList.shape[0]):
+                tags = []
+                for j in xrange(0, textualFeatures.shape[0]):
+                    if(termDocumentMatrix[j,i]==1):
+                        tags.add(textualFeatures[j])
+                d = Document(documentList[i],tags,True)
+                documents.append(d)
         
-        self.__collection = Collection(documents, range(0,textualF.shape[1]), range(0,visualF.shape[1]), textualFeatures, None, colectionParameters.getDocumentsPath())
-
+            self.__collection = Collection(documents, range(0,textualF.shape[1]), range(0,visualF.shape[1]), textualFeatures, None, colectionParameters.getDocumentsPath())
+            return True
+        except:
+            self.__controlZentity = None
+            self.__controlNMFTextual = None
+            self.__controlNMFVisual = None
+            self.__collection = None
+            return False
+        def showImages():
+            if(self.__collection == None):
+                return None
+            else
+                img = []
+                for i in self.__collection.getDocuments
+                    img.append((join(self.__collection.getDocumentsPath(),i.getId()),i.getSelected()))
+                return img
+            
 class ControlNMF:
 
     def __init__(self, controlCollection, f, h, mf, documents, id, name, abreviature):
         self.__controlCollection = controlCollection
-        self.__controlLatentTopics = crateTypeLatentTopic(id, name, abreviature, documents, h, f, None, mf,None)
+        self.__controlLatentTopics = ExamplepeLatentTopic(id, name, abreviature, documents, h, f, None, mf,None)
+        if (self.__controlLatentTopics == None)
+            raise Exception()
         
     def images(self)
         #FALTA
