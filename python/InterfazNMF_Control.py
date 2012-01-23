@@ -87,15 +87,15 @@ class ControlTypeLatentTopic:
             if W1!= None
                 representativeDocuments = np.transpose(W1)[i].tolist()[0] 
                 sortedIndexRepresentativeDocuments = self.sortVector(np.transpose(W1)[i]).tolist()[0].reverse()
-            else
+            else:
                 W1S = None
             if F2!=None
                 F2S = self.sortVector(np.transpose(F2)[i]).tolist()[0]
-            else
+            else:
                 F2S = None
             if W2!=None
                 W2S = self.sortVector(np.transpose(W2)[i]).tolist()[0]
-            else
+            else:
                 W2S = None    
             CLT=ControlLatentTopic(i, belongingVector, representativeWords, sortedIndexRepresentativeWords, representativeDocuments, sortedIndexRepresentativeDocuments,np.transpose(F2)[i].tolist()[0], F2S.reverse(),np.transpose(W2)[i].tolist()[0], W2S.reverse(), self)
             self.__arrayControlLatentTopics.append(CLT)
