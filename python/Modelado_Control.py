@@ -56,30 +56,31 @@ class ControlCollection:
             self.__controlNMFVisual = None
             self.__collection = None
             return False
-        def showImages():
+        def imageInfo():
             if(self.__collection == None):
                 return None
-            else
-                img = []
-                for i in self.__collection.getDocuments
-                    img.append((join(self.__collection.getDocumentsPath(),i.getId()),i.getSelected()))
-                return img
+            else:
+                return (self.__collection.getDocuments(),self.__collection.getDocumentsPath())
+        def latentTopicsInfo():
+            if(self.__collection == None or self.__controlNMFTextual == None):
+                return None
+            else:
+                #FALTA
+                return (self.__collection.getTextualFeatures(),self.__collection.getDocuments(),self.__collection.getDocumentsPath())
             
 class ControlNMF:
 
     def __init__(self, controlCollection, f, h, mf, documents, id, name, abreviature):
         self.__controlCollection = controlCollection
-        self.__controlLatentTopics = ExamplepeLatentTopic(id, name, abreviature, documents, h, f, None, mf,None)
+        self.__controlLatentTopics = controlpeLatentTopic(id, name, abreviature, documents, h, f, None, mf,None)
         if (self.__controlLatentTopics == None)
             raise Exception()
         
     def images(self)
-        #FALTA
-        return 0
+        pass
     
     def names(self)
-        #FALTA
-        return 0
+        pass
         
 class ControlZentity:
     
