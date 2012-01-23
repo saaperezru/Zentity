@@ -1,70 +1,81 @@
 from xml.etree.ElementTree import Element, ElementTree
-from os.path import join
+from os.path import join,exists
+import InterfazZ_Entidad as Entidad
 class GeneradorCreacion:
     def __init__(self,DataModelModule):
         self.DataModelModule = DataModelModule
 
-    def save(self,path,filename="ModelCreator.cs"):
-        namespace = self.DataModelModule.getNombre()
-        # Create a file object:
-        # in "write" mode
-        FILE = open(join(path, "code",filename),"w")
-        FILE.write("using Zentity.Core;\n")
-        FILE.write("using System.IO;\n")
-        FILE.write("using System.Linq;\n\n")
-        FILE.write("namespace GeneratedDataModel_" +namespace+"\n")
-        FILE.write("{ \n \t class DMCreator \n \t { \n  ")
-        FILE.write(" \t \t const string connectionString = @\"provider=System.Data.SqlClient;")
-        FILE.write("\n \t \t     metadata=res://*/; provider connection string='Data Source=.;")
-        FILE.write("\n \t \t     Initial Catalog=Zentity;Integrated Security=True;MultipleActiveResultSets=True'\";")
-        FILE.write("\n\n  \t \t public void CreateDM() \n \t \t { ")
-        FILE.write("\n \t \t    ZentityContext context = new ZentityContext(connectionString);")
-        FILE.write("\n \t \t   //Create a new module.") 
-        FILE.write("\n\t \t    DataModelModule module = new DataModelModule { NameSpace = \"Zentity."+namespace+"\" };")
-        FILE.write("\n\t \t   // Create the Resources type.")
-        FILE.write("\n\t \t    ResourceType resourceTypeResource = context.DataModel.Modules[\"Zentity.Core\"].ResourceTypes[\"Resource\"];")
-        
-        for resourceType in self.DataModelModule.getResourceTypes():	    	
-            FILE.write("\n\t \t    ResourceType "+ resourceType.name +" = new ResourceType { Name = \""+resourceType.name+"\", BaseType = resourceTypeResource };")
-            FILE.write("\n\t \t    module.ResourceTypes.Add("+resourceType.name+"); ")
-            FILE.write("\n\t \t    // Create some Scalar Properties.")
-            #print arrProperties	
-            scalarProperties = resourceType.scalarProperties
-            for property in scalarProperties:
-                    if(property.default==False):
-                            FILE.write("\n\t \t    ScalarProperty " + property.name + " = new ScalarProperty { Name = \"" + property.name + "\", DataType =" + property.dataType+ " };")
-                            FILE.write("\n\t \t    "+resourceType.name+".ScalarProperties.Add(" + property.name + ");")
-        FILE.write("\n\t \t    // Synchronize to alter the database schema.")
-        FILE.write("\n\t \t    context.DataModel.Modules.Add(module);")
-        FILE.write("\n\t \t    context.DataModel.Synchronize();\n")
-        FILE.write("\n\t \t    // Generate Extensions Assembly.")
-        FILE.write("\n\t \t    using (FileStream fout = new FileStream(@\""+join(path, "code",namespace)+".dll\", FileMode.Create, FileAccess.Write))")
-        FILE.write("\n\t \t \t {  \n")
-        FILE.write("\t \t \t  byte[] rawAssembly = context.DataModel.GenerateExtensionsAssembly(")
-        FILE.write("\n\t \t \t    \"Zentity."+namespace + "\", false, null, new string[] { \"Zentity."+namespace + "\" }, null); \n")
-        FILE.write("\n\t \t \t   fout.Write(rawAssembly, 0, rawAssembly.Length);  \n")
-        #Closes Generate Extensions Assembly()
-        FILE.write("\n\t\t      }")
-        FILE.write("\n\t \t    // Generate Entity Framework artifacts.\n")
-        FILE.write("\n\t \t    EFArtifactGenerationResults results = context.DataModel.GenerateEFArtifacts(\"Zentity."+namespace + "\");")
-        FILE.write("\n\t \t    results.Csdls.Where(tuple => tuple.Key == \"Zentity.Core\").First().Value.Save(@\""+join(path, "code","Zentity."+namespace)+".ExtendedCore.csdl\");")
-        FILE.write("\n\t \t    results.Csdls.Where(tuple => tuple.Key == \"Zentity."+namespace+"\").First().Value.Save(@\""+join(path, "code","Zentity."+namespace)+".csdl\");")
-        FILE.write("\n\t \t    results.Msl.Save(@\""+join(path, "code","Zentity."+namespace)+".Consolidated.msl\");")
-        FILE.write("\n\t \t    results.Ssdl.Save(@\""+join(path, "code","Zentity."+namespace)+".Consolidated.ssdl\");\n") 
-        #Closes createDM()
-        FILE.write("\n\t\t }")
-        FILE.write("\n\t\t static void Main(string[] args)")	
-        FILE.write("\n\t\t {")
-        FILE.write("\n\t\t\t DMCreator creator = new DMCreator();")
-        FILE.write("\n\t\t\t creator.CreateDM();")		
-        #Closes Main()
-        FILE.write("\n\t\t }")		
-        #Closes class DMCreator()
-        FILE.write("\n\t }")
-        #Closes namespace
-        FILE.write("\n }")
+    def __checkDMMParameters__(self):
+        if not exists(self.DataModelModule.getCodeStoragePath()):
+            print "[ERROR] Bad path provided to store code in DMM"
+            return False          
 
-        FILE.close()
+    def save(self,filename="ModelCreator.cs"):
+        if self.__checkDMMParameters__():
+            path = self.DataModelModule.getCodeStoragePath()
+            namespace = self.DataModelModule.getNombre()
+            # Create a file object:
+            # in "write" mode
+            FILE = open(join(path, "code",filename),"w")
+            FILE.write("using Zentity.Core;\n")
+            FILE.write("using System.IO;\n")
+            FILE.write("using System.Linq;\n\n")
+            FILE.write("namespace GeneratedDataModel_" +namespace+"\n")
+            FILE.write("{ \n \t class DMCreator \n \t { \n  ")
+            FILE.write(" \t \t const string connectionString = @\"provider=System.Data.SqlClient;")
+            FILE.write("\n \t \t     metadata=res://*/; provider connection string='Data Source=.;")
+            FILE.write("\n \t \t     Initial Catalog=Zentity;Integrated Security=True;MultipleActiveResultSets=True'\";")
+            FILE.write("\n\n  \t \t public void CreateDM() \n \t \t { ")
+            FILE.write("\n \t \t    ZentityContext context = new ZentityContext(connectionString);")
+            FILE.write("\n \t \t   //Create a new module.") 
+            FILE.write("\n\t \t    DataModelModule module = new DataModelModule { NameSpace = \"Zentity."+namespace+"\" };")
+            FILE.write("\n\t \t   // Create the Resources type.")
+            FILE.write("\n\t \t    ResourceType resourceTypeResource = context.DataModel.Modules[\"Zentity.Core\"].ResourceTypes[\"Resource\"];")
+            
+            for resourceType in self.DataModelModule.getResourceTypes():	    	
+                FILE.write("\n\t \t    ResourceType "+ resourceType.name +" = new ResourceType { Name = \""+resourceType.name+"\", BaseType = resourceTypeResource };")
+                FILE.write("\n\t \t    module.ResourceTypes.Add("+resourceType.name+"); ")
+                FILE.write("\n\t \t    // Create some Scalar Properties.")
+                #print arrProperties	
+                scalarProperties = resourceTypes.getProperties()
+                for property in scalarProperties:
+                        if not property.isInherited:
+                                FILE.write("\n\t \t    ScalarProperty " + property.name + " = new ScalarProperty { Name = \"" + property.name + "\", DataType =" + property.getDataType+ " };")
+                                FILE.write("\n\t \t    "+resourceType.name+".ScalarProperties.Add(" + property.name + ");")
+            FILE.write("\n\t \t    // Synchronize to alter the database schema.")
+            FILE.write("\n\t \t    context.DataModel.Modules.Add(module);")
+            FILE.write("\n\t \t    context.DataModel.Synchronize();\n")
+            FILE.write("\n\t \t    // Generate Extensions Assembly.")
+            FILE.write("\n\t \t    using (FileStream fout = new FileStream(@\""+join(path, "code",namespace)+".dll\", FileMode.Create, FileAccess.Write))")
+            FILE.write("\n\t \t \t {  \n")
+            FILE.write("\t \t \t  byte[] rawAssembly = context.DataModel.GenerateExtensionsAssembly(")
+            FILE.write("\n\t \t \t    \"Zentity."+namespace + "\", false, null, new string[] { \"Zentity."+namespace + "\" }, null); \n")
+            FILE.write("\n\t \t \t   fout.Write(rawAssembly, 0, rawAssembly.Length);  \n")
+            #Closes Generate Extensions Assembly()
+            FILE.write("\n\t\t      }")
+            FILE.write("\n\t \t    // Generate Entity Framework artifacts.\n")
+            FILE.write("\n\t \t    EFArtifactGenerationResults results = context.DataModel.GenerateEFArtifacts(\"Zentity."+namespace + "\");")
+            FILE.write("\n\t \t    results.Csdls.Where(tuple => tuple.Key == \"Zentity.Core\").First().Value.Save(@\""+join(path, "code","Zentity."+namespace)+".ExtendedCore.csdl\");")
+            FILE.write("\n\t \t    results.Csdls.Where(tuple => tuple.Key == \"Zentity."+namespace+"\").First().Value.Save(@\""+join(path, "code","Zentity."+namespace)+".csdl\");")
+            FILE.write("\n\t \t    results.Msl.Save(@\""+join(path, "code","Zentity."+namespace)+".Consolidated.msl\");")
+            FILE.write("\n\t \t    results.Ssdl.Save(@\""+join(path, "code","Zentity."+namespace)+".Consolidated.ssdl\");\n") 
+            #Closes createDM()
+            FILE.write("\n\t\t }")
+            FILE.write("\n\t\t static void Main(string[] args)")	
+            FILE.write("\n\t\t {")
+            FILE.write("\n\t\t\t DMCreator creator = new DMCreator();")
+            FILE.write("\n\t\t\t creator.CreateDM();")		
+            #Closes Main()
+            FILE.write("\n\t\t }")		
+            #Closes class DMCreator()
+            FILE.write("\n\t }")
+            #Closes namespace
+            FILE.write("\n }")
+
+            FILE.close()
+        else:
+            print "[ERROR] Impossible to generate code due to lack of some parameters in the DMM and its parts"
+
 
 
 ##WARNING: THIS DOESN'T WORKS FOR MORE THAN ONE RESOURCE TYPE IN A DATA MODEL MODULE
@@ -74,12 +85,11 @@ class GeneradorInsercion:
         self.estructuraXML = DataModelModule.getResourceTypes()[0].getEstructuraXML()
         self.DataModelModule = DataModelModule
 
-    def save(self,path,filename="ModelUploader.cs"):
-        namespace = self.DataModelModule.getNombre()
-        # Create a file object:
-        # in "write" mode
-        FILE = open(join(path, "code",filename),"w")
-        #Imports
+    def __checkDMMParameters__(self):
+        #Check XMLStructure 
+            #Check each resource type as a unique FilesPrefix
+        #Check that if the visualizationType is IMAGE there is one identifier property
+    def writeImports(self,FILE):
         FILE.write("using System;\n")
         FILE.write("using System.IO;\n")
         FILE.write("using System.Collections.Generic;\n")
@@ -87,13 +97,10 @@ class GeneradorInsercion:
         FILE.write("using System.Text;\n")
         FILE.write("using Zentity.Core;\n")
         FILE.write("using System.Xml.Serialization;")
-        FILE.write("using Zentity."+ namespace +";\n")
-        
-        #Begin namespace
-        FILE.write("namespace DataInsert\n")
-        FILE.write("{ \n \t class DataInsert \n \t { \n  ")
+        FILE.write("using Zentity."+ self.DataModelModule.getNombre()+";\n")
 
-        FILE.write(" \n \t\t private " + self.estructuraXML.getNodoPadreXML() + " data;")
+    def writeDeserializeMethod(self,FILE):
+
         #Begin Deserialize Method
         FILE.write(" \n \t\t /// <summary>")
         FILE.write(" \n \t\t /// Deserializes the specified XML path.")
@@ -115,12 +122,6 @@ class GeneradorInsercion:
         #Close Deserialize method                   
         FILE.write(" \n \t\t }")
         #Finish Deserialize Method                   
-        #Begin loadData Method
-        FILE.write(" \n \t\t private void loadData(string xmlPath)")
-        FILE.write(" \n \t\t {")
-        FILE.write(" \n \t\t\t data = Deserialize<"+self.estructuraXML.getNodoPadreXML()+">(xmlPath);")
-        FILE.write(" \n \t\t }")
-        #Finish loadData Method                   
         #Begin ConvertTimestamp Method
         FILE.write(" \n \t\t /// <summary>")
         FILE.write(" \n \t\t /// method for converting a UNIX timestamp to a regular")
@@ -137,38 +138,58 @@ class GeneradorInsercion:
         FILE.write(" \n \t\t\t//return the value in string format")
         FILE.write(" \n \t\t\treturn newDateTime.ToLocalTime();")
         FILE.write(" \n \t\t }")
-        
-        for RT in self.DataModelModule.getResourceTypes():
-            FILE.write(" \n \t\t public void insertData_"+RT.name+"(ZentityContext zenContext, string xmlPath, string imgPath)")
-            FILE.write(" \n \t\t {")
-            FILE.write(" \n \t\t\t loadData(xmlPath);")
-            FILE.write(" \n \t\t\t using (ZentityContext context = zenContext)")
-            FILE.write(" \n \t\t\t {")
-            #Begin for
-            FILE.write(" \n \t\t\t\t foreach ("+self.estructuraXML.getNodoPadreXML()+self.estructuraXML.getNodoHijoXML()+" p in data.Items)")
-            FILE.write(" \n \t\t\t\t {")
-            FILE.write(" \n \t\t\t\t\t //WARNING : Comparing attribute should be changed to a unique key")
-            FILE.write(' \n \t\t\t\t\t context.MetadataWorkspace.LoadFromAssembly(System.Reflection.Assembly.Load("Zentity.'+namespace+'"));')
+
+    def writeLoadAndInsertDataCode(self,FILE,resource,namespace,loadDataMethodName,insertDataMethodName,dataVariable):
+
+        #Find a identifier variable and set uniqueVariable if there is one
+        identifierProperty = None
+        for prop in resource.getProperties:
+            if prop.isIdentifier():
+                identifierProperty = prop
+                break
+
+
+        FILE.write(" \n \t\t private " + resource.getXMLStructure.getParentNodeName() + dataVariable + ";")
+        #Begin loadData Method
+        FILE.write(" \n \t\t private void "+methodName+"(string xmlPath)")
+        FILE.write(" \n \t\t {")
+        FILE.write(" \n \t\t\t data = Deserialize<"+resource.getXMLStructure.getParentNodeName() +">(xmlPath);")
+        FILE.write(" \n \t\t }")
+        #Finish loadData Method                   
+   
+        #Begin InsertData Method
+        FILE.write(" \n \t\t public void "+insertDataMethodName+"(ZentityContext zenContext, string xmlPath, string imgPath)")
+        FILE.write(" \n \t\t {")
+        FILE.write(" \n \t\t\t " + methodName  + "(xmlPath);")
+        FILE.write(" \n \t\t\t using (ZentityContext context = zenContext)")
+        FILE.write(" \n \t\t\t {")
+        #Begin for
+        FILE.write(" \n \t\t\t\t foreach ("+resource.getXMLStructure.getParentNodeName() +resource.getXMLStructure.getChildNodeName() +" p in data.Items)")
+        FILE.write(" \n \t\t\t\t {")
+        FILE.write(" \n \t\t\t\t\t //WARNING : Comparing attribute should be changed to a unique key")
+        FILE.write(' \n \t\t\t\t\t context.MetadataWorkspace.LoadFromAssembly(System.Reflection.Assembly.Load("Zentity.'+namespace+'"));')
+        if identifierProperty !=None:
             FILE.write(" \n \t\t\t\t\t var existingPres = (from pres in context.Resources")
-            FILE.write(" \n \t\t\t\t\t\t where pres."+RT.uniqueProperty.name+".Equals(p."+RT.uniqueProperty.name+", StringComparison.OrdinalIgnoreCase)")
+            FILE.write(" \n \t\t\t\t\t\t where pres."+identifierProperty.name +".Equals(p."+identifierProperty.name +", StringComparison.OrdinalIgnoreCase)")
             FILE.write(" \n \t\t\t\t\t\t select pres).FirstOrDefault();")
             FILE.write(" \n \t\t\t\t\t\t if (existingPres != null)")
             FILE.write(" \n \t\t\t\t\t\t {")
-            FILE.write(' \n \t\t\t\t\t\t\t Console.WriteLine("[WARNING] Image {0} already exists in database", p.'+RT.uniqueProperty.name+');')
+            FILE.write(' \n \t\t\t\t\t\t\t Console.WriteLine("[WARNING] Image {0} already exists in database", p.'+identifierProperty.name +');')
             FILE.write(" \n \t\t\t\t\t\t\t continue;")
             FILE.write(" \n \t\t\t\t\t\t }")
-            FILE.write(" \n \t\t\t\t\t\t // Create resources.")
-            FILE.write(" \n \t\t\t\t\t\t try")
-            FILE.write(" \n \t\t\t\t\t\t\t {")
-            #Begin resource creation
-            FILE.write(" \n \t\t\t\t\t\t\t "+RT.name+" img = new "+RT.name+" {")
-            #Begin properties values assignation
-            for SP in RT.scalarProperties:
-                FILE.write("\n \t\t\t\t\t\t\t\t "+SP.toCode("p") +",")
-            #Finish properties values assignation
-            FILE.write(" \n \t\t\t\t\t\t\t };")
+        FILE.write(" \n \t\t\t\t\t\t // Create resources.")
+        FILE.write(" \n \t\t\t\t\t\t try")
+        FILE.write(" \n \t\t\t\t\t\t\t {")
+        #Begin resource creation
+        FILE.write(" \n \t\t\t\t\t\t\t "+resource.name+" img = new "+resource.name+" {")
+        #Begin properties values assignation
+        for SP in resource.getProperties():
+            FILE.write("\n \t\t\t\t\t\t\t\t "+SP.toCode("p") +",")
+        #Finish properties values assignation
+        FILE.write(" \n \t\t\t\t\t\t\t };")
+        if resource.visual = InterfazZ_Entidad.VisualizationTypes.IMAGE:
             FILE.write(" \n \t\t\t\t\t\t\t context.AddToResources(img);")
-            FILE.write(' \n \t\t\t\t\t\t\t string[] imagesInFolder = Directory.GetFiles(imgPath, p.'+RT.imgFileProperty.name+' + ".*");')
+            FILE.write(' \n \t\t\t\t\t\t\t string[] imagesInFolder = Directory.GetFiles(imgPath, p.'+identifierProperty.name+' + ".*");')
             #Finish new entity creation
             FILE.write(" \n \t\t\t\t\t\t\t // Create a Zentity file.")
             FILE.write(" \n \t\t\t\t\t\t\t FileInfo ImageFile = new FileInfo(imagesInFolder[0]);")
@@ -193,48 +214,69 @@ class GeneradorInsercion:
             FILE.write(" \n \t\t\t\t\t\t\t //Save Changes in context")
             FILE.write(' \n \t\t\t\t\t\t\t Console.WriteLine("[INFO] Associating image {0} and file", p.'+RT.uniqueProperty.name+');')
             FILE.write(" \n \t\t\t\t\t\t\t context.SaveChanges();")
-            FILE.write(" \n \t\t\t\t\t\t\t }")
-            FILE.write(" \n \t\t\t\t\t\t\t catch{")
-            FILE.write(' \n \t\t\t\t\t\t\t\t Console.WriteLine("[ERROR] During image {0} creation", p.'+RT.uniqueProperty.name+');')
-            FILE.write(" \n \t\t\t\t\t\t\t\t continue;")
-            #Close try/catch
-            FILE.write(" \n \t\t\t\t\t\t\t }")
-            #Close foreach
-            FILE.write(" \n \t\t\t\t\t\t }")
-            FILE.write(" \n \t\t\t\t }")
-            FILE.write(" \n \t\t\t }")
-        #Begin main method
-        FILE.write(" \n \t\t static void Main(string[] args)")
-        FILE.write(" \n \t\t {")
-        FILE.write(' \n \t\t\t const string connectionString = @"provider=System.Data.SqlClient;')
-        FILE.write(" \n \t\t\t\t metadata="+join(path,'code',"Zentity."+namespace+'.ExtendedCore.csdl')+"|"+join(path,'code',"Zentity."+namespace+'.csdl')+'|'+join(path,'code',"Zentity."+namespace+'.Consolidated.msl')+"|"+join(path,'code',"Zentity."+namespace+".Consolidated.ssdl;"))
-        FILE.write(" \n \t\t\t\t provider connection string='Data Source=.;")
-        FILE.write(" \n \t\t\t\t Initial Catalog=Zentity;Integrated Security=True;MultipleActiveResultSets=True'")
-        FILE.write(' \n \t\t\t\t ";')
+        FILE.write(" \n \t\t\t\t\t\t\t }")
+        FILE.write(" \n \t\t\t\t\t\t\t catch{")
+        FILE.write(' \n \t\t\t\t\t\t\t\t Console.WriteLine("[ERROR] During image {0} creation", p.'+RT.uniqueProperty.name+');')
+        FILE.write(" \n \t\t\t\t\t\t\t\t continue;")
+        #Close try/catch
+        FILE.write(" \n \t\t\t\t\t\t\t }")
+        #Close foreach
+        FILE.write(" \n \t\t\t\t\t\t }")
+        FILE.write(" \n \t\t\t\t }")
+        FILE.write(" \n \t\t\t }")
 
-        FILE.write(" \n \t\t\t DataInsert dataUploader = new DataInsert();")
-        #Add double slash to the paths so they can be stored as strings in C#
-        FILE.write(' \n \t\t\t string imgFolderPath = "'+"\\\\".join(join(path,'images').split('\\'))+'";')
-        #Call the data insertor for each resourceType and for each ZXML file
-        FILE.write(' \n \t\t\t string ZXMLPath = "'+"\\\\".join(join(path,'ZXML').split('\\'))+'";')
-        for RT in self.DataModelModule.getResourceTypes():
-            FILE.write(' \n \t\t\t string[] '+RT.name+'ZXMLFiles = Directory.GetFiles(ZXMLPath, "'+self.estructuraXML.getPrefijoXML()+'*.*");')
-            FILE.write(" \n \t\t\t foreach (string a in "+RT.name+"ZXMLFiles)")
-            #begin foreach file
-            FILE.write(" \n \t\t\t {")
-            FILE.write(" \n \t\t\t\t ZentityContext zenContext = new ZentityContext(connectionString);")
-            FILE.write(' \n \t\t\t\t dataUploader.insertData_'+RT.name+'(zenContext, a, imgFolderPath);')
-            FILE.write(" \n \t\t\t }")
-            #begin foreach file
-        #Closes class
-        FILE.write("\n\t\t }")
-        FILE.write("\n\t }")
-        #Closes namespace
-        FILE.write("\n }")
+    def save(self,path,filename="ModelUploader.cs"):
+        if ___checkDMMParameters__():
+            namespace = self.DataModelModule.getNombre()
+            # Create a file object:
+            # in "write" mode
+            FILE = open(join(path, "code",filename),"w")
+            #Imports
+            self.writeImports(FILE)
+            #Begin namespace
+            FILE.write("namespace DataInsert\n")
+            FILE.write("{ \n \t class DataInsert \n \t { \n  ")
+            #Begin Deserialize Method
+            self.writeGeneralMethods(FILE)
+            #Begin LoadData Methods
+            for resource in self.DataModelModule.getResourceTypes():
+                loadDataMethodName = "load"+resource.getXMLStructure.getParentNodename()+"Data"
+                dataVariableName = "data"+resource.getXMLStructure.getParentNodename()
+                insertDataMethodName = "insertData_"+resource.name
+                self.writeLoadAndInsertDataCode(FILE,resource,namespace,loadDataMethodName,insertDataMethodName,dataVariableName)
 
-        FILE.close()
+            #Begin main method
+            FILE.write(" \n \t\t static void Main(string[] args)")
+            FILE.write(" \n \t\t {")
+            FILE.write(' \n \t\t\t const string connectionString = @"provider=System.Data.SqlClient;')
+            FILE.write(" \n \t\t\t\t metadata="+join(path,'code',"Zentity."+namespace+'.ExtendedCore.csdl')+"|"+join(path,'code',"Zentity."+namespace+'.csdl')+'|'+join(path,'code',"Zentity."+namespace+'.Consolidated.msl')+"|"+join(path,'code',"Zentity."+namespace+".Consolidated.ssdl;"))
+            FILE.write(" \n \t\t\t\t provider connection string='Data Source=.;")
+            FILE.write(" \n \t\t\t\t Initial Catalog=Zentity;Integrated Security=True;MultipleActiveResultSets=True'")
+            FILE.write(' \n \t\t\t\t ";')
 
+            FILE.write(" \n \t\t\t DataInsert dataUploader = new DataInsert();")
+            for resource in self.DataModelModule.getResourceTypes():
+                if resource.getVisualizationType().vType == Entidad.
+                    imagesPath = resource.getVisualizationType().path
+                    #Add double slash to the paths so they can be stored as strings in C#
+                    FILE.write(' \n \t\t\t string imgFolderPath = "'+"\\\\".join(imagesPath).split('\\'))+'";')
+                    #Call the data insertor for each resourceType and for each ZXML file
+                FILE.write(' \n \t\t\t string ZXMLPath = "'+"\\\\".join(self.DataModelModuel.getZXMLFilesStoragePath()).split('\\'))+'";')
+                FILE.write(' \n \t\t\t string[] ZXMLFiles = Directory.GetFiles(ZXMLPath, "'+resource.getXMLStructure().getFilesPrefix()+'*.*");')
+                FILE.write(" \n \t\t\t foreach (string a in ZXMLFiles)")
+                #begin foreach file
+                FILE.write(" \n \t\t\t {")
+                FILE.write(" \n \t\t\t\t ZentityContext zenContext = new ZentityContext(connectionString);")
+                FILE.write(' \n \t\t\t\t dataUploader.insertData_'+RT.name+'(zenContext, a, imgFolderPath);')
+                FILE.write(" \n \t\t\t }")
+                #begin foreach file
+                #Closes class
+                FILE.write("\n\t\t }")
+                FILE.write("\n\t }")
+                #Closes namespace
+                FILE.write("\n }")
 
+            FILE.close()
 
 class GeneradorXML:
     def __init__(self,path,ZXMLPrefix=""):

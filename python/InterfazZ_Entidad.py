@@ -1,3 +1,10 @@
+from os.path import exists,isdir
+import errno
+from os import strerror
+class Error(Exception):
+    pass
+
+
 class DataModelModule:
     def __init__(self,name,resources,codeStoragePath,zxmlFilesStoragePath):
     """Builds a DataModel Module with the ResourceTypes specified in the argument array resources
@@ -11,7 +18,11 @@ class DataModelModule:
     """
         self.name=name
         self.resourceTypes = resources
+        if codeStoragePath != None and ((not exists(codeStoragePath)) or (not isdir(codeStoratePath))):
+            raise OSError(errno.ENOENT,strerror(errno.ENOENT),codeStoragePath)
         self.codeStoragePath = codeStoragePath
+        if zxmlFilesStoragePath != None and ((not exists(zxmlFilesStoragePath)) or (not isdir(zxmlFilesStoragePath))):
+            raise OSError(errno.ENOENT,strerror(errno.ENOENT),zxmlFilesStoragePath)
         self.zxmlFilesStoragePath = zxmlStoragePath
     def __init__(self,name):
     """Builds a DataModel Module with an empty list of resource types and without codeStoragePath and zxmlFileStoragePath (this must be set manually)
@@ -42,6 +53,15 @@ class DataModelModule:
         return self.codeStoragePath
     def getZXMLFilesStoragePath(self):
         return self.zxmlFilesStoragePath
+
+    def setCodeStoragePath(self,codeStoragePath ):
+        if codeStoragePath != None and ((not exists(codeStoragePath)) or (not isdir(codeStoratePath))):
+            raise OSError(errno.ENOENT,strerror(errno.ENOENT),codeStoragePath)
+        self.codeStoragePath = codeStoragePath 
+    def setZXMLFilesStoragePath(self,zxmlFilesStoragePath):
+        if zxmlFilesStoragePath != None and ((not exists(zxmlFilesStoragePath)) or (not isdir(codeStoratePath))):
+            raise OSError(errno.ENOENT,strerror(errno.ENOENT),zxmlFilesStoragePath)
+        self.zxmlFilesStoragePath = zxmlFilesStoragePath
 
 class ResourceType:
     def __init__(self,name):
@@ -93,11 +113,31 @@ class ResourceType:
     def setVisualizationType(self,visualizationType):
         self.visual  = visualizationType
 
+    def getVisualizationType(self,visualizationType):
+        return self.visual
+
     def getProperties(self):
         return self.scalarProperties
 
-class VisualizationTypes:
+class VisualizationType:
     IMAGE,NOIMAGE = range(2)
+    def __init__(self,vType,path=""):
+    """Creates a visualization type.
+
+    Attributes:
+
+        - vType : One of VisualizationType.IMAGE or VisualizationType.NOIMAGE
+        - path : A path to a folder that contain the images (with names equal to the identifier of the Resource Type) that will be visualized
+
+    """
+        if vType=VisualizationType.IMAGE 
+            if ((not exists(path)) or (not isdir(path))):
+                raise OSError(errno.ENOENT,strerror(errno.ENOENT),path)
+            else:
+                self.path = path
+                self.vType = vType
+        else:
+            self.vType = vType
 
 class DataTypes:
 
