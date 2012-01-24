@@ -1,21 +1,29 @@
-import numpy as npimport pymfimport InterfazNMF as IN
+#T (20x20) = (20x10)(10x20)
+#V(20x20) = (20x9(9x20)
 
+import Modelado_Control as MC
+import Modelado_Entidad as ME
 
-a=np.random.rand(3,4)nmf_mdl = pymf.CNMF(a, num_bases=2, niter=10)nmf_mdl.initialization()nmf_mdl.factorize()LD=["perro","gato","arana","sapo"]H=np.matrix(nmf_mdl.H)F=np.matrix(nmf_mdl.W)W=np.matrix(nmf_mdl.G)
-CTLT=IN.crateTypeLatentTopic(1,"","",LD,H,F,W)
+modelPa = ME.CollectionParameters()
+modelPa.setDocumentListPath("../matlab/matrix/DL.mat")
+modelPa.setDocumentListVariableName("DL")
+modelPa.setTextualFeaturesPath("../matlab/matrix/TF.mat")
+modelPa.setTextualFeaturesVariableName("TF")
+modelPa.setTermDocumentMatrixPath("../matlab/matrix/TD.mat")
+modelPa.setTermDocumentMatrixVariableName("TD")
+modelPa.setDocumentsPath("./documentsFolder/")
+modelPa.setTextualFPath("../matlab/matrix/Ft.mat")
+modelPa.setTextualFVariableName("Ft")
+modelPa.setTextualHPath("../matlab/matrix/Ht.mat")
+modelPa.setTextualHVariableName("Ht")
+modelPa.setTextualVisualFPath("../matlab/matrix/FVt.mat")
+modelPa.setTextualVisualFVariableName("FVt")
+modelPa.setVisualFPath("../matlab/matrix/Fv.mat")
+modelPa.setVisualFVariableName("Fv")
+modelPa.setVisualHPath("../matlab/matrix/Hv.mat")
+modelPa.setVisualHVariableName("Hv")
+modelPa.setVisualTextualFPath("../matlab/matrix/FTv.mat")
+modelPa.setVisualTextualFVariableName("FTv")
 
-CLT=CTLT.getControlArrayLatentTopics()
-
-LS=CTLT.getLatentTopicsForImg("perro")
-print LS[0].getBelongingDegree("perro")
-print LS[1].getBelongingDegree("perro")
-
-lss=CTLT.getMostImportantLatentTopicForImg("perro")
-print lss.getBelongingDegree("perro")
-
-
-CCLT=CTLT.copyControlArrayLatentTopics()
-
-
-
-
+cC = MC.ControlCollection()
+cC.beginCollection(modelPa)

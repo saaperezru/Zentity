@@ -69,7 +69,12 @@ class ControlTypeLatentTopic:
             if not self.correctClass(W2):
                 print "Error-class"
                 return None
-
+        
+        if(LD.shape[0] < LD.shape[1]):
+            LD = np.transpose(LD)
+        if(LD.shape[1] != 1):
+            print "Document List is not a vector"
+            return None
         #Review the dimensions of each matrix.
         if not self.correctDimensions(LD, H, F1, W1, F2, W2):
             print "Error-shape"
@@ -84,16 +89,16 @@ class ControlTypeLatentTopic:
             belongingVector = self.normalize(H[i]).tolist()[0]
             representativeWords = np.transpose(F1)[i].tolist()[0]
             sortedIndexRepresentativeWords = self.sortVector(np.transpose(F1)[i]).tolist()[0].reverse()
-            if W1!= None
+            if W1!= None:
                 representativeDocuments = np.transpose(W1)[i].tolist()[0] 
                 sortedIndexRepresentativeDocuments = self.sortVector(np.transpose(W1)[i]).tolist()[0].reverse()
             else:
                 W1S = None
-            if F2!=None
+            if F2!=None:
                 F2S = self.sortVector(np.transpose(F2)[i]).tolist()[0]
             else:
                 F2S = None
-            if W2!=None
+            if W2!=None:
                 W2S = self.sortVector(np.transpose(W2)[i]).tolist()[0]
             else:
                 W2S = None    
@@ -109,28 +114,28 @@ class ControlTypeLatentTopic:
         """
         mi = min(H.shape[0],F1.shape[1])
         ma = max(H.shape[0],F1.shape[1])
-        if(W1!=None)
+        if(W1!=None):
             mi = min(mi,W1.shape[1])
             ma = max(ma,W1.shape[1])
-        if(F2!=None)
+        if(F2!=None):
             mi = min(mi,F2.shape[1])
             ma = max(ma,F2.shape[1])
-        if(W2!=None)
+        if(W2!=None):
             mi = min(mi,W2.shape[1])
             ma = max(ma,W2.shape[1])
-        if(mi!=ma)
-            return false
+        if(mi!=ma):
+            return False
         mi = min(H.shape[1],LD.shape[0])
         ma = max(H.shape[1],LD.shape[0])
-        if(W1!=None)
+        if(W1!=None):
             mi = min(mi,W1.shape[0])
             ma = max(ma,W1.shape[0])
-        if(W2!=None)
+        if(W2!=None):
             mi = min(mi,W2.shape[0])
             ma = max(ma,W2.shape[0])
-        if(mi!=ma)
-            return false
-        return true
+        if(mi!=ma):
+            return False
+        return True
 
     
     

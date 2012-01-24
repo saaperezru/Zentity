@@ -30,11 +30,12 @@ class Documents:
 
 class Collection:
      
-    def __init__(self, documents, selectedTextualLatentTopics, selectedVisualLatentTopics, textualFeatures,modelName, documentsPath):
+    def __init__(self, documents, selectedTextualLatentTopics, selectedVisualLatentTopics, textualFeatures, termDocumentMatrix, modelName, documentsPath):
         self.__documents = documents
         self.__selectedTextualLatentTopics = selectedTextualLatentTopics
         self.__selectedVisualLatentTopics = selectedVisualLatentTopics
-        self.__textualFeatures = textualFeatures 
+        self.__textualFeatures = textualFeatures
+        self.__termDocumentMatrix = termDocumentMatrix 
         self.__modelName = modelName
         self.__documentsPath = documentsPath   
     
@@ -55,6 +56,10 @@ class Collection:
         """ Returns the textual words used.
         """
         return self.__textualFeatures
+    def getTermDocumentMatrix(self):
+        """ Returns the term vs  Document matrix.
+        """
+        return self.__termDocumentMatrix
     def getModelName(self):
         """ Returns the model name.
         """
