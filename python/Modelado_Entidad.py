@@ -1,3 +1,9 @@
+
+import scipy.io as sio
+from numpy import *
+from os.path import join
+from ChargeXML import chargeXML
+
 class Documents:
      
     def __init__(self, id, tags, selected):
@@ -267,28 +273,7 @@ class CollectionParameters:
 
 
 
-#old version
-
-import scipy.io as sio
-from numpy import *
-from os.path import join
-from os.path import join
-from ChargeXML import chargeXML
-
-
-class Matriz:
-    def __init__(self,identifiacodresFilas,identificadoresColumnas,cuerpo):
-        self.filas = {}
-        for i in range (len(identifiacodresFilas)):
-            self.filas[str(identifiacodresFilas[i])]=i
-        self.columnas = {}
-        for i in range (len(identificadoresColumnas)):
-            self.columnas[str(identificadoresColumnas[i])]=i
-        self.cuerpo=cuerpo
-    def getFC(self,fila,columna):
-        return self.cuerpo[self.filas[fila],self.columnas[columna]]
-    def getCF(self,columna,fila):
-        return self.cuerpo[self.filas[fila],self.columnas[columna]]
+###Begin Extractors Section
 
 
 class DescriptionExtractor:
