@@ -357,14 +357,14 @@ class ControlLatentTopic:
     def getLatantTopicName(self):
         """ Change the LatentTopic name.
         """
-        return self.__latentTopic.getId()
+        return self.__latentTopic.getName()
 
 
 
     def getLatantTopicId(self):
         """ Change the LatentTopic name.
         """
-        return self.__latentTopic.getName()
+        return self.__latentTopic.getId()
 
 
 

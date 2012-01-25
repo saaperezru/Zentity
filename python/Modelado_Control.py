@@ -83,8 +83,14 @@ class ControlNMF:
     def mostImportantLatentTopic(self,id):
         return self.__controlLatentTopics.getLatentTopicsForImg(id)[0]
     
-    def images(self):
-        pass
+    def images(self,controlLatentTopic,tam):
+        """Retorn top <tam> most important string array for the given laten topic.
+        """
+        importatNames = controlLatentTopic.getDocumentResume()
+        images = []
+        for i in xrange(0,tam)
+            images.append(self.__controlCollection.__collection.get[importatNames[i]])
+        return images   
     
     def names(self,controlLatentTopic,tam):
         """Retorn top <tam> most important string array for the given laten topic.
@@ -93,7 +99,7 @@ class ControlNMF:
         importatNames = controlLatentTopic.getModalResume()
         name = []
         for i in xrange(0,tam)
-            name.append(self.__controlCollection.__collection.getTextualFeatures[importatNames[i]])
+            name.append(self.__controlCollection.__collection.getDocuments([importatNames[i]])
         return name
         
 class ControlZentity:
