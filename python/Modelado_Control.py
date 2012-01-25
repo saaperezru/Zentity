@@ -32,7 +32,7 @@ class ControlCollection:
             textualVisualF = ControlMatrix.InstanceMatrix(colectionParameters.getTextualVisualFPath(), colectionParameters.getTextualVisualFVariableName())
             self.__controlNMFTextual = ControlNMF(self,textualF,textualH, textualVisualF, documentList, 1, "Textual", "Tex")
 
-	    visualF = ControlMatrix.InstanceMatrix(colectionParameters.getVisualFPath(), colectionParameters.getVisualFVariableName())
+	        visualF = ControlMatrix.InstanceMatrix(colectionParameters.getVisualFPath(), colectionParameters.getVisualFVariableName())
             visualH = ControlMatrix.InstanceMatrix(colectionParameters.getVisualHPath(), colectionParameters.getVisualHVariableName())
             visualTextualF = ControlMatrix.InstanceMatrix(colectionParameters.getVisualTextualFPath(), colectionParameters.getVisualTextualFVariableName())
             self.__controlNMFVisual = ControlNMF(self, visualF, visualH, visualTextualF, documentList, 2, "Visual", "Vis")
@@ -78,15 +78,25 @@ class ControlNMF:
         if (self.__controlLatentTopics == None):
             raise Exception()
         
+    def mostImportantLatentTopic(self,id):
+        return self.__controlLatentTopics.getLatentTopicsForImg(id)[0]
+    
     def images(self):
         pass
     
-    def names(self):
-        pass
+    def names(self,controlLatentTopic,tam):
+        """Retorn top <tam> most important string array for the given laten topic.
+            
+        """
+        importatNames = controlLatentTopic.getModalResume()
+        name = []
+        for i in xrange(0,tam)
+            name.append(self.__controlCollection.__collection.getTextualFeatures[importatNames[i]])
+        return name
         
 class ControlZentity:
     
-    def __init__(self,DMMName,RTName,Control,topWords,LTNameTop,codeStoragePath,zxmlFilesPath,xmlInfoPath):
+    def __init__(self,DMMName,RTName,Control,topWords,LTNameTop,codeStoragePath,zxmlFilesPath,xmlInfoPath,LatentTopicsNameSize = 5):
         """Builds an interface to communicate with InterfazZ to create a model with the detected LatentTopics
         
         Attributes:
@@ -115,18 +125,25 @@ class ControlZentity:
         #Some basic SPs
         titleExtractor = Extractors.TitleExtractor(xmlInfoPath)
         RT1.addProperty(ZEntidad.ScalarProperty("Title",ZEntidad.DataTYpes.STRING,titleExtractor,False,True))
-        descriptionExtractor = Extractors.DescriptionExtractor()
+        descriptionExtractor = Extractors.DescriptionExtractor(xmlInfoPath)
         RT1.addProperty(ZEntidad.ScalarProperty("Description",ZEntidad.DataTYpes.STRING,descriptionExtractor,False,True))
-        mainCategoryExtractor = Extractors.MainCategoryExtractor() 
-        RT1.addProperty(ZEntidad.ScalarProperty("Main_Category",ZEntidad.DataTYpes.STRING,mainCategoryExtractor))
+        #A main textual category extractor
+        mainTextualCategoryExtractor = Extractors.MainCategoryExtractor(Control.__controlNMFTextual) 
+        RT1.addProperty(ZEntidad.ScalarProperty("Main_Textual_Category",ZEntidad.DataTYpes.STRING,mainTextualCategoryExtractor))
+        #A main visual category extractor
+        mainVisualCategoryExtractor = Extractors.MainCategoryExtractor(Control.__controlNMFVisual) 
+        RT1.addProperty(ZEntidad.ScalarProperty("Main_Visual_Category",ZEntidad.DataTYpes.STRING,mainVisualCategoryExtractor))
         #There is one SP for each Textual LatentTopic 
-        for LT in Control.
+        
+        for LT in Control.__controlNMFVisual.getControlArrayLatentTopics():
+            LTExtractor = Extractors.LatentTopicExtractor(LT)
+            RT1.addProperty("_".join(ZEntidad.ScalarProperty("LTT_"+Control.__controlNMFVisual.names(LT,LatentTopicsNameSize))),ZEntidad.DataTypes.STRING,LTExtractor)
         #There is one SP for each Visual LatentTopic 
         
         #There is one SP for each ImportantTag
         for tag in self.detectMostImportantTextualWords(topWords,LTNameTop):
-            tagExtractor = Entidad.TagExtractor(tag,)
-            RT1.addProperty(ZEntidad.ScalarProperty("Tag_"+tag,ZEntidad.DataTYpes.STRING,tagExtractor,False,True))
+            tagExtractor = Extractors.TagExtractor(tag,)
+            RT1.addProperty(ZEntidad.ScalarProperty("Tag_"+tag,ZEntidad.DataTypes.STRING,tagExtractor))
         #Finally lets generate the Code Generator
         self.Gen = Control.CodeGenerator(DMM,self.codeStoragePath)
         

@@ -218,14 +218,6 @@ class ControlTypeLatentTopic:
         """
         return max(self.__arrayControlLatentTopics, key=lambda ControlLatentTopic: ControlLatentTopic.getBelongingDegree(identificador))
 
-    
-
-    def copyControlArrayLatentTopics(self):
-        """ Return a copy of the list of ControlLatenTopics.
-        """
-        copy=self.__arrayControlLatentTopics[:]
-        return copy
-
 
 
     def getControlArrayLatentTopics(self):
@@ -335,8 +327,7 @@ class ControlLatentTopic:
 
 
     def getModalResume(self, type=True):
-        """
-        return a sorted index list of the array representativeWords or resumeWords.
+        """Return a sorted index list of the array representativeWords or resumeWords.
         """
         if type:
             return self.__latentTopic.getSortedIndexRepresentativeWords()
