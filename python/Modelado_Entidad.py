@@ -1,6 +1,6 @@
 from numpy import *
 
-class Documents:
+class Document:
      
     def __init__(self, id, tags, selected):
         self.__id = id
@@ -38,7 +38,6 @@ class Collection:
         self.__selectedVisualLatentTopics = selectedVisualLatentTopics
         self.__textualFeatures = textualFeatures
         self.__termDocumentMatrix = termDocumentMatrix 
-        self.__modelName = modelName
         self.__documentsPath = documentsPath   
     
     #Getters for each attributes
@@ -62,10 +61,6 @@ class Collection:
         """ Returns the term vs  Document matrix.
         """
         return self.__termDocumentMatrix
-    def getModelName(self):
-        """ Returns the model name.
-        """
-        return self.__modelName
     def getDocumentsPath(self):
         """ Returns the images path in string format.
         """
@@ -73,10 +68,6 @@ class Collection:
     
    
     #set method for the only attribute that can change.
-    def setModelName(self, modelName):
-        """ Save modelName variable.
-        """
-        self.__modelName = modelName
     def setSelectedTextualLatentTopics(self, selectedTextualLatentTopics):
         """ Save selectedTextualLatentTopics variable.
         """
