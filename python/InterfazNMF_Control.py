@@ -1,6 +1,5 @@
 import numpy as np
 from pylab import *
-from scipy import mgrid
 from InterfazNMF_Model import LatentTopic
 from InterfazNMF_Model import TypeLatentTopic
 
@@ -82,27 +81,35 @@ class ControlTypeLatentTopic:
 
         #Attributes initialization.  
         self.__arrayControlLatentTopics=[]
-        self.__typeLatentTopic=TypeLatentTopic(id, name, abreviature, self.createDictionary(LD))
+        LLD =[]
+	for i in  LD.tolist():
+	    LLD.append(i[0][0])
+	self.__typeLatentTopic=TypeLatentTopic(id, name, abreviature, self.createDictionary(LLD))
 
-	    #ControlLatentTopics creation.
+	#ControlLatentTopics creation.
         for i in xrange(H.shape[0]):
-            belongingVector = self.normalize(H[i]).tolist()[0]
-            representativeWords = np.transpose(F1)[i].tolist()[0]
-            sortedIndexRepresentativeWords = self.sortVector(np.transpose(F1)[i]).tolist()[0].reverse()
+            belongingVector = self.normalize(H[i]).tolist()
+            representativeWords = np.transpose(F1)[i].tolist()
+            sortedIndexRepresentativeWords = self.sortVector(np.transpose(F1)[i]).tolist().reverse()
             if W1!= None:
-                representativeDocuments = np.transpose(W1)[i].tolist()[0] 
-                sortedIndexRepresentativeDocuments = self.sortVector(np.transpose(W1)[i]).tolist()[0].reverse()
+                representativeDocuments = np.transpose(W1)[i].tolist()
+                sortedIndexRepresentativeDocuments = self.sortVector(np.transpose(W1)[i]).tolist().reverse()
             else:
-                W1S = None
+                representativeDocuments = None
+                sortedIndexRepresentativeDocuments = None
             if F2!=None:
-                F2S = self.sortVector(np.transpose(F2)[i]).tolist()[0]
+                resumeWords = np.transpose(F2)[i].tolist()
+                sortedIndexResumeWords = self.sortVector(np.transpose(F2)[i]).tolist().reverse()
             else:
-                F2S = None
+                resumeWords = None
+                sortedIndexResumeWords = None
             if W2!=None:
-                W2S = self.sortVector(np.transpose(W2)[i]).tolist()[0]
+                resumeDocuments = np.transpose(W2)[i].tolist()
+                sortedIndexResumeDocuments = self.sortVector(np.transpose(W2)[i]).tolist().reverse()
             else:
-                W2S = None    
-            CLT=ControlLatentTopic(i, belongingVector, representativeWords, sortedIndexRepresentativeWords, representativeDocuments, sortedIndexRepresentativeDocuments,np.transpose(F2)[i].tolist()[0], F2S.reverse(),np.transpose(W2)[i].tolist()[0], W2S.reverse(), self)
+                resumeDocuments = None
+                sortedIndexResumeDocuments = None   
+            CLT=ControlLatentTopic(i, belongingVector, representativeWords, sortedIndexRepresentativeWords, representativeDocuments, sortedIndexRepresentativeDocuments, resumeWords, sortedIndexResumeWords, resumeDocuments, sortedIndexResumeDocuments, self)
             self.__arrayControlLatentTopics.append(CLT)
                 
 
@@ -185,7 +192,7 @@ class ControlTypeLatentTopic:
             Where the key is LD[i] and the object is the number i, which is the id-column of the 
             ith document of the representation matrix.   
         """
-        x=range(LD.shape[0])
+        x=range(len(LD))
         return  dict(zip(LD, x))
 
     

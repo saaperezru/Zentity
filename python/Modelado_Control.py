@@ -1,4 +1,6 @@
-import Modelado_Entidad_ExtractorsRenata as Extractors
+#import Modelado_Entidad_ExtractorsRenata as Extractors
+import numpy as np
+import scipy.io as sio
 import InterfazNMF_Control as INMFC
 import InterfazZ_Entidad as ZEntidad
 import InterfazZ_Control as ZControl
@@ -9,7 +11,7 @@ class ControlMatrix:
 
     @staticmethod
     def InstanceMatrix(path,name):
-        return array(sio.loadmat(path)[name])
+        return np.array(sio.loadmat(path)[name])
         
 class ControlCollection:
     
@@ -19,33 +21,49 @@ class ControlCollection:
         self.__controlNMFVisual = None
         self.__collection = None
     
-    def beginCollection(self,colectionParameters):
-        #try:
-        self.__controlZentity = None
+    def __init__(self,colectionParameters):
+        try:
+            self.__controlZentity = None
         
-        #Latent Topics creation
-        documentList = ControlMatrix.InstanceMatrix(colectionParameters.getDocumentListPath(), colectionParameters.getDocumentListVariableName())
-        textualF = ControlMatrix.InstanceMatrix(colectionParameters.getTextualFPath(), colectionParameters.getTextualFVariableName()) 
-        textualH = ControlMatrix.InstanceMatrix(colectionParameters.getTextualHPath(), colectionParameters.getTextualHVariableName())
-        textualVisualF = ControlMatrix.InstanceMatrix(colectionParameters.getTextualVisualFPath(), colectionParameters.getTextualVisualFVariableName())
-        self.__controlNMFTextual = ControlNMF(self,textualF,textualH, textualVisualF, documentList, 1, "Textual", "Tex")
+            #Latent Topics creation
+            documentList = ControlMatrix.InstanceMatrix(colectionParameters.getDocumentListPath(), colectionParameters.getDocumentListVariableName())
+            textualF = ControlMatrix.InstanceMatrix(colectionParameters.getTextualFPath(), colectionParameters.getTextualFVariableName()) 
+            textualH = ControlMatrix.InstanceMatrix(colectionParameters.getTextualHPath(), colectionParameters.getTextualHVariableName())
+            textualVisualF = ControlMatrix.InstanceMatrix(colectionParameters.getTextualVisualFPath(), colectionParameters.getTextualVisualFVariableName())
+            self.__controlNMFTextual = ControlNMF(self,textualF,textualH, textualVisualF, documentList, 1, "Textual", "Tex")
+
+	    visualF = ControlMatrix.InstanceMatrix(colectionParameters.getVisualFPath(), colectionParameters.getVisualFVariableName())
+            visualH = ControlMatrix.InstanceMatrix(colectionParameters.getVisualHPath(), colectionParameters.getVisualHVariableName())
+            visualTextualF = ControlMatrix.InstanceMatrix(colectionParameters.getVisualTextualFPath(), colectionParameters.getVisualTextualFVariableName())
+            self.__controlNMFVisual = ControlNMF(self, visualF, visualH, visualTextualF, documentList, 2, "Visual", "Vis")
+
+            #Collection creation
+            textualFeatures = ControlMatrix.InstanceMatrix(colectionParameters.getTextualFeaturesPath(), colectionParameters.getTextualFeaturesVariableName())
+            tF=[]
+            for i in  textualFeatures.tolist():
+	        tF.append(i[0][0])
+            termDocumentMatrix = ControlMatrix.InstanceMatrix(colectionParameters.getTermDocumentMatrixPath(), colectionParameters.getTermDocumentMatrixVariableName())
+            documents = []
+            k = 0
+            if documentList.shape[0] == 1:
+                documentList = np.transpose(documentList)
+            for i in documentList.tolist():
+                tags = []
+                for j in xrange(0, textualFeatures.shape[0]):
+                    if(termDocumentMatrix[j,k]==1):
+                        tags.add(tf[j])
+                documents.append(Entidad.Document(i[0][0],tags,True))
+                k = k + 1
+            self.__collection = Entidad.Collection(documents, range(0,textualF.shape[1]), range(0,visualF.shape[1]), tF, termDocumentMatrix, None, colectionParameters.getDocumentsPath())
+        except:
+            print "Error-creation"
         
-            
-        return True
-        #except:
-            #self.__controlZentity = None
-            #self.__controlNMFTextual = None
-            #self.__controlNMFVisual = None
-            #self.__collection = None
-            #print "Error-creation"
-            #return False
-        
-    def imageInfo():
+    def imageInfo(self):
         if(self.__collection == None):
             return None
         else:
             return (self.__collection.getDocuments(),self.__collection.getDocumentsPath())
-    def latentTopicsInfo():
+    def latentTopicsInfo(self):
         if(self.__collection == None or self.__controlNMFTextual == None):
             return None
         else:
