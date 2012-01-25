@@ -65,9 +65,9 @@ class LatentTopic:
         self.__sortedIndexRepresentativeWords = sortedIndexRepresentativeWords
         self.__representativeDocuments = representativeDocuments
         self.__sortedIndexRepresentativeDocuments = sortedIndexRepresentativeDocuments
-	    self.__resumeWords = resumeWords
+	self.__resumeWords = resumeWords
         self.__sortedIndexResumeWords = sortedIndexResumeWords
-	    self.__resumeDocuments = resumeDocuments
+	self.__resumeDocuments = resumeDocuments
         self.__sortedIndexResumeDocuments = sortedIndexResumeDocuments
         
     
