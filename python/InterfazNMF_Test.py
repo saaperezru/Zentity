@@ -26,7 +26,4 @@ modelPa.setVisualTextualFPath("../matlab/matrix/FTv.mat")
 modelPa.setVisualTextualFVariableName("FTv")
 
 cC = MC.ControlCollection (modelPa)
-img = cC.imageInfo()
-print img[0]
-print img[1]
 

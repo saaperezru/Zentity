@@ -18,7 +18,6 @@ class ControlCollection:
 
     def __init__(self,colectionParameters):
         try:
-            self.__controlZentity = None
         
             #Latent Topics creation
             documentList = ControlMatrix.InstanceMatrix(colectionParameters.getDocumentListPath(), colectionParameters.getDocumentListVariableName())
@@ -27,7 +26,7 @@ class ControlCollection:
             textualVisualF = ControlMatrix.InstanceMatrix(colectionParameters.getTextualVisualFPath(), colectionParameters.getTextualVisualFVariableName())
             self.__controlNMFTextual = ControlNMF(self,textualF,textualH, textualVisualF, documentList, 1, "Textual", "Tex")
 
-	        visualF = ControlMatrix.InstanceMatrix(colectionParameters.getVisualFPath(), colectionParameters.getVisualFVariableName())
+	    visualF = ControlMatrix.InstanceMatrix(colectionParameters.getVisualFPath(), colectionParameters.getVisualFVariableName())
             visualH = ControlMatrix.InstanceMatrix(colectionParameters.getVisualHPath(), colectionParameters.getVisualHVariableName())
             visualTextualF = ControlMatrix.InstanceMatrix(colectionParameters.getVisualTextualFPath(), colectionParameters.getVisualTextualFVariableName())
             self.__controlNMFVisual = ControlNMF(self, visualF, visualH, visualTextualF, documentList, 2, "Visual", "Vis")
@@ -65,7 +64,7 @@ class ControlCollection:
             #FALTA
             return (self.__collection.getTextualFeatures(),self.__collection.getDocuments(),self.__collection.getDocumentsPath())
     def getDocument(self,idm):
-        """Returns the document instance 
+        """Returns the document instance """
         if(self.__collection == None):
             return None
         else:
@@ -84,24 +83,23 @@ class ControlNMF:
         return self.__controlLatentTopics.getLatentTopicsForImg(id)[0]
     
     def images(self,controlLatentTopic,tam):
-        """Retorn top <tam> most important string array for the given laten topic.
-        """
+        """Return top <tam> most important string array for the given laten topic."""
         importatNames = controlLatentTopic.getDocumentResume()
         images = []
-        for i in xrange(0,tam)
+        for i in xrange(0,tam):
             images.append(self.__controlCollection.__collection.get[importatNames[i]])
         return images   
     
     def names(self,controlLatentTopic,tam):
         """Retorn top <tam> most important string array for the given laten topic.
-            
         """
         importatNames = controlLatentTopic.getModalResume()
         name = []
-        for i in xrange(0,tam)
-            name.append(self.__controlCollection.__collection.getDocuments([importatNames[i]])
+        for i in xrange(0,tam):
+            name.append(self.__controlCollection.__collection.getDocuments([importatNames[i]]))
         return name
-        
+
+
 class ControlZentity:
     
     def __init__(self,DMMName,RTName,Control,topWords,LTNameTop,codeStoragePath,zxmlFilesPath,xmlInfoPath,LatentTopicsNameSize = 5):
@@ -116,6 +114,7 @@ class ControlZentity:
         """
         self.codeStoragePath = codeStoragePath
         self.zxmlDirectory = zxmlFilesPath
+        self.importantTags = set()
         #Lets create the DMM
         self.DMM = ZEntidad.DataModelModule(DMMName)
         #And the only RT we will need
@@ -126,7 +125,8 @@ class ControlZentity:
         RT1.setVisualizationType(Entidad.VisualizationType(Entidad.VisualizationType.IMAGE,Control.collection.getImagesPath()))
         #And all documents as instances of this DMM
         for doc in Control.collection.getDocuments():
-            RT1.addInstance(doc.id)
+            if doc.getSelected():
+                RT1.addInstance(doc.id)
         #Finally we add this Resource Type to the DMM Model
         DMM.addResourceType(RT1)
         #Now add al  the Scalar Properties to this RT1
@@ -141,12 +141,20 @@ class ControlZentity:
         #A main visual category extractor
         mainVisualCategoryExtractor = Extractors.MainCategoryExtractor(Control.__controlNMFVisual) 
         RT1.addProperty(ZEntidad.ScalarProperty("Main_Visual_Category",ZEntidad.DataTYpes.STRING,mainVisualCategoryExtractor))
-        #There is one SP for each Textual LatentTopic 
+        #There is one SP for each Visual LatentTopic 
         
         for LT in Control.__controlNMFVisual.getControlArrayLatentTopics():
             LTExtractor = Extractors.LatentTopicExtractor(LT)
-            RT1.addProperty("_".join(ZEntidad.ScalarProperty("LTT_"+Control.__controlNMFVisual.names(LT,LatentTopicsNameSize))),ZEntidad.DataTypes.STRING,LTExtractor)
-        #There is one SP for each Visual LatentTopic 
+            LTName = Control.__controlNMFVisual.names(LT,LatentTopicsNameSize)
+            LTName.insert(0,"LTT")
+            RT1.addProperty("_".join(ZEntidad.ScalarProperty(LTName)),ZEntidad.DataTypes.STRING,LTExtractor)
+        #There is one SP for each Textual LatentTopic 
+
+        for LT in Control.__controlNMFTextual.getControlArrayLatentTopics():
+            LTExtractor = Extractors.LatentTopicExtractor(LT)
+            LTName = Control.__controlNMFTextual.names(LT,LatentTopicsNameSize)
+            LTName.insert(0,"LTV")
+            RT1.addProperty("_".join(ZEntidad.ScalarProperty(LTName)),ZEntidad.DataTypes.STRING,LTExtractor)
         
         #There is one SP for each ImportantTag
         for tag in self.detectMostImportantTextualWords(topWords,LTNameTop):
