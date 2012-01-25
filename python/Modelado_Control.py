@@ -1,10 +1,10 @@
+import Modelado_Entidad_ExtractorsRenata as Extractors
 from Modelo_Entidad import *
-import InterfazNMF
 import InterfazNMF_Control as IC
 import InterfazZ_Entidad as ZEntidad
 import InterfazZ_Control as ZControl
 import Modelado_Entidad as Entidad
-class ControlMatrix
+class ControlMatrix:
 
     @staticmethod
     def InstanceMatrix(path,name):
@@ -92,12 +92,12 @@ class ControlZentity:
         DMM.addResourceType(RT1)
         #Now add al  the Scalar Properties to this RT1
         #Some basic SPs
-        titleExtractor = 
-        RT1.addProperty(ZEntidad.ScalarProperty("Title",ZEntidad.DataTYpes.STRING,titleExtractor,False,True)
-        descriptionExtractor =
-        RT1.addProperty(ZEntidad.ScalarProperty("Description",ZEntidad.DataTYpes.STRING,descriptionExtractor,False,True)
-        mainCategoryExtractor = 
-        RT1.addProperty(ZEntidad.ScalarProperty("Main_Category",ZEntidad.DataTYpes.STRING,mainCategoryExtractor)
+        titleExtractor = Extractors.TitleExtractor()
+        RT1.addProperty(ZEntidad.ScalarProperty("Title",ZEntidad.DataTYpes.STRING,titleExtractor,False,True))
+        descriptionExtractor = Extractors.DescriptionExtractor()
+        RT1.addProperty(ZEntidad.ScalarProperty("Description",ZEntidad.DataTYpes.STRING,descriptionExtractor,False,True))
+        mainCategoryExtractor = Extractors.MainCategoryExtractor() 
+        RT1.addProperty(ZEntidad.ScalarProperty("Main_Category",ZEntidad.DataTYpes.STRING,mainCategoryExtractor))
         #There is one SP for each Textual LatentTopic 
         
         #There is one SP for each Visual LatentTopic 
@@ -106,7 +106,7 @@ class ControlZentity:
         for tag in self.detectMostImportantTextualWords(topWords,LTNameTop):
             #
             tagExtractor = Entidad.TagExtractor(tag,)
-            RT1.addProperty(ZEntidad.ScalarProperty("Tag_"+tag,ZEntidad.DataTYpes.STRING,tagExtractor,False,True)
+            RT1.addProperty(ZEntidad.ScalarProperty("Tag_"+tag,ZEntidad.DataTYpes.STRING,tagExtractor,False,True))
         #Finally lets generate the Code Generator
         self.Gen = Control.CodeGenerator(DMM,self.codeStoragePath)
         
@@ -119,7 +119,6 @@ class ControlZentity:
         self.Gen.saveInsertionCode(self.zxmlDirectory)
         
     def generateZXMLFiles():
-        zxmlDirectory = "/home/tuareg/Documents/Work/Zentity/scripts/"
         ZXML = Control.ZXMLGenerator(self.DMM,self.zxmlDirectory)
         ZXML.save()
         
