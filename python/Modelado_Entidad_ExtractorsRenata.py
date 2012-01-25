@@ -1,5 +1,6 @@
 from ChargeXML import chargeXML
 from os.path import join
+from Modelado_Exception import *
 class DescriptionExtractor:
     def __init__(self,path):
         self.path = path
@@ -45,10 +46,10 @@ class TitleExtractor:
     
     def extract(self,idm):
         try:
-            tree = chargeXML(join(self.path,'xml',str(idm)+'.txt'))
+            tree = chargeXML(join(self.path,str(idm)+'.txt'))
             for f in tree.findall("field"):
                 if (f.get("name")=="nombre"):
                     return f.text.split('.')[0]
         except:
-            print "[ERROR] Extraction of " + str(idm) + " title failed."
+            raise(ErrorModelado("[ERROR] Extraction of " + str(idm) + " title failed."))
         return "No title"

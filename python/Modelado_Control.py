@@ -68,13 +68,15 @@ class ControlNMF:
         
 class ControlZentity:
     
-    def __init__(self,DMMName,RTName,Control,topWords,LTNameTop,codeStoragePath,zxmlFilesPath):
+    def __init__(self,DMMName,RTName,Control,topWords,LTNameTop,codeStoragePath,zxmlFilesPath,xmlInfoPath):
         """Builds an interface to communicate with InterfazZ to create a model with the detected LatentTopics
         
         Attributes:
         
             - DMMName -- Name for the Data Model Module, it must be unique among the names of DMMs present in the Zentity instance
             - RTName -- Name for the Resource Type that will shelter all the images in the collection. NOTE: It must be unque among all the Resource TYpes in all the Data Model Modules in the Zentity instance that will be used
+            - Conrtol -- An instance of the ControlCollection that creates this ControlZentity
+            - xmlInfoPath
         """
         self.codeStoragePath = codeStoragePath
         self.zxmlDirectory = zxmlFilesPath
@@ -93,19 +95,18 @@ class ControlZentity:
         DMM.addResourceType(RT1)
         #Now add al  the Scalar Properties to this RT1
         #Some basic SPs
-        titleExtractor = Extractors.TitleExtractor()
+        titleExtractor = Extractors.TitleExtractor(xmlInfoPath)
         RT1.addProperty(ZEntidad.ScalarProperty("Title",ZEntidad.DataTYpes.STRING,titleExtractor,False,True))
         descriptionExtractor = Extractors.DescriptionExtractor()
         RT1.addProperty(ZEntidad.ScalarProperty("Description",ZEntidad.DataTYpes.STRING,descriptionExtractor,False,True))
         mainCategoryExtractor = Extractors.MainCategoryExtractor() 
         RT1.addProperty(ZEntidad.ScalarProperty("Main_Category",ZEntidad.DataTYpes.STRING,mainCategoryExtractor))
         #There is one SP for each Textual LatentTopic 
-        
+        for LT in Control.
         #There is one SP for each Visual LatentTopic 
         
         #There is one SP for each ImportantTag
         for tag in self.detectMostImportantTextualWords(topWords,LTNameTop):
-            #
             tagExtractor = Entidad.TagExtractor(tag,)
             RT1.addProperty(ZEntidad.ScalarProperty("Tag_"+tag,ZEntidad.DataTYpes.STRING,tagExtractor,False,True))
         #Finally lets generate the Code Generator
