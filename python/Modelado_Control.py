@@ -4,7 +4,8 @@ import InterfazNMF_Control as IC
 import InterfazZ_Entidad as ZEntidad
 import InterfazZ_Control as ZControl
 import Modelado_Entidad as Entidad
-class ControlMatrix
+
+class ControlMatrix:
 
     @staticmethod
     def InstanceMatrix(path,name):
