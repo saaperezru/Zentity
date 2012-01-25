@@ -48,11 +48,12 @@ class LatentTopicExtractor:
 
 
 class TagExtractor:
-    def __init__(self,tagValue,Xt):
+    def __init__(self,tagValue,controlCollection):
         self.tagValue = tagValue
-        self.Xt=Xt
+        self.Control = controlCollection
+        
     def extract(self,idm):
-        if self.Xt.getFC(idm,self.tagValue):
+        if self.tagValue in self.Control.getDocument(idm).getTags():
             return "True"
         return "False"
         

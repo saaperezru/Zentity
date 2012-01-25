@@ -15,12 +15,7 @@ class ControlMatrix:
         
 class ControlCollection:
     
-    def __init__(self):
-        self.__controlZentity = None
-        self.__controlNMFTextual = None
-        self.__controlNMFVisual = None
-        self.__collection = None
-    
+
     def __init__(self,colectionParameters):
         try:
             self.__controlZentity = None
@@ -69,6 +64,13 @@ class ControlCollection:
         else:
             #FALTA
             return (self.__collection.getTextualFeatures(),self.__collection.getDocuments(),self.__collection.getDocumentsPath())
+    def getDocument(self,idm):
+        """Returns the document instance 
+        if(self.__collection == None):
+            return None
+        else:
+            # We use the built-in method from ControlNMF for getting the position of a document, given only the id, in the matrix
+            return self.__controlNMFTextual.getDictionary()
             
 class ControlNMF:
 
