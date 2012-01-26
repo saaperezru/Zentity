@@ -122,7 +122,6 @@ class ControlNMF:
     def getControlArrayLatentTopics(self):
         return self.__controlLatentTopics.getControlArrayLatentTopics()
 
-
 class ControlZentity:
     
     def __init__(self,DMMName,RTName,collectionControl,tagsConfig,zentityPaths):
@@ -181,7 +180,7 @@ class ControlZentity:
             for i in range(min(LTNameTop,len(LTName))):
                 self.importantTags.add(LTName[i])
             LTName.insert(0,"LTT")
-            RT1.addProperty("_".join(ZEntidad.ScalarProperty(LTName)),ZEntidad.DataTypes.STRING,LTExtractor)
+            RT1.addProperty(ZEntidad.ScalarProperty("_".join(LTName),ZEntidad.DataTypes.STRING,LTExtractor))
         #There is one SP for each Textual LatentTopic 
 
         for LT in self.controlCollection.getControlNMFTextual().getControlArrayLatentTopics():
@@ -190,10 +189,10 @@ class ControlZentity:
             for i in range(min(LTNameTop,len(LTName))):
                 self.importantTags.add(LTName[i])
             LTName.insert(0,"LTV")
-            RT1.addProperty("_".join(ZEntidad.ScalarProperty(LTName)),ZEntidad.DataTypes.STRING,LTExtractor)
+            RT1.addProperty(ZEntidad.ScalarProperty("_".join(LTName),ZEntidad.DataTypes.STRING,LTExtractor))
         
         #There is one SP for each ImportantTag
-        for tag in self.detectMostImportantTextualWords(topWords,LTNameTop):
+        for tag in self.detectMostImportantTextualWords(topWords):
             tagExtractor = Extractors.TagExtractor(tag,self.controlCollection)
             RT1.addProperty(ZEntidad.ScalarProperty("Tag_"+tag,ZEntidad.DataTypes.STRING,tagExtractor))
         #Finally lets generate the Code Generator
@@ -223,4 +222,6 @@ class ControlZentity:
             Return:
                 A list of strings
         """
-        return self.controlCollection.getOrderedTags(top)
+        for t in self.controlCollection.getOrderedTags(top):
+            self.importantTags.add(t)
+        return list(self.importantTags)

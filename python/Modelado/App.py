@@ -5,9 +5,8 @@ modelParemeters = None
 
 
 @route('/home')
-def hello():
-    #Initialized is true if the client cookie says so
-    if initialized==True and modelParameters!=None:
+def home():
+    if modelParemeters==None:
         return template('home')
     else:
         return template('home_initialized' )

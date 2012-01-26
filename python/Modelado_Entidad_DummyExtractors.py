@@ -19,7 +19,7 @@ class MainCategoryExtractor:
         self.controlNMF = controlNMF
         
     def extract(self,idm):
-        return "_".join(controlNMF.names(self.controlNMF.mostImportantLatentTopic(idm),self.LTNameSize))
+        return "_".join(self.controlNMF.names(self.controlNMF.mostImportantLatentTopic(idm),self.LTNameSize))
         
         
 class LatentTopicExtractor:

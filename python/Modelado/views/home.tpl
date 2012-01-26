@@ -39,13 +39,13 @@
                     <div class="span6">
                         <label for="fileInput">File input</label>
                         <div class="input">
-                            <input type="file" name="fileInput" id="fileInput" class="input-file">
+                            <input type="file" name="TermDocumentMatrix" id="fileInput" class="input-file">
                         </div>
                     </div>
                     <div class="span6">
                         <label for="xlInput">Variable name</label>
                         <div class="input">
-                            <input style="height:20px" class="xlarge" id="xlInput" name="xlInput" size="40" type="text">
+                            <input style="height:20px" class="xlarge" id="xlInput" name="TermDocumentMatrixName" size="40" type="text">
                         </div>
                     </div>
                 </div>     
