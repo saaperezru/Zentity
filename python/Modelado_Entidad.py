@@ -259,3 +259,15 @@ class CollectionParameters:
         self.__visualTextualFVariableName = visualTextualFVariableName
 
 
+class TagsConfig:
+    def __init__(self,topWords,LTNamesTop,LTNamesSize):
+        self.topWords = topWords
+        self.LTNamesTop = LTNamesTop
+        self.LTNamesSize = LTNamesSize
+
+class ZentityPathsConfig:
+    def __init__(self,codeStoragePath,zxmlFilesPath,xmlInfoPath):
+        self.codePath = codeStoragePath
+        self.zxmlPath = zxmlFilesPath
+        self.xmlPath = xmlInfoPath
+
