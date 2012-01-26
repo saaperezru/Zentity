@@ -47,6 +47,7 @@ class ControlTypeLatentTopic:
     def __init__(self, id, name, abreviature, LD, H, F1, W1, F2, W2):
         
         #Review matrix type.
+        
         if not self.correctClass(H):
             print "Error-class"
             return None
@@ -85,27 +86,30 @@ class ControlTypeLatentTopic:
 	for i in  LD.tolist():
 	    LLD.append(i[0][0])
 	self.__typeLatentTopic=TypeLatentTopic(id, name, abreviature, self.createDictionary(LLD))
-
 	#ControlLatentTopics creation.
         for i in xrange(H.shape[0]):
             belongingVector = self.normalize(H[i]).tolist()
             representativeWords = np.transpose(F1)[i].tolist()
-            sortedIndexRepresentativeWords = self.sortVector(np.transpose(F1)[i]).tolist().reverse()
+            sortedIndexRepresentativeWords = self.sortVector(np.array(np.transpose(F1)[i])).tolist()
+            sortedIndexRepresentativeWords.reverse()
             if W1!= None:
                 representativeDocuments = np.transpose(W1)[i].tolist()
-                sortedIndexRepresentativeDocuments = self.sortVector(np.transpose(W1)[i]).tolist().reverse()
+                sortedIndexRepresentativeDocuments = self.sortVector(np.transpose(W1)[i]).tolist()
+                sortedIndexRepresentativeDocuments.reverse()
             else:
                 representativeDocuments = None
                 sortedIndexRepresentativeDocuments = None
             if F2!=None:
                 resumeWords = np.transpose(F2)[i].tolist()
-                sortedIndexResumeWords = self.sortVector(np.transpose(F2)[i]).tolist().reverse()
+                sortedIndexResumeWords = self.sortVector(np.transpose(F2)[i]).tolist()
+                sortedIndexResumeWords.reverse()
             else:
                 resumeWords = None
                 sortedIndexResumeWords = None
             if W2!=None:
                 resumeDocuments = np.transpose(W2)[i].tolist()
-                sortedIndexResumeDocuments = self.sortVector(np.transpose(W2)[i]).tolist().reverse()
+                sortedIndexResumeDocuments = self.sortVector(np.transpose(W2)[i]).tolist()
+                sortedIndexResumeDocuments.reverse()
             else:
                 resumeDocuments = None
                 sortedIndexResumeDocuments = None   
@@ -179,7 +183,7 @@ class ControlTypeLatentTopic:
                 Vector with the sorted index. 
         """
         if self.correctClass(M):
-            return M.argsort() 
+            return np.argsort(M) 
         else:
             print "Error-class"
             return None

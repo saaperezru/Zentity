@@ -34,6 +34,10 @@ class ControlCollection:
 
             #Collection creation
             textualFeatures = ControlMatrix.InstanceMatrix(colectionParameters.getTextualFeaturesPath(), colectionParameters.getTextualFeaturesVariableName())
+            if(textualFeatures.shape[0] < textualFeatures.shape[1]):
+                textualFeatures = np.transpose(textualFeatures)
+            if(textualFeatures.shape[1] != 1):
+                raise
             tF=[]
             for i in  textualFeatures.tolist():
 	        tF.append(i[0][0])
@@ -104,17 +108,16 @@ class ControlNMF:
         importatNames = controlLatentTopic.getDocumentResume()
         images = []
         for i in xrange(0,tam):
-            images.append(self.__controlCollection.__collection.get[importatNames[i]])
+            images.append(self.__controlCollection.getCollection.getDocuments()[importatNames[i]])
         return images   
     
     def names(self,controlLatentTopic,tam):
         """Retorn top <tam> most important string array for the given laten topic.
         """
         importatNames = controlLatentTopic.getModalResume()
-        print "[DEBUG] importantNames for Latent Topic :" , importatNames 
         name = []
         for i in xrange(0,tam):
-            name.append(self.__controlCollection.getCollection().getDocuments([importatNames[i]]))
+            name.append(self.__controlCollection.getCollection().getTextualFeatures()[importatNames[i]])
         return name
     def getControlArrayLatentTopics(self):
         return self.__controlLatentTopics.getControlArrayLatentTopics()
