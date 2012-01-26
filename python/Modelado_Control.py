@@ -79,7 +79,7 @@ class ControlCollection:
             return None
         else:
             # We use the built-in method from ControlNMF for getting the position of a document, given only the id, in the matrix
-            return self.__controlNMFTextual.getDictionary()
+            return self.__collection.getDocuments()[self.__controlNMFTextual.getDocumentPosition(idm)]
     def getOrderedTags(self,amount):
         ret = []
         for i in range(amount):
@@ -121,6 +121,8 @@ class ControlNMF:
         return name
     def getControlArrayLatentTopics(self):
         return self.__controlLatentTopics.getControlArrayLatentTopics()
+    def getDocumentPosition(self,idm):
+        return self.__controlLatentTopics.getDictionary(idm)
 
 class ControlZentity:
     
