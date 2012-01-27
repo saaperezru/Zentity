@@ -73,7 +73,7 @@ class ControlCollection:
                         tags.append(tF[j])
                 documents.append(Entidad.Document(i[0][0],tags,True))
                 k = k + 1
-            if colectionParameters.getDocumentsPath()[len(colectionParameters.getDocumentsPath())-1] != '/'
+            if colectionParameters.getDocumentsPath()[len(colectionParameters.getDocumentsPath())-1] != '/':
                 colectionParameters.setDocumentsPath(colectionParameters.getDocumentsPath()+'/')
             self.__collection = Entidad.Collection(documents, range(0,textualF.shape[1]), range(0,visualF.shape[1]), tF, orderedTags, termDocumentMatrix, colectionParameters.getDocumentsPath())
         except:
