@@ -1,5 +1,5 @@
 import numpy as np
-from pylab import *
+#from pylab import *
 from InterfazNMF_Model import LatentTopic
 from InterfazNMF_Model import TypeLatentTopic
 

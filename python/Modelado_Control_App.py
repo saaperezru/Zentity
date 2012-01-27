@@ -1,29 +1,65 @@
 from bottle import *
+from beaker.middleware import SessionMiddleware
 import Modelado_Control as MC
 import Modelado_Entidad as ME
 
-initialized = False
-modelParameters  = None
-model = None
-cC = None
-@route('/images')
-def images():
-    return template('images')
+
+
+session_opts = {
+    'session.type': 'file',
+    'session.cookie_expires': 300,
+    'session.data_dir': './sessions',
+    'session.auto': True
+}
+app = SessionMiddleware(bottle.app(), session_opts)
+
+
+@route('/images/<action>')
+def images(action):
+    if action=="get":
+        imgId = request.GET.get('id')
+        img,path = model.imagePath(imgId)
+        img = img + ".png" 
+        return static_file(img, root=path)
+    if action == "select":
+        id = int(request.GET.get('id'))
+        if request.GET.get('s')=="True":
+            value = True
+        else:
+            value = False
+        if id<0 : 
+            abort(400,"Bad GET parameters")
+        docsList = model.getDocumentsList()
+        img = docsList[min(id,len(docsList))]
+        img.setSelected(value)
+    if action == "list":
+        images = []
+        #setting json as MIME type
+        response.set_header('Content-Type','application/json')
+        docsList = model.getDocumentsList()
+        for doc in docsList:
+            images.append({"imgId": doc.getId(),"selected":doc.getSelected()})
+        return {"images" : images}
+    abort(400,"Bad GET parameters")
+
 @route('/static/<filename>')
 def server_static(filename):
     return static_file(filename, root='./static/')
 @route('/')
 def home():
-    if modelParameters==None:
+    s = bottle.request.environ.get('beaker.session')
+    model = s.get('model',0)
+    print model
+    if model==None:
         return template('home')
     else:
-        return template('images' )
+        return template('images')
 @post('/')
 def createModel():
     modelParameters = ME.CollectionParameters()
     modelParameters.setDocumentListPath(request.forms.DocumentsList)
     modelParameters.setDocumentListVariableName(request.forms.DocumentsListName)
-    modelParameters.setTextualFeaturesPath(request.forms.TextualFeaturesListName)
+    modelParameters.setTextualFeaturesPath(request.forms.TextualFeaturesList)
     modelParameters.setTextualFeaturesVariableName(request.forms.TextualFeaturesListName)
     modelParameters.setTermDocumentMatrixPath(request.forms.TermDocumentMatrix)
     modelParameters.setTermDocumentMatrixVariableName(request.forms.TermDocumentMatrixName)
@@ -40,15 +76,16 @@ def createModel():
     modelParameters.setVisualHVariableName(request.forms.VisualHName)
     modelParameters.setVisualTextualFPath(request.forms.VisualTextualF)
     modelParameters.setVisualTextualFVariableName(request.forms.VisualTextualFName)
-
-    cC = MC.ControlCollection(modelParameters)
+    try:
+        s = bottle.request.environ.get('beaker.session')
+        s['model'] = MC.ControlCollection(modelParameters)
+        s.save()
+    except:
+        print "ERROR!!!!"
+        abort(400,"ERROR!!!!")
     return template('images')
-
-
-def showImages():
-    info = cC.imageInfo()
 
 @route('/favicon.ico')
 def favicon():
-    return static_file('favicon.ico', root='./')
+    return static_file('favicon.ico', root='./static')
 run(host='localhost', port=9090, debug=True)

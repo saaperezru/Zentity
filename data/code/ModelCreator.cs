@@ -105,7 +105,7 @@ namespace GeneratedDataModel_DMMTest1
 	 	    context.DataModel.Synchronize();
 
 	 	    // Generate Extensions Assembly.
-	 	    using (FileStream fout = new FileStream(@"../data/code/code/DMMTest1.dll", FileMode.Create, FileAccess.Write))
+	 	    using (FileStream fout = new FileStream(@"../data/code/code\DMMTest1.dll", FileMode.Create, FileAccess.Write))
 	 	 	 {  
 	 	 	  byte[] rawAssembly = context.DataModel.GenerateExtensionsAssembly(
 	 	 	    "Zentity.DMMTest1", false, null, new string[] { "Zentity.DMMTest1" }, null); 
@@ -116,10 +116,10 @@ namespace GeneratedDataModel_DMMTest1
 	 	    // Generate Entity Framework artifacts.
 
 	 	    EFArtifactGenerationResults results = context.DataModel.GenerateEFArtifacts("Zentity.DMMTest1");
-	 	    results.Csdls.Where(tuple => tuple.Key == "Zentity.Core").First().Value.Save(@"../data/code/code/Zentity.DMMTest1.ExtendedCore.csdl");
-	 	    results.Csdls.Where(tuple => tuple.Key == "Zentity.DMMTest1").First().Value.Save(@"../data/code/code/Zentity.DMMTest1.csdl");
-	 	    results.Msl.Save(@"../data/code/code/Zentity.DMMTest1.Consolidated.msl");
-	 	    results.Ssdl.Save(@"../data/code/code/Zentity.DMMTest1.Consolidated.ssdl");
+	 	    results.Csdls.Where(tuple => tuple.Key == "Zentity.Core").First().Value.Save(@"../data/code/code\Zentity.DMMTest1.ExtendedCore.csdl");
+	 	    results.Csdls.Where(tuple => tuple.Key == "Zentity.DMMTest1").First().Value.Save(@"../data/code/code\Zentity.DMMTest1.csdl");
+	 	    results.Msl.Save(@"../data/code/code\Zentity.DMMTest1.Consolidated.msl");
+	 	    results.Ssdl.Save(@"../data/code/code\Zentity.DMMTest1.Consolidated.ssdl");
 
 		 }
 		 static void Main(string[] args)
