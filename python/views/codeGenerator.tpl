@@ -26,36 +26,32 @@
                 <button class="offset1 btn span4"> CODE GENERATION </button>
             </div>
         <div class="content well">
-        <form method="post" action="/" enctype="multipart/form-data">
-        <!--- GENERAL MATRICES -->
-        <div class="page-header">
-            <h1>General Matrices</h1>
-            <small>FALTA INSTRUCCIONES.</small>
-        </div>
-        <div class="row">
-              <div class="span8">
-                <fieldset>
-                  <legend>Original Term Documents Matrices</legend>
-                  <label for="fileInput">File input</label>
-                  <div class="input">
-                    <input id="TermDocumentMatrix" name="TermDocumentMatrix" type="text" value="../matlab/matrix/TD.mat">
+            <form method="post" action="/home" enctype="multipart/form-data">
+                <!--- GENERAL MATRICES -->
+                <div class="page-header">
+                    <h1>General Matrices</h1>
+                    <small>FALTA INSTRUCCIONES.</small>
+                </div>
+                <div class="row">
+                    <div class="span8">
+                        <fieldset>
+                            <legend>FALTA</legend>
+                            <label for="fileInput">File input</label>
+                            <div class="input">
+                                <input class="input-file" id="fileInput" name="TermDocumentMatrix" type="text" value="../matlab/matrix/TD.mat">
+                            </div>
+                            <label for="">Variable Name</label>
+                            <div class="input">
+                                <input class="xlarge" id="xlInput" name="TermDocumentMatrixName" size="30" type="text" value="TD">
+                            </div>
+                        </fieldset>
                   </div>
-                  <label for="">Variable Name</label>
-                  <div class="input">
-                    <input class="xlarge" id="xlInput" name="TermDocumentMatrixName" size="30" type="text" value="TD">
-                  </div>
-                </fieldset>
-              </div>
-              <div class="span4">
+                  <div class="span4">
                 <fieldset>
                   <legend>Documents list</legend>
                   <label for="fileInput">File input</label>
                   <div class="input">
-<<<<<<< HEAD
-                    <input id="DocumentsList" name="DocumentsList" type="text" value="../matlab/matrix/DocumentsList.mat">
-=======
-                    <input class="input-file" id="xlInput" name="DocumentsList" type="text" value="../matlab/matrix/DocumentsList.mat">
->>>>>>> 133b2d0529ee12d605605c088d2737fd835e240e
+                    <input class="input-file" id="DocumentsList" name="fileInput" type="text" value="../matlab/matrix/DocumentsList.mat">
                   </div><!-- /clearfix -->
                   <label for="">Variable Name</label>
                   <div class="input">
@@ -71,7 +67,7 @@
                            <div class="clearfix">
                             <label for="fileInput">File input</label>
                             <div class="input">
-                              <input id="TextualFeaturesList" name="TextualFeaturesList" type="text" value="../matlab/matrix/TF.mat">
+                              <input class="input-file" id="fileInput" name="TextualFeaturesList" type="text" value="../matlab/matrix/TF.mat">
                             </div>
                           </div><!-- /clearfix -->
                           <div class="clearfix">
@@ -106,7 +102,7 @@
                            <div class="clearfix">
                             <label for="fileInput">File input</label>
                             <div class="input">
-                              <input  id="TextualF" name="TextualF" type="text" value="../matlab/matrix/Ft.mat">
+                              <input class="input-file" id="fileInput" name="TextualF" type="text" value="../matlab/matrix/Ft.mat">
                             </div>
                           </div><!-- /clearfix -->
                           <div class="clearfix">
@@ -123,7 +119,7 @@
                            <div class="clearfix">
                             <label for="fileInput">File input</label>
                             <div class="input">
-                              <input id="TextualH" name="TextualH" type="text" value="../matlab/matrix/Ht.mat">
+                              <input class="input-file" id="xlInput" name="TextualH" type="text" value="../matlab/matrix/Ht.mat">
                             </div>
                           </div><!-- /clearfix -->
                           <div class="clearfix">
@@ -142,7 +138,7 @@
                            <div class="clearfix">
                             <label for="fileInput">File input</label>
                             <div class="input">
-                              <input id="TextualVisualF" name="TextualVisualF" type="text" value="../matlab/matrix/FVt.mat">
+                              <input class="input-file" id="fileInput" name="TextualVisualF" type="text" value="../matlab/matrix/FVt.mat">
                             </div>
                           </div><!-- /clearfix -->
                           <div class="clearfix">
@@ -166,7 +162,7 @@
                            <div class="clearfix">
                             <label for="fileInput">File input</label>
                             <div class="input">
-                              <input id="VisualF" name="VisualF" type="text" value="../matlab/matrix/Fv.mat">
+                              <input class="input-file" id="fileInput" name="VisualF" type="text" value="../matlab/matrix/Fv.mat">
                             </div>
                           </div><!-- /clearfix -->
                           <div class="clearfix">

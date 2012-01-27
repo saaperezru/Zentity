@@ -81,19 +81,19 @@ class ControlCollection:
             #FALTA CREAR LA EXEPCION
             raise
         
-    def imageInfo(self):
+    def getDocumentsList(self):
         """Returns information about all documents in the model."""
         if(self.__collection == None):
             return None
         else:
             return self.__collection.getDocuments()
 
-    def imageId(self, position):
+    def imagePath(self, position):
         """Returns image id given the position in the document list."""
         if(self.__collection == None):
             return None
         else:
-            return join(self.__collection.getDocumentsPath(),self.__collection.getDocuments()[position].getId())
+            return self.__collection.getDocumentsPath(),self.__collection.getDocuments()[position].getId()
     
     def latentTopicsInfo(self):
         pass
