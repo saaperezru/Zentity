@@ -5,13 +5,14 @@ import Modelado_Entidad as ME
 initialized = False
 modelParameters  = None
 model = None
+cC = None
 
 @route('/home')
 def home():
     if modelParameters==None:
         return template('home')
     else:
-        return template('home_initialized' )
+        return template('images' )
 @post('/home')
 def createModel():
     modelParameters = ME.CollectionParameters()
@@ -36,6 +37,11 @@ def createModel():
     modelParameters.setVisualTextualFVariableName(request.forms.VisualTextualFName)
 
     cC = MC.ControlCollection(modelParameters)
+    return template('images')
+
+
+def showImages():
+    info = cC.imageInfo()
 
 @route('/favicon.ico')
 def favicon():

@@ -84,7 +84,7 @@ class ControlCollection:
         if(self.__collection == None):
             return None
         else:
-            return self.__collection.getDocuments(),self.__collection.getDocumentsPath()
+            return (self.__collection.getDocuments(),self.__collection.getDocumentsPath())
     
     def latentTopicsInfo(self):
         pass
@@ -130,7 +130,8 @@ class ControlNMF:
             raise Exception()
         
     def mostImportantLatentTopic(self,id):
-        return self.__controlLatentTopics.getLatentTopicsForImg(id)[0]
+        """Return the most important latent topic for a document"""
+        return self.__controlLatentTopics.getMostImportantLatentTopicForImg(id)
     
     def images(self,controlLatentTopic,tam):
         """Return top <tam> most important string array for the given laten topic."""

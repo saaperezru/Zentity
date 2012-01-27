@@ -38,11 +38,11 @@
                   <legend>Original Term Documents Matrices</legend>
                   <label for="fileInput">File input</label>
                   <div class="input">
-                    <input class="input-file" id="fileInput" name="TermDocumentMatrix" type="file">
+                    <input class="input-file" id="fileInput" name="TermDocumentMatrix" type="file" value="../matlab/matrix/TD.mat">
                   </div>
                   <label for="">Variable Name</label>
                   <div class="input">
-                    <input class="xlarge" id="xlInput" name="TermDocumentMatrixName" size="30" type="text">
+                    <input class="xlarge" id="xlInput" name="TermDocumentMatrixName" size="30" type="text" value="TD">
                   </div>
                 </fieldset>
               </div>

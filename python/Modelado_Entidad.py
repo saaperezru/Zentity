@@ -290,7 +290,9 @@ class TagsConfig:
         self.LTNamesSize = LTNamesSize
 
 class ZentityPathsConfig:
+
     def __init__(self,codeStoragePath,zxmlFilesPath,xmlInfoPath):
+        """FALTA DOCUMENTAR"""
         self.codePath = codeStoragePath
         self.zxmlPath = zxmlFilesPath
         self.xmlPath = xmlInfoPath
