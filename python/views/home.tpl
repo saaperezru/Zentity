@@ -26,7 +26,7 @@
                 <button class="offset1 btn span4"> CODE GENERATION </button>
             </div>
         <div class="content well">
-        <form>
+        <form method="post" action="/home" enctype="multipart/form-data">
         <!--- GENERAL MATRICES -->
         <div class="page-header">
             <h1>General Matrices</h1>
@@ -38,7 +38,7 @@
                   <legend>Original Term Documents Matrices</legend>
                   <label for="fileInput">File input</label>
                   <div class="input">
-                    <input class="input-file" id="fileInput" name="TermDocumentMatrix" type="file" value="../matlab/matrix/TD.mat">
+                    <input class="input-file" id="fileInput" name="TermDocumentMatrix" type="text" value="../matlab/matrix/TD.mat">
                   </div>
                   <label for="">Variable Name</label>
                   <div class="input">
@@ -51,7 +51,7 @@
                   <legend>Documents list</legend>
                   <label for="fileInput">File input</label>
                   <div class="input">
-                    <input class="input-file" id="DocumentsList" name="fileInput" type="file">
+                    <input class="input-file" id="DocumentsList" name="fileInput" type="text">
                   </div><!-- /clearfix -->
                   <label for="">Variable Name</label>
                   <div class="input">
@@ -67,7 +67,7 @@
                            <div class="clearfix">
                             <label for="fileInput">File input</label>
                             <div class="input">
-                              <input class="input-file" id="fileInput" name="TextualFeaturesList" type="file">
+                              <input class="input-file" id="fileInput" name="TextualFeaturesList" type="text">
                             </div>
                           </div><!-- /clearfix -->
                           <div class="clearfix">
@@ -102,7 +102,7 @@
                            <div class="clearfix">
                             <label for="fileInput">File input</label>
                             <div class="input">
-                              <input class="input-file" id="fileInput" name="TextualF" type="file">
+                              <input class="input-file" id="fileInput" name="TextualF" type="text">
                             </div>
                           </div><!-- /clearfix -->
                           <div class="clearfix">
@@ -119,7 +119,7 @@
                            <div class="clearfix">
                             <label for="fileInput">File input</label>
                             <div class="input">
-                              <input class="input-file" id="xlInput" name="TextualH" type="file">
+                              <input class="input-file" id="xlInput" name="TextualH" type="text">
                             </div>
                           </div><!-- /clearfix -->
                           <div class="clearfix">
@@ -138,7 +138,7 @@
                            <div class="clearfix">
                             <label for="fileInput">File input</label>
                             <div class="input">
-                              <input class="input-file" id="fileInput" name="TextualVisualF" type="file">
+                              <input class="input-file" id="fileInput" name="TextualVisualF" type="text">
                             </div>
                           </div><!-- /clearfix -->
                           <div class="clearfix">
@@ -162,7 +162,7 @@
                            <div class="clearfix">
                             <label for="fileInput">File input</label>
                             <div class="input">
-                              <input class="input-file" id="fileInput" name="VisualF" type="file">
+                              <input class="input-file" id="fileInput" name="VisualF" type="text">
                             </div>
                           </div><!-- /clearfix -->
                           <div class="clearfix">
@@ -179,7 +179,7 @@
                            <div class="clearfix">
                             <label for="fileInput">File input</label>
                             <div class="input">
-                              <input class="input-file" id="xlInput" name="VisualH" type="file">
+                              <input class="input-file" id="xlInput" name="VisualH" type="text">
                             </div>
                           </div><!-- /clearfix -->
                           <div class="clearfix">
