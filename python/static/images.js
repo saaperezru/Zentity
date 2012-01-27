@@ -50,14 +50,15 @@ $(function(){
       this.$('img').attr("src","/images/get?id=" + this.model.get('imgId'));
     },
     toggleSelected: function() {
+      var model = this.model;
       $.ajax({
         url : "images/select?id=" + this.model.get("imgId") + "&s=" + this.model.get("selected"),
         success: function(response){
           if(response.error) {
             console.log(data.error);
           }
-          this.$('img').toggleClass("loading");
-          this.model.toggle();
+          console.log(model)
+          model.toggle();
         },
       });
     },

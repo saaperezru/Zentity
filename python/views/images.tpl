@@ -35,9 +35,9 @@
     -->
     <div class="container-fluid" id="imgapp">
       <div class="sidebar">
-        <button class="offset1 btn span4 primary"> HOME </button>
+        <button class="offset1 btn span4"> HOME </button>
         <hr>
-        <button class="offset1 btn span4"> IMAGES </button>
+        <button class="offset1 btn span4 primary"> IMAGES </button>
         <hr>
         <button class="offset1 btn span4"> LATENT TOPICS </button>
         <hr>
