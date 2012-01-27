@@ -51,11 +51,7 @@
                   <legend>Documents list</legend>
                   <label for="fileInput">File input</label>
                   <div class="input">
-<<<<<<< HEAD
                     <input id="DocumentsList" name="DocumentsList" type="text" value="../matlab/matrix/DocumentsList.mat">
-=======
-                    <input class="input-file" id="xlInput" name="DocumentsList" type="text" value="../matlab/matrix/DocumentsList.mat">
->>>>>>> 133b2d0529ee12d605605c088d2737fd835e240e
                   </div><!-- /clearfix -->
                   <label for="">Variable Name</label>
                   <div class="input">

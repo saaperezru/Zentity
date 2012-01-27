@@ -4,7 +4,6 @@ import Modelado_Control as MC
 import Modelado_Entidad as ME
 
 
-
 session_opts = {
     'session.type': 'file',
     'session.cookie_expires': 300,
@@ -21,20 +20,22 @@ def images(action):
     model = s.get('model',0)
     if action=="get":
         imgId = int(request.GET.get('id'))
-        img,path = model.imagePath(imgId)
-        img = img + ".png"
+        path,img = model.imagePath(imgId)
+        #img = img + ".png"
+	print "".join([path,img])
         return static_file(img, root=path)
     if action == "select":
         id = int(request.GET.get('id'))
-        if request.GET.get('s')=="True":
+        if request.GET.get('s')=="true":
             value = True
         else:
             value = False
-        if id<0 : 
+        if id<0: 
             abort(400,"Bad GET parameters")
         docsList = model.getDocumentsList()
         img = docsList[min(id,len(docsList))]
         img.setSelected(value)
+	return
     if action == "list":
         images = []
         #setting json as MIME type
