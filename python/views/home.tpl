@@ -26,7 +26,7 @@
                 <button class="offset1 btn span4"> CODE GENERATION </button>
             </div>
         <div class="content well">
-        <form method="post" action="/home" enctype="multipart/form-data">
+        <form method="post" action="/" enctype="multipart/form-data">
         <!--- GENERAL MATRICES -->
         <div class="page-header">
             <h1>General Matrices</h1>

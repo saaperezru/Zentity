@@ -6,14 +6,19 @@ initialized = False
 modelParameters  = None
 model = None
 cC = None
-
-@route('/home')
+@route('/images')
+def images():
+    return template('images')
+@route('/static/<filename>')
+def server_static(filename):
+    return static_file(filename, root='./static/')
+@route('/')
 def home():
     if modelParameters==None:
         return template('home')
     else:
         return template('images' )
-@post('/home')
+@post('/')
 def createModel():
     modelParameters = ME.CollectionParameters()
     modelParameters.setDocumentListPath(request.forms.DocumentsList)
@@ -47,4 +52,3 @@ def showImages():
 def favicon():
     return static_file('favicon.ico', root='./')
 run(host='localhost', port=9090, debug=True)
-
