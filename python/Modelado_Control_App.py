@@ -11,15 +11,18 @@ session_opts = {
     'session.data_dir': './sessions',
     'session.auto': True
 }
-app = SessionMiddleware(bottle.app(), session_opts)
+
+app = SessionMiddleware(app(), session_opts)
 
 
 @route('/images/<action>')
 def images(action):
+    s = request.environ.get('beaker.session')
+    model = s.get('model',0)
     if action=="get":
-        imgId = request.GET.get('id')
+        imgId = int(request.GET.get('id'))
         img,path = model.imagePath(imgId)
-        img = img + ".png" 
+        img = img + ".png"
         return static_file(img, root=path)
     if action == "select":
         id = int(request.GET.get('id'))
@@ -37,8 +40,8 @@ def images(action):
         #setting json as MIME type
         response.set_header('Content-Type','application/json')
         docsList = model.getDocumentsList()
-        for doc in docsList:
-            images.append({"imgId": doc.getId(),"selected":doc.getSelected()})
+        for i in range(len(docsList)):
+            images.append({"imgId": i,"selected":docsList[i].getSelected()})
         return {"images" : images}
     abort(400,"Bad GET parameters")
 
@@ -47,10 +50,10 @@ def server_static(filename):
     return static_file(filename, root='./static/')
 @route('/')
 def home():
-    s = bottle.request.environ.get('beaker.session')
+    s = request.environ.get('beaker.session')
     model = s.get('model',0)
-    print model
-    if model==None:
+    print "[DEBUG]",model
+    if not model:
         return template('home')
     else:
         return template('images')
@@ -77,15 +80,14 @@ def createModel():
     modelParameters.setVisualTextualFPath(request.forms.VisualTextualF)
     modelParameters.setVisualTextualFVariableName(request.forms.VisualTextualFName)
     try:
-        s = bottle.request.environ.get('beaker.session')
+        s = request.environ.get('beaker.session')
         s['model'] = MC.ControlCollection(modelParameters)
         s.save()
     except:
-        print "ERROR!!!!"
         abort(400,"ERROR!!!!")
     return template('images')
 
 @route('/favicon.ico')
 def favicon():
     return static_file('favicon.ico', root='./static')
-run(host='localhost', port=9090, debug=True)
+run(host='localhost', port=9090, debug=True, app=app)
