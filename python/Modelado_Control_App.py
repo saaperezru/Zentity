@@ -6,14 +6,16 @@ initialized = False
 modelParameters  = None
 model = None
 cC = None
-
-@route('/home')
+@route('/images')
+def images():
+    return template('images')
+@route('/')
 def home():
     if modelParameters==None:
         return template('home')
     else:
         return template('images' )
-@post('/home')
+@post('/')
 def createModel():
     modelParameters = ME.CollectionParameters()
     modelParameters.setDocumentListPath(request.forms.DocumentsList)
