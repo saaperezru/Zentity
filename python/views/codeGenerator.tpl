@@ -29,20 +29,18 @@
             <form method="post" action="/home" enctype="multipart/form-data">
                 <!--- GENERAL MATRICES -->
                 <div class="page-header">
-                    <h1>General Matrices</h1>
+                    <h1>Tags information</h1>
                     <small>FALTA INSTRUCCIONES.</small>
                 </div>
                 <div class="row">
                     <div class="span8">
                         <fieldset>
-                            <legend>FALTA</legend>
-                            <label for="fileInput">File input</label>
+                            <legend>Most important tags</legend>
+                            <h2>Write the wanted amount of most importatn tags.</h2>
+                            <HR>
+                            <label for="fileInput">Amount</label>
                             <div class="input">
-                                <input class="input-file" id="fileInput" name="TermDocumentMatrix" type="text" value="../matlab/matrix/TD.mat">
-                            </div>
-                            <label for="">Variable Name</label>
-                            <div class="input">
-                                <input class="xlarge" id="xlInput" name="TermDocumentMatrixName" size="30" type="text" value="TD">
+                                <input  id="topWords" name="topWords" type="text" value="5">
                             </div>
                         </fieldset>
                   </div>

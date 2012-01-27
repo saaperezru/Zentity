@@ -13,6 +13,9 @@ session_opts = {
 
 app = SessionMiddleware(app(), session_opts)
 
+@route('/images')
+def imagesDefault():
+    return template('images')
 
 @route('/images/<action>')
 def images(action):
@@ -57,7 +60,7 @@ def home():
     if not model:
         return template('home')
     else:
-        return template('images')
+        redirect('/images')
 @post('/')
 def createModel():
     modelParameters = ME.CollectionParameters()
@@ -86,7 +89,7 @@ def createModel():
         s.save()
     except:
         abort(400,"ERROR!!!!")
-    return template('images')
+    redirect('/images')
 
 @route('/favicon.ico')
 def favicon():
