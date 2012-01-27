@@ -3,6 +3,12 @@ from numpy import *
 class Document:
      
     def __init__(self, id, tags, selected):
+        """Is a model class, it save all information of a document.
+           Attributes
+              - id -- Interfaz NMF object with all information about textual latent topics.
+              - tags -- Interfaz NMF object with all information about visual latent topics.
+              - selected -- Boolean attribute, it is true if the document is selected for the Zentity collection, false otherwise. 
+        """
         self.__id = id
         self.__tags = tags
         self.__selected = selected   
@@ -32,11 +38,22 @@ class Document:
 
 class Collection:
      
-    def __init__(self, documents, selectedTextualLatentTopics, selectedVisualLatentTopics, textualFeatures, termDocumentMatrix, modelName, documentsPath):
+    def __init__(self, documents, selectedTextualLatentTopics, selectedVisualLatentTopics, textualFeatures, orderedTags, termDocumentMatrix, documentsPath):
+        """Is a model class, it save all collection information as document list, selected latent topics, textual features and others.
+           Attributes
+              - documents -- List of all documents.
+              - selectedTextualLatentTopics -- Index list of selected textual latent topics.
+              - selectedVisualLatentTopics -- Index list of selected visual latent topics.
+              - textualFeatures -- String list of textual words or tags.
+              - orderedTags -- Order index list of the most important tags.
+              - termDocumentMatrix -- Term vs Document matrix used in the NMF factorization.
+              - documentsPath -- Folder path of all images.
+        """
         self.__documents = documents
         self.__selectedTextualLatentTopics = selectedTextualLatentTopics
         self.__selectedVisualLatentTopics = selectedVisualLatentTopics
         self.__textualFeatures = textualFeatures
+        self.__orderedTags = orderedTags
         self.__termDocumentMatrix = termDocumentMatrix 
         self.__documentsPath = documentsPath   
     
@@ -57,6 +74,10 @@ class Collection:
         """ Returns the textual words used.
         """
         return self.__textualFeatures
+    def getOrderedTags(self):
+        """ Returns the textual words used.
+        """
+        return self.__orderedTags
     def getTermDocumentMatrix(self):
         """ Returns the term vs  Document matrix.
         """
@@ -80,6 +101,7 @@ class Collection:
 class CollectionParameters:
      
     def __init__(self):
+        "Especial data object. It save the initial information given for the user, and it is used to construct the ControlCollection object."
         self.__documentListPath = None
         self.__documentListVariableName = None
         self.__textualFeaturesPath = None
@@ -260,7 +282,9 @@ class CollectionParameters:
 
 
 class TagsConfig:
+
     def __init__(self,topWords,LTNamesTop,LTNamesSize):
+        """FALTA DOCUMENTAR"""
         self.topWords = topWords
         self.LTNamesTop = LTNamesTop
         self.LTNamesSize = LTNamesSize

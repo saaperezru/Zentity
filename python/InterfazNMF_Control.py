@@ -4,10 +4,7 @@ from InterfazNMF_Model import LatentTopic
 from InterfazNMF_Model import TypeLatentTopic
 
 class ControlTypeLatentTopic:
-    """  	
-    ControlTypeLatentTopic(id, name, abreviature, LD, H, F1, W1, F2, W2)
-    
-    Control entity whose function is to be a layer between the user and TypeLatentTopic model, 
+    """Control entity whose function is to be a layer between the user and TypeLatentTopic model, 
     also it will be the only thing the user can see and use to access and work with the model.
 
     Asymmetric Factorization
@@ -40,9 +37,6 @@ class ControlTypeLatentTopic:
     ----------
         arrayControlLatentTopics : List of ControlLatentTopics who are correlated for the same list of documents.
         typeLatentTopic : TypeLatentTopic entity. 	
-	
-    Example
-    -------
     """
     def __init__(self, id, name, abreviature, LD, H, F1, W1, F2, W2):
         
@@ -75,6 +69,7 @@ class ControlTypeLatentTopic:
         if(LD.shape[1] != 1):
             print "Document List is not a vector"
             return None
+        
         #Review the dimensions of each matrix.
         if not self.correctDimensions(LD, H, F1, W1, F2, W2):
             print "Error-shape"
@@ -86,7 +81,8 @@ class ControlTypeLatentTopic:
 	for i in  LD.tolist():
 	    LLD.append(i[0][0])
 	self.__typeLatentTopic=TypeLatentTopic(id, name, abreviature, self.createDictionary(LLD))
-	#ControlLatentTopics creation.
+	
+        #ControlLatentTopics creation.
         for i in xrange(H.shape[0]):
             belongingVector = self.normalize(H[i]).tolist()
             representativeWords = np.transpose(F1)[i].tolist()
@@ -117,7 +113,6 @@ class ControlTypeLatentTopic:
             self.__arrayControlLatentTopics.append(CLT)
                 
 
-    
     def correctDimensions(self, LD, H, F1, W1, F2, W2):
         """ Check if the matrix dimensions are related to each.
             return:
@@ -148,8 +143,7 @@ class ControlTypeLatentTopic:
             return False
         return True
 
-    
-    
+        
     def correctClass(self, M):
         """ Check the type of the parameter.
             return:
@@ -159,7 +153,6 @@ class ControlTypeLatentTopic:
             return True
         else:
             return False
-
 
 
     def normalize(self, M):
@@ -176,7 +169,6 @@ class ControlTypeLatentTopic:
             return None
 
 
-
     def sortVector(self, M):
         """ Sort the index of a M vector depending on M.
             return:
@@ -189,8 +181,6 @@ class ControlTypeLatentTopic:
             return None
         
 
-
-
     def createDictionary(self, LD):
         """ Create a dictionary mapping between the list of documents and his position.
             Where the key is LD[i] and the object is the number i, which is the id-column of the 
@@ -198,7 +188,6 @@ class ControlTypeLatentTopic:
         """
         x=range(len(LD))
         return  dict(zip(LD, x))
-
     
 
     def getDictionary(self,imaged):
@@ -207,8 +196,7 @@ class ControlTypeLatentTopic:
                i if the parameter imaged is a key of the dictionary, None otherwise.
         """
         return  self.__typeLatentTopic.getDictionary(imaged)
-
-    
+ 
 
     def getLatentTopicsForImg(self,identificador):
         """ Return a sorted list of ControlLatenTopics. The other depends of the belong degree of the Latent Topic to the document.
@@ -216,74 +204,54 @@ class ControlTypeLatentTopic:
         return sorted(self.__arrayControlLatentTopics, key=lambda ControlLatentTopic: ControlLatentTopic.getBelongingDegree(identificador), reverse=True) 
     
 
-
     def getMostImportantLatentTopicForImg(self,identificador):
-        """ Return a ControlLatenTopics with the highest belong degree of the Latent Topics to the document.
-        """
+        """ Return a ControlLatenTopics with the highest belong degree of the Latent Topics to the document."""
         return max(self.__arrayControlLatentTopics, key=lambda ControlLatentTopic: ControlLatentTopic.getBelongingDegree(identificador))
 
 
-
     def getControlArrayLatentTopics(self):
-        """ Return the list of ControlLatenTopics.
-        """
+        """ Return the list of ControlLatenTopics."""
         return self.__arrayControlLatentTopics
 
-    
 
     def getSizeDictionary(self):
-        """ Return the length of the dictionary.
-        """
+        """ Return the length of the dictionary."""
         return self.__typeLatentTopic.getSizeDictionary() 
 
-    
 
     def setTypeLatantTopicId(selsf, ids):
-        """ Change the TypeLatentTopic id.
-        """
+        """ Change the TypeLatentTopic id."""
         self.__typeLatentTopic.setId(ids)
-    
     
 
     def setTypeLatantTopicName(self, name):
-        """ Change the TypeLatentTopic name.
-        """
+        """ Change the TypeLatentTopic name."""
         self.__typeLatentTopic.setName(name)
-    
     
 
     def setTypeLatantTopicAbreviature(self, Abreviature):
-        """ Change the TypeLatentTopic abreviature.
-        """
+        """ Change the TypeLatentTopic abreviature."""
         self.__typeLatentTopic.setAbreviature(Abreviature)
 
 
     def getTypeLatantTopicId(self):
-        """ Get the TypeLatentTopic id.
-        """
+        """ Get the TypeLatentTopic id."""
         return self.__typeLatentTopic.getId()
-    
     
 
     def getTypeLatantTopicName(self):
-        """ Get the TypeLatentTopic name.
-        """
+        """ Get the TypeLatentTopic name."""
         return self.__typeLatentTopic.getName()
-    
     
 
     def getTypeLatantTopicAbreviature(self):
-        """ Get the TypeLatentTopic abreviature.
-        """
+        """ Get the TypeLatentTopic abreviature."""
         return self.__typeLatentTopic.getAbreviature()
 
 
 
 class ControlLatentTopic:
-    """  	
-    ControlLatentTopic(id, H, IH, F1, IF1, W1, IW1, F2, IF2, W2, IW2, CTLT)
-    
-    Control entity whose function is to be a layer between the user and LatentTopic model, 
+    """Control entity whose function is to be a layer between the user and LatentTopic model, 
     also it will be the only thing the user can see and use to access and work with the model.
 
 	
@@ -331,8 +299,7 @@ class ControlLatentTopic:
 
 
     def getModalResume(self, type=True):
-        """Return a sorted index list of the array representativeWords or resumeWords.
-        """
+        """Return a sorted index list of the array representativeWords or resumeWords."""
         if type:
             return self.__latentTopic.getSortedIndexRepresentativeWords()
         else:
@@ -341,9 +308,7 @@ class ControlLatentTopic:
     
 
     def getDocumentResume(self, type=True):
-        """
-        return a sorted index list of the array representativeDocuments or resumeDocuments.
-        """
+        """Return a sorted index list of the array representativeDocuments or resumeDocuments."""
         if type:
             return self.__latentTopic.getSortedIndexRepresentativeDocuments()
         else:
@@ -352,49 +317,33 @@ class ControlLatentTopic:
 
     
     def setLatantTopicName(self, name):
-        """ Change the LatentTopic name.
-        """
+        """ Change the LatentTopic name."""
         self.__latentTopic.setName(name)
 
 
 
     def getLatantTopicName(self):
-        """ Change the LatentTopic name.
-        """
+        """ Change the LatentTopic name."""
         return self.__latentTopic.getName()
 
 
 
     def getLatantTopicId(self):
-        """ Change the LatentTopic name.
-        """
+        """ Change the LatentTopic name."""
         return self.__latentTopic.getId()
 
 
 
 
 class LTRelation:
-    """  	
-    LTRelation()
-    
-    Interface class with methods to do a correlation matrix between Latent Topics and make an image with this matrix.
-	
-	
-    Example
-    -------
-    """     
-    
-
 
     @staticmethod
     def createMatrix(LD,LT1,LT2):
-        """
-           Create and return a matrix M(ControlLatentTopic list(LT1) vs ControlLatentTopic list(LT2)) 
+        """Create and return a matrix M(ControlLatentTopic list(LT1) vs ControlLatentTopic list(LT2)) 
            where each i,j s is the number of documents where the ith latent topic was the most important
            in the LT1 list, and the jth latent topic was the most important in the LT2 list.
    	        
            If for a document the belonging degree is not define this does not count.
-
 	"""    
 	x=len(LT1)
         y=len(LT2)
@@ -412,12 +361,10 @@ class LTRelation:
 	return matirx
     
     
-    
     @staticmethod
     def getMostImportantLatentTopic(id, LT):
-        """
-	    Return the most important latent topic in the LT  list for a id document.
-            If for a document the belonging degree is not define return None.  
+        """Return the most important latent topic in the LT  list for a id document.
+           If for a document the belonging degree is not define return None.  
         """ 
         CLT=min(LT, key=lambda ControlLatentTopic: ControlLatentTopic.getBelongingDegree(id))
         if CLT.getBelongingDegree(id)>=0:
@@ -425,13 +372,10 @@ class LTRelation:
         else:
             return None
 
-    
 
     @staticmethod
     def imagePrint( path, M, escale):
-        """
-	    Make an image with the M matrix  
-        """  
+        """Make an image with the M matrix."""  
         X=LTRelation.escalar(M, escale)
         figsize=(array(X.shape)/100.0)[::-1]
         rcParams.update({'figure.figsize':figsize})
@@ -443,13 +387,10 @@ class LTRelation:
         savefig(path, facecolor='black', edgecolor='black', dpi=100)
         close(fig)
         
-    
 
     @staticmethod
     def escalar(M,scale):
-        """
-	    Scale the size of the M matrix to a bigger one.  
-        """ 
+        """Scale the size of the M matrix to a bigger one.""" 
         Mt = np.zeros((M.shape[0]*scale,M.shape[1]*scale))
         for i in range(M.shape[0]):
             for j in range(M.shape[1]):
