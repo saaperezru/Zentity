@@ -73,6 +73,8 @@ class ControlCollection:
                         tags.append(tF[j])
                 documents.append(Entidad.Document(i[0][0],tags,True))
                 k = k + 1
+            if colectionParameters.getDocumentsPath()[len(colectionParameters.getDocumentsPath())-1] != '/'
+                colectionParameters.setDocumentsPath(colectionParameters.getDocumentsPath()+'/')
             self.__collection = Entidad.Collection(documents, range(0,textualF.shape[1]), range(0,visualF.shape[1]), tF, orderedTags, termDocumentMatrix, colectionParameters.getDocumentsPath())
         except:
             print "Error-creation"
@@ -84,7 +86,14 @@ class ControlCollection:
         if(self.__collection == None):
             return None
         else:
-            return (self.__collection.getDocuments(),self.__collection.getDocumentsPath())
+            return self.__collection.getDocuments()
+
+    def imageId(self, position):
+        """Returns image id given the position in the document list."""
+        if(self.__collection == None):
+            return None
+        else:
+            return join(self.__collection.getDocumentsPath(),self.__collection.getDocuments()[position].getId())
     
     def latentTopicsInfo(self):
         pass
