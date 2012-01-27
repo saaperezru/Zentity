@@ -17,17 +17,17 @@
         </div>
         <div class="container-fluid">
             <div class="sidebar">
-                <button class="offset1 btn span4 primary"> HOME </button>
+                <button class="offset1 btn span4"> HOME </button>
                 <hr>
                 <button class="offset1 btn span4"> IMAGES </button>
                 <hr>
                 <button class="offset1 btn span4"> LATENT TOPICS </button>
                 <hr>
-                <button class="offset1 btn span4"> CODE GENERATION </button>
+                <button class="offset1 btn span4 primary"> CODE GENERATION </button>
             </div>
         <div class="content well">
             <form method="post" action="/home" enctype="multipart/form-data">
-                <!--- GENERAL MATRICES -->
+                <!--- TAG INFORMATION -->
                 <div class="page-header">
                     <h1>Tags information</h1>
                     <small>FALTA INSTRUCCIONES.</small>
@@ -36,183 +36,106 @@
                     <div class="span8">
                         <fieldset>
                             <legend>Most important tags</legend>
-                            <h2>Write the wanted amount of most importatn tags.</h2>
-                            <HR>
+                            <p>Write the wanted amount of most importatn tags.</p> 
                             <label for="fileInput">Amount</label>
                             <div class="input">
                                 <input  id="topWords" name="topWords" type="text" value="5">
                             </div>
                         </fieldset>
-                  </div>
-                  <div class="span4">
-                <fieldset>
-                  <legend>Documents list</legend>
-                  <label for="fileInput">File input</label>
-                  <div class="input">
-                    <input class="input-file" id="DocumentsList" name="fileInput" type="text" value="../matlab/matrix/DocumentsList.mat">
-                  </div><!-- /clearfix -->
-                  <label for="">Variable Name</label>
-                  <div class="input">
-                    <input class="xlarge" id="xlInput" name="DocumentsListName" size="30" type="text" value="LD">
-                  </div><!-- /clearfix -->
-                </fieldset>
-              </div>
-        </div><!-- /row -->
-        <div class="row">
-              <div class="span8">
-                <fieldset>
-                  <legend>Textual features list </legend>
-                           <div class="clearfix">
-                            <label for="fileInput">File input</label>
+                    </div>
+                    <div class="span4">
+                        <fieldset>
+                            <legend>Number of properties.</legend>
+                            <p>Type the desired number of properties.</p>
+                            <label for="fileInput">Amount</label>
                             <div class="input">
-                              <input class="input-file" id="fileInput" name="TextualFeaturesList" type="text" value="../matlab/matrix/TF.mat">
+                                <input  id="LTNamesTop" name="LTNamesTop" type="text" value="2">
                             </div>
-                          </div><!-- /clearfix -->
-                          <div class="clearfix">
-                            <label for="">Variable Name</label>
+                        </fieldset>
+                    </div>           
+                </div>
+                <div class="row">
+                    <div class="span8">
+                        <fieldset>
+                            <legend>Latent topic size name</legend>
+                            <p>Write the amount of tags used for the latent topic name.</p>
+                            <label for="fileInput">Amount</label>
                             <div class="input">
-                              <input class="xlarge" id="xlInput" name="TextualFeaturesListName" size="30" type="text" value="TF">
+                                <input  id="LTNamesSize" name="LTNamesSize" type="text" value="4">
                             </div>
-                          </div><!-- /clearfix -->
-                </fieldset>
-              </div>
-              <div class="span8">
-                <fieldset>
-                  <legend>Documents images path</legend>
-                          <div class="clearfix">
-                            <label for="">Path</label>
+                        </fieldset>
+                    </div>
+                </div>
+                <!--- ZENTITY PATHS -->
+                <div class="page-header">
+                    <h1>Zentity paths</h1>
+                    <small>FALTA INSTRUCCIONES.</small>
+                </div>
+                <div class="row">
+                    <div class="span8">
+                        <fieldset>
+                            <legend>Code storage path</legend>
+                            <p>FALTA</p>
+                            <label for="fileInput">Path</label>
                             <div class="input">
-                              <input class="xlarge" id="xlInput" name="DocumentsPath" size="30" type="text" value="../data/images/">
+                                <input  id="codeStoragePath" name="codeStoragePath" type="text" value="../data/code/">
                             </div>
-                          </div><!-- /clearfix -->
-                </fieldset>
-              </div>
-        </div><!-- row -->
-         <!--- TEXTUAL CLUSTERING MATRICES -->
-        <div class="page-header">
-            <h1>Textual Clustering Matrices</h1>
-            <small>FALTA INSTRUCCIONES.</small>
-        </div>
-        <div class="row">
-              <div class="span8">
-                <fieldset>
-                  <legend> Textual Basis Matrix (Ft) </legend>
-                           <div class="clearfix">
-                            <label for="fileInput">File input</label>
+                        </fieldset>
+                    </div>
+                    <div class="span4">
+                        <fieldset>
+                            <legend>Zxml files path</legend>
+                            <p>FALTA</p>
+                            <label for="fileInput">Path</label>
                             <div class="input">
-                              <input class="input-file" id="fileInput" name="TextualF" type="text" value="../matlab/matrix/Ft.mat">
+			    <input  id="zxmlFilesPath" name="zxmlFilesPath" type="text" value="..data/ZXML/">
                             </div>
-                          </div><!-- /clearfix -->
-                          <div class="clearfix">
-                            <label for="">Variable Name</label>
+                        </fieldset>
+                    </div>                         
+                </div>
+                <div class="row">
+                    <div class="span8">
+                        <fieldset>
+                            <legend>XML information path</legend>
+                            <p>FALTA</p>
+                            <label for="fileInput">Path</label>
                             <div class="input">
-                              <input class="xlarge" id="xlInput" name="TextualFName" size="30" type="text" value="Ft">
+                                <input  id="xmlInfoPath" name="xmlInfoPath" type="text" value="">
                             </div>
-                          </div><!-- /clearfix -->
-                </fieldset>
-              </div>
-              <div class="span8">
-                <fieldset>
-                  <legend>General Textual Representation Matrix (H)</legend>
-                           <div class="clearfix">
-                            <label for="fileInput">File input</label>
+                        </fieldset>
+                    </div>
+                </div>
+                <!--- Zentity Information -->
+                <div class="page-header">
+                    <h1>Zentity Information</h1>
+                    <small>FALTA INSTRUCCIONES.</small>
+                </div>
+                <div class="row">
+                    <div class="span8">
+                        <fieldset>
+                            <legend>Data model module name</legend>
+                            <p>FALTA</p>
+                            <label for="fileInput">Name</label>
                             <div class="input">
-                              <input class="input-file" id="xlInput" name="TextualH" type="text" value="../matlab/matrix/Ht.mat">
+                                <input  id="dataModelName" name="dataModelName" type="text" value="DMMTest1">
                             </div>
-                          </div><!-- /clearfix -->
-                          <div class="clearfix">
-                            <label for="">Variable Name</label>
+                        </fieldset>
+                    </div>
+                    <div class="span4">
+                        <fieldset>
+                            <legend>Resource type name</legend>
+                            <p>FALTA</p>
+                            <label for="fileInput">Name</label>
                             <div class="input">
-                              <input class="xlarge" id="xlInput" name="TextualHName" size="30" type="text" value="Ht">
+                                <input  id="resourceTypeName" name="resourceTypeName" type="text" value="RTTest1">
                             </div>
-                          </div><!-- /clearfix -->
-                </fieldset>
-              </div>
-        </div><!-- /row -->
-        <div class="row">
-              <div class="span8">
-                <fieldset>
-                  <legend> Visual Basis from Textual Clustering (FTv) </legend>
-                           <div class="clearfix">
-                            <label for="fileInput">File input</label>
-                            <div class="input">
-                              <input class="input-file" id="fileInput" name="TextualVisualF" type="text" value="../matlab/matrix/FVt.mat">
-                            </div>
-                          </div><!-- /clearfix -->
-                          <div class="clearfix">
-                            <label for="">Variable Name</label>
-                            <div class="input">
-                              <input class="xlarge" id="xlInput" name="TextualVisualFName" size="30" type="text" value="FVt">
-                            </div>
-                          </div><!-- /clearfix -->
-                </fieldset>
-              </div>
-        </div><!-- /row -->
-        <!--- VISUAL CLUSTERING MATRICES -->
-        <div class="page-header">
-            <h1>Visual Clustering Matrices</h1>
-            <small>FALTA INSTRUCCIONES.</small>
-        </div>
-        <div class="row">
-              <div class="span8">
-                <fieldset>
-                  <legend> Visual Basis Matrix (Ft) </legend>
-                           <div class="clearfix">
-                            <label for="fileInput">File input</label>
-                            <div class="input">
-                              <input class="input-file" id="fileInput" name="VisualF" type="text" value="../matlab/matrix/Fv.mat">
-                            </div>
-                          </div><!-- /clearfix -->
-                          <div class="clearfix">
-                            <label for="">Variable Name</label>
-                            <div class="input">
-                              <input class="xlarge" id="xlInput" name="VisualFName" size="30" type="text" value="Fv">
-                            </div>
-                          </div><!-- /clearfix -->
-                </fieldset>
-              </div>
-              <div class="span8">
-                <fieldset>
-                  <legend>General Visual Representation Matrix (H)</legend>
-                           <div class="clearfix">
-                            <label for="fileInput">File input</label>
-                            <div class="input">
-                              <input class="input-file" id="xlInput" name="VisualH" type="text" value="../matlab/matrix/Hv.mat">
-                            </div>
-                          </div><!-- /clearfix -->
-                          <div class="clearfix">
-                            <label for="">Variable Name</label>
-                            <div class="input">
-                              <input class="xlarge" id="xlInput" name="VisualHName" size="30" type="text" value="Hv">
-                            </div>
-                          </div><!-- /clearfix -->
-                </fieldset>
-              </div>
-        </div><!-- /row -->
-        <div class="row">
-              <div class="span8">
-                <fieldset>
-                  <legend> Visual Basis from Textual Clustering (FTv) </legend>
-                           <div class="clearfix">
-                            <label for="fileInput">File input</label>
-                            <div class="input">
-                              <input class="input-file" id="fileInput" name="VisualTextualF" type="text" value="../matlab/matrix/FTv.mat">
-                            </div>
-                          </div><!-- /clearfix -->
-                          <div class="clearfix">
-                            <label for="">Variable Name</label>
-                            <div class="input">
-                              <input class="xlarge" id="xlInput" name="VisualTextualFName" size="30" type="text" value="FTv">
-                            </div>
-                          </div><!-- /clearfix -->
-                </fieldset>
-              </div>
-        </div><!-- /row -->
-        <div class="actions">
-            <input type="submit" class="btn primary" value="Save changes">&nbsp;<button type="reset" class="btn">Cancel</button>
-        </div>
-        
-        </form>
+                        </fieldset>
+                    </div>
+                </div>  
+            </form>
+            <div class="actions">
+                <input type="submit" class="btn primary" value="Save changes">&nbsp;<button type="reset" class="btn">Cancel</button>
+            </div>
         </div><!-- /content-well -->
         <footer>
             <p>&copy; Company 2011</p>
