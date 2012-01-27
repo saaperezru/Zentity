@@ -5,6 +5,7 @@ $(function(){
     defaults: function() {
       return {
         selected:  true,
+        imgId: 0,
       };
     },
     toggle: function() {
@@ -34,7 +35,7 @@ $(function(){
 </a>"
     ),
     events: {
-      "click img"   : "toggleDone",
+      "click img"   : "toggleSelected",
     },
     initialize: function() {
       this.model.bind('change', this.render, this);
@@ -46,11 +47,19 @@ $(function(){
       return this;
     },
     setImage: function(){
-      var image = this.model.get('path');
-      this.$('img').attr("src","/img?img=" + image);
+      this.$('img').attr("src","/images/get?id=" + this.model.get('imgId'));
     },
-    toggleDone: function() {
-      this.model.toggle();
+    toggleSelected: function() {
+      $.ajax({
+        url : "images/select?id=" + this.model.get("imgId") + "&s=" + this.model.get("selected"),
+        success: function(response){
+          if(response.error) {
+            console.log(data.error);
+          }
+          this.$('img').toggleClass("loading");
+          this.model.toggle();
+        },
+      });
     },
     remove: function() {
       $(this.el).remove();
@@ -90,8 +99,10 @@ $(function(){
       Images.bind('add',   this.loadOne, this);
       Images.bind('reset', this.loadAll, this);
       Images.bind('all',   this.render, this);
-
       Images.fetch();
+      if(window.Images.length === 0){
+        this.createImages();
+      }
     },
     render: function() {
       this.$('#image-stats').html(this.statsTemplate({
@@ -99,8 +110,6 @@ $(function(){
         selected:       Images.selected().length,
         remaining:  Images.remaining().length
       }));
-
-      console.log("render");
     },
     loadOne :function(image) {
       var view = new ImageView({model:image});
@@ -108,24 +117,25 @@ $(function(){
     },
     loadAll :function() {
       Images.each(this.loadOne)
-      console.log("loadAll")
     },
     createImages : function() {
       $.ajax({
-        url : "list",
-        data: 'dir=' + $("#imageInput").val(),
-        success: function(data){
-          if(data.error) {
+        url : "/images/list",
+        success: function(response){
+          if(response.error) {
             console.log(data.error);
           }
-          if(data.files) {
-            _.each(data.files,function(file){
-              Images.create({path: file.path})
+          if(response.images) {
+            console.log(response);
+            _.each(response.images,function(image){
+              Images.create({
+                selected : image.selected,
+                imgId : image.imgId,
+              });
             });
           }
         }
       });
-      console.log("loadIamge")
     },
     clearDeselected : function() {
       _.each(Images.remaining(), function(image){ image.destroy(); });

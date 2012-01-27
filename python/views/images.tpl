@@ -47,13 +47,6 @@
         <div class="page-header">
           <h1>Load Matrices</h1>
         </div>
-        <div class="row">
-          <form action="" method="get" accept-charset="utf-8" class="form-stacked">
-            <label>insert a directory path to load images</label>
-            <input type="text" name="dir" id="imageInput" class="xlInput" size="60">
-            <input type="button" id="loadImages" value="Load" class="btn primary">
-          </form>
-        </div>
         <ul id="image-list" class="media-grid">
         </ul>
         <div id="image-stats">
