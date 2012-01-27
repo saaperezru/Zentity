@@ -9,6 +9,9 @@ cC = None
 @route('/images')
 def images():
     return template('images')
+@route('/static/<filename>')
+def server_static(filename):
+    return static_file(filename, root='./static/')
 @route('/')
 def home():
     if modelParameters==None:
