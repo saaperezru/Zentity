@@ -51,11 +51,11 @@
                   <legend>Documents list</legend>
                   <label for="fileInput">File input</label>
                   <div class="input">
-                    <input class="input-file" id="DocumentsList" name="fileInput" type="text">
+                    <input class="input-file" id="DocumentsList" name="fileInput" type="text" value="../matlab/matrix/DocumentsList.mat">
                   </div><!-- /clearfix -->
                   <label for="">Variable Name</label>
                   <div class="input">
-                    <input class="xlarge" id="xlInput" name="DocumentsListName" size="30" type="text">
+                    <input class="xlarge" id="xlInput" name="DocumentsListName" size="30" type="text" value="LD">
                   </div><!-- /clearfix -->
                 </fieldset>
               </div>
@@ -67,13 +67,13 @@
                            <div class="clearfix">
                             <label for="fileInput">File input</label>
                             <div class="input">
-                              <input class="input-file" id="fileInput" name="TextualFeaturesList" type="text">
+                              <input class="input-file" id="fileInput" name="TextualFeaturesList" type="text" value="../matlab/matrix/TF.mat">
                             </div>
                           </div><!-- /clearfix -->
                           <div class="clearfix">
                             <label for="">Variable Name</label>
                             <div class="input">
-                              <input class="xlarge" id="xlInput" name="TextualFeaturesListName" size="30" type="text">
+                              <input class="xlarge" id="xlInput" name="TextualFeaturesListName" size="30" type="text" value="TF">
                             </div>
                           </div><!-- /clearfix -->
                 </fieldset>
@@ -82,9 +82,9 @@
                 <fieldset>
                   <legend>Documents images path</legend>
                           <div class="clearfix">
-                            <label for="">Variable Name</label>
+                            <label for="">Path</label>
                             <div class="input">
-                              <input class="xlarge" id="xlInput" name="DocumentsPath" size="30" type="text">
+                              <input class="xlarge" id="xlInput" name="DocumentsPath" size="30" type="text" value="../data/images/">
                             </div>
                           </div><!-- /clearfix -->
                 </fieldset>
@@ -102,13 +102,13 @@
                            <div class="clearfix">
                             <label for="fileInput">File input</label>
                             <div class="input">
-                              <input class="input-file" id="fileInput" name="TextualF" type="text">
+                              <input class="input-file" id="fileInput" name="TextualF" type="text" value="../matlab/matrix/Ft.mat">
                             </div>
                           </div><!-- /clearfix -->
                           <div class="clearfix">
                             <label for="">Variable Name</label>
                             <div class="input">
-                              <input class="xlarge" id="xlInput" name="TextualFName" size="30" type="text">
+                              <input class="xlarge" id="xlInput" name="TextualFName" size="30" type="text" value="Ft">
                             </div>
                           </div><!-- /clearfix -->
                 </fieldset>
@@ -119,13 +119,13 @@
                            <div class="clearfix">
                             <label for="fileInput">File input</label>
                             <div class="input">
-                              <input class="input-file" id="xlInput" name="TextualH" type="text">
+                              <input class="input-file" id="xlInput" name="TextualH" type="text" value="../matlab/matrix/Ht.mat">
                             </div>
                           </div><!-- /clearfix -->
                           <div class="clearfix">
                             <label for="">Variable Name</label>
                             <div class="input">
-                              <input class="xlarge" id="xlInput" name="TextualHName" size="30" type="text">
+                              <input class="xlarge" id="xlInput" name="TextualHName" size="30" type="text" value="Ht">
                             </div>
                           </div><!-- /clearfix -->
                 </fieldset>
@@ -138,13 +138,13 @@
                            <div class="clearfix">
                             <label for="fileInput">File input</label>
                             <div class="input">
-                              <input class="input-file" id="fileInput" name="TextualVisualF" type="text">
+                              <input class="input-file" id="fileInput" name="TextualVisualF" type="text" value="../matlab/matrix/FVt.mat">
                             </div>
                           </div><!-- /clearfix -->
                           <div class="clearfix">
                             <label for="">Variable Name</label>
                             <div class="input">
-                              <input class="xlarge" id="xlInput" name="TextualVisualFName" size="30" type="text">
+                              <input class="xlarge" id="xlInput" name="TextualVisualFName" size="30" type="text" value="FVt">
                             </div>
                           </div><!-- /clearfix -->
                 </fieldset>
@@ -162,13 +162,13 @@
                            <div class="clearfix">
                             <label for="fileInput">File input</label>
                             <div class="input">
-                              <input class="input-file" id="fileInput" name="VisualF" type="text">
+                              <input class="input-file" id="fileInput" name="VisualF" type="text" value="../matlab/matrix/Fv.mat">
                             </div>
                           </div><!-- /clearfix -->
                           <div class="clearfix">
                             <label for="">Variable Name</label>
                             <div class="input">
-                              <input class="xlarge" id="xlInput" name="VisualFName" size="30" type="text">
+                              <input class="xlarge" id="xlInput" name="VisualFName" size="30" type="text" value="Fv">
                             </div>
                           </div><!-- /clearfix -->
                 </fieldset>
@@ -179,13 +179,13 @@
                            <div class="clearfix">
                             <label for="fileInput">File input</label>
                             <div class="input">
-                              <input class="input-file" id="xlInput" name="VisualH" type="text">
+                              <input class="input-file" id="xlInput" name="VisualH" type="text" value="../matlab/matrix/Hv.mat">
                             </div>
                           </div><!-- /clearfix -->
                           <div class="clearfix">
                             <label for="">Variable Name</label>
                             <div class="input">
-                              <input class="xlarge" id="xlInput" name="VisualHName" size="30" type="text">
+                              <input class="xlarge" id="xlInput" name="VisualHName" size="30" type="text" value="Hv">
                             </div>
                           </div><!-- /clearfix -->
                 </fieldset>
@@ -198,13 +198,13 @@
                            <div class="clearfix">
                             <label for="fileInput">File input</label>
                             <div class="input">
-                              <input class="input-file" id="fileInput" name="VisualTextualF" type="file">
+                              <input class="input-file" id="fileInput" name="VisualTextualF" type="text" value="../matlab/matrix/FTv.mat">
                             </div>
                           </div><!-- /clearfix -->
                           <div class="clearfix">
                             <label for="">Variable Name</label>
                             <div class="input">
-                              <input class="xlarge" id="xlInput" name="VisualTextualFName" size="30" type="text">
+                              <input class="xlarge" id="xlInput" name="VisualTextualFName" size="30" type="text" value="FTv">
                             </div>
                           </div><!-- /clearfix -->
                 </fieldset>
