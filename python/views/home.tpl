@@ -51,7 +51,7 @@
                   <legend>Documents list</legend>
                   <label for="fileInput">File input</label>
                   <div class="input">
-                    <input class="input-file" id="DocumentsList" name="fileInput" type="text" value="../matlab/matrix/DocumentsList.mat">
+                    <input class="input-file" id="xlInput" name="DocumentsList" type="text" value="../matlab/matrix/DocumentsList.mat">
                   </div><!-- /clearfix -->
                   <label for="">Variable Name</label>
                   <div class="input">
