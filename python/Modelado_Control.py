@@ -7,19 +7,31 @@ import InterfazZ_Entidad as ZEntidad
 import InterfazZ_Control as ZControl
 import Modelado_Entidad as Entidad
 
-
 class ControlMatrix:
 
     @staticmethod
-    def InstanceMatrix(path,name):
+    def InstanceMatrix(path, name):
+        """Import a Matlab matrix.
+           Parameters:
+               - path -- Path and file where is saved the matrix 
+               - name -- Name of the Matlab matrix.
+           Return:
+               A numpy array with all elements of the Matlab matrix.
+        """
         return np.array(sio.loadmat(path)[name])
         
 class ControlCollection:
     
-
-    def __init__(self,colectionParameters):
+    def __init__(self, colectionParameters):
+        """Is the control class of Modelado. It is responsible for building and modifying the data model.
+           Parameters
+               - colectionParameters -- Especial data object with all parameters needed for construct the model.
+           Attributes
+              - controlNMFTextual -- Interfaz NMF object with all information about textual latent topics.
+              - controlNMFVisual -- Interfaz NMF object with all information about visual latent topics.
+              - collection -- Model object the save the information of the documents, tags, selected latent topics, etc. 
+        """
         try:
-        
             #Latent Topics creation
             documentList = ControlMatrix.InstanceMatrix(colectionParameters.getDocumentListPath(), colectionParameters.getDocumentListVariableName())
             textualF = ControlMatrix.InstanceMatrix(colectionParameters.getTextualFPath(), colectionParameters.getTextualFVariableName()) 
@@ -33,19 +45,23 @@ class ControlCollection:
             self.__controlNMFVisual = ControlNMF(self, visualF, visualH, visualTextualF, documentList, 2, "Visual", "Vis")
 
             #Collection creation
+            #Creating tag array
             textualFeatures = ControlMatrix.InstanceMatrix(colectionParameters.getTextualFeaturesPath(), colectionParameters.getTextualFeaturesVariableName())
             if(textualFeatures.shape[0] < textualFeatures.shape[1]):
                 textualFeatures = np.transpose(textualFeatures)
             if(textualFeatures.shape[1] != 1):
+                #FALTA CREAR LA EXEPCION
                 raise
             tF=[]
             for i in  textualFeatures.tolist():
 	        tF.append(i[0][0])
             termDocumentMatrix = ControlMatrix.InstanceMatrix(colectionParameters.getTermDocumentMatrixPath(), colectionParameters.getTermDocumentMatrixVariableName())
+            
             #Lets create the ordered tags list
             tagsOcurrence = np.dot(termDocumentMatrix,np.ones((termDocumentMatrix.shape[1],1)))
-            self.orderedTags = np.argsort(tagsOcurrence)
-            self.tF = tF
+            orderedTags = np.argsort(tagsOcurrence)
+            
+            #Documents creation
             documents = []
             k = 0
             if documentList.shape[0] == 1:
@@ -57,39 +73,52 @@ class ControlCollection:
                         tags.append(tF[j])
                 documents.append(Entidad.Document(i[0][0],tags,True))
                 k = k + 1
-            self.__collection = Entidad.Collection(documents, range(0,textualF.shape[1]), range(0,visualF.shape[1]), tF, termDocumentMatrix, None, colectionParameters.getDocumentsPath())
+            self.__collection = Entidad.Collection(documents, range(0,textualF.shape[1]), range(0,visualF.shape[1]), tF, orderedTags, termDocumentMatrix, colectionParameters.getDocumentsPath())
         except:
             print "Error-creation"
+            #FALTA CREAR LA EXEPCION
             raise
         
     def imageInfo(self):
+        """Returns information about all documents in the model."""
         if(self.__collection == None):
             return None
         else:
-            return (self.__collection.getDocuments(),self.__collection.getDocumentsPath())
+            return self.__collection.getDocuments(),self.__collection.getDocumentsPath()
+    
     def latentTopicsInfo(self):
-        if(self.__collection == None or self.__controlNMFTextual == None):
-            return None
-        else:
-            #FALTA
-            return (self.__collection.getTextualFeatures(),self.__collection.getDocuments(),self.__collection.getDocumentsPath())
-    def getDocument(self,idm):
-        """Returns the document instance """
+        pass
+    
+    def getDocument(self, idm):
+        """Returns the document instance."""
         if(self.__collection == None):
             return None
         else:
             # We use the built-in method from ControlNMF for getting the position of a document, given only the id, in the matrix
             return self.__collection.getDocuments()[self.__controlNMFTextual.getDocumentPosition(idm)]
-    def getOrderedTags(self,amount):
+    
+    def getOrderedTags(self, amount):
+        """Given an amount of tags, return the most important used in the documents.
+           Parameters:
+               - amount --  the number of tags that it would be returned.
+           Return:
+               A list of tags(strings).  
+        """
         ret = []
         for i in range(amount):
-           ret.append(self.tF[self.orderedTags[i]])
+           ret.append(self.__collection.getTextualFeatures()[self.__collection.getOrderedTags()[i]])
         return ret
+    
     def getCollection(self):
+        """Returns the collection instance."""
         return self.__collection
+    
     def getControlNMFTextual(self):
+        """Returns the controlNMFTextual instance."""
         return self.__controlNMFTextual 
+    
     def getControlNMFVisual(self):
+        """Returns the controlNMFVisual instance."""
         return self.__controlNMFVisual
             
 class ControlNMF:

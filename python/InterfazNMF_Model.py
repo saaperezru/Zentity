@@ -1,8 +1,5 @@
 class LatentTopic:
-    """  	
-        LatentTopic(self, ids, name, belongingVector, representativeWords, sortedIndexRepresentativeWords, representativeDocuments, sortedIndexRepresentativeDocuments, resumeWords, sortedIndexResumeWords, resumeDocuments, sortedIndexResumeDocuments)
-    
-        Entity that keep the structure and attributes of each of the latent topics, 
+    """ Entity that keep the structure and attributes of each of the latent topics, 
         includes: belonging degree of each document, 
         vector representation of this and the resulting vectors by the asymmetric factorization.
 
@@ -129,10 +126,7 @@ class LatentTopic:
 
 
 class TypeLatentTopic:
-    """
-        TypeLatentTopic(self,ids,name,abreviature,Dictionary)
-    
-        This will save the dictionary class of documents for a modality
+    """This will save the dictionary class of documents for a modality
         and link all resulting Latent Topics for this modality, 
         as well as save information needed to work with it.
 	

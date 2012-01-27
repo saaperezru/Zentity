@@ -143,40 +143,58 @@
             </fieldset></form>
             <h2>Load matrices</h2>
             <!-- Textual world matrix -->
-            <div class="row">
-                <form><fieldset>
-                    <legend>Textual words matrix</legend>
-                    <div class="clearfix">
+            <form><fieldset>
+                <legend>Textual words</legend>
+                <div class="row">
+                    <div class="span6">
                         <label for="fileInput">File input</label>
                         <div class="input">
                             <input type="file" name="fileInput" id="fileInput" class="input-file">
                         </div>
                     </div>
-                </fieldset></form>
-            </div>
+                    <div class="span6">
+                        <label for="xlInput">Variable name</label>
+                        <div class="input">
+                            <input tyle="height:20px" class="xlarge" id="xlInput" name="xlInput" size="40" type="text">
+                        </div>
+                    </div>
+                </div>
+            </fieldset></form>
             <!-- Documents id-->
-            <div class="row">
-                <form><fieldset>
-                    <legend>Documents id</legend>
-                    <div class="clearfix">
+            <form><fieldset>
+                <legend>Documents id</legend>
+                <div class="row">
+                    <div class="span6">
                         <label for="fileInput">File input</label>
                         <div class="input">
                             <input type="file" name="fileInput" id="fileInput" class="input-file">
                         </div>
+                    </div>  
+                    <div class="span6">
+                        <label for="xlInput">Variable name</label>
+                        <div class="input">
+                            <input tyle="height:20px" class="xlarge" id="xlInput" name="xlInput" size="40" type="text">
+                        </div>
                     </div>
-                </fieldset></form>
-            </div>
-            <div class="row">
-                <form><fieldset>
-                    <legend>Tags matrix</legend>
-                    <div class="clearfix">
+                </div>
+            </fieldset></form>
+            <form><fieldset>
+                <legend>Tags matrix</legend>
+                <div class="row">
+                    <div class="span6">
                         <label for="fileInput">File input</label>
                         <div class="input">
                             <input type="file" name="fileInput" id="fileInput" class="input-file">
                         </div>
+                    </div>  
+                    <div class="span6">
+                        <label for="xlInput">Variable name</label>
+                        <div class="input">
+                            <input tyle="height:20px" class="xlarge" id="xlInput" name="xlInput" size="40" type="text">
+                        </div>
                     </div>
-                </fieldset></form>
-            </div>
+                </div>
+            </fieldset></form>
             <div class="row">
                 <form><fieldset>
                     <legend>Images path</legend>
