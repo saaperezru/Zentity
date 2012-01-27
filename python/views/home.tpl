@@ -33,43 +33,35 @@
             <small>FALTA INSTRUCCIONES.</small>
         </div>
         <div class="row">
-              <div class="span4">
+              <div class="span8">
                 <fieldset>
                   <legend>Original Term Documents Matrices</legend>
-                           <div class="clearfix">
-                            <label for="fileInput">File input</label>
-                            <div class="input">
-                              <input class="input-file" id="fileInput" name="TermDocumentMatrix" type="file">
-                            </div>
-                          </div><!-- /clearfix -->
-                          <div class="clearfix">
-                            <label for="">Variable Name</label>
-                            <div class="input">
-                              <input class="xlarge" id="xlInput" name="TermDocumentMatrixName" size="30" type="text">
-                            </div>
-                          </div><!-- /clearfix -->
+                  <label for="fileInput">File input</label>
+                  <div class="input">
+                    <input class="input-file" id="fileInput" name="TermDocumentMatrix" type="file">
+                  </div>
+                  <label for="">Variable Name</label>
+                  <div class="input">
+                    <input class="xlarge" id="xlInput" name="TermDocumentMatrixName" size="30" type="text">
+                  </div>
                 </fieldset>
               </div>
               <div class="span4">
                 <fieldset>
                   <legend>Documents list</legend>
-                           <div class="clearfix">
-                            <label for="fileInput">File input</label>
-                            <div class="input">
-                              <input class="input-file" id="DocumentsList" name="fileInput" type="file">
-                            </div>
-                          </div><!-- /clearfix -->
-                          <div class="clearfix">
-                            <label for="">Variable Name</label>
-                            <div class="input">
-                              <input class="xlarge" id="xlInput" name="DocumentsListName" size="30" type="text">
-                            </div>
-                          </div><!-- /clearfix -->
+                  <label for="fileInput">File input</label>
+                  <div class="input">
+                    <input class="input-file" id="DocumentsList" name="fileInput" type="file">
+                  </div><!-- /clearfix -->
+                  <label for="">Variable Name</label>
+                  <div class="input">
+                    <input class="xlarge" id="xlInput" name="DocumentsListName" size="30" type="text">
+                  </div><!-- /clearfix -->
                 </fieldset>
               </div>
         </div><!-- /row -->
         <div class="row">
-              <div class="span4">
+              <div class="span8">
                 <fieldset>
                   <legend>Textual features list </legend>
                            <div class="clearfix">
@@ -86,7 +78,7 @@
                           </div><!-- /clearfix -->
                 </fieldset>
               </div>
-              <div class="span4">
+              <div class="span8">
                 <fieldset>
                   <legend>Documents images path</legend>
                           <div class="clearfix">
@@ -104,7 +96,7 @@
             <small>FALTA INSTRUCCIONES.</small>
         </div>
         <div class="row">
-              <div class="span4">
+              <div class="span8">
                 <fieldset>
                   <legend> Textual Basis Matrix (Ft) </legend>
                            <div class="clearfix">
@@ -121,7 +113,7 @@
                           </div><!-- /clearfix -->
                 </fieldset>
               </div>
-              <div class="span4">
+              <div class="span8">
                 <fieldset>
                   <legend>General Textual Representation Matrix (H)</legend>
                            <div class="clearfix">
@@ -140,7 +132,7 @@
               </div>
         </div><!-- /row -->
         <div class="row">
-              <div class="span4">
+              <div class="span8">
                 <fieldset>
                   <legend> Visual Basis from Textual Clustering (FTv) </legend>
                            <div class="clearfix">
@@ -164,7 +156,7 @@
             <small>FALTA INSTRUCCIONES.</small>
         </div>
         <div class="row">
-              <div class="span4">
+              <div class="span8">
                 <fieldset>
                   <legend> Visual Basis Matrix (Ft) </legend>
                            <div class="clearfix">
@@ -181,7 +173,7 @@
                           </div><!-- /clearfix -->
                 </fieldset>
               </div>
-              <div class="span4">
+              <div class="span8">
                 <fieldset>
                   <legend>General Visual Representation Matrix (H)</legend>
                            <div class="clearfix">
@@ -200,7 +192,7 @@
               </div>
         </div><!-- /row -->
         <div class="row">
-              <div class="span4">
+              <div class="span8">
                 <fieldset>
                   <legend> Visual Basis from Textual Clustering (FTv) </legend>
                            <div class="clearfix">
