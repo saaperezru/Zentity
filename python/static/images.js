@@ -31,7 +31,7 @@ $(function(){
     tagName:  "li",
     template: _.template(
 "<a class='<%= selected ? '' : 'deselected' %>'> \
-  <img class=\"thumbnail\" height=\"40\" width=\"40\"></img> \
+  <img class=\"<%= selected ? '' : 'wrapper' %> thumbnail\" height=\"40\" width=\"40\"></img> \
 </a>"
     ),
     events: {
@@ -52,12 +52,11 @@ $(function(){
     toggleSelected: function() {
       var model = this.model;
       $.ajax({
-        url : "images/select?id=" + this.model.get("imgId") + "&s=" + this.model.get("selected"),
+        url : "images/select?id=" + this.model.get("imgId") + "&s=" + !this.model.get("selected"),
         success: function(response){
           if(response.error) {
             console.log(data.error);
           }
-          console.log(model)
           model.toggle();
         },
       });
@@ -80,15 +79,7 @@ $(function(){
     <span class=\"number\"><%= selected %></span> \
     <span class=\"word\"><%= selected == 1 ? 'item' : 'items' %></span> selected. \
   </span> \
-<% } %> \
-<% if (remaining) { %> \
-  <span class=\"image-clear\"> \
-    <a href=\"#\"> \
-      Clear <span class=\"number-deselected\"><%= remaining %></span> \
-      deselected <span class=\"word-remaining\"><%= remaining == 1 ? 'item' : 'items' %></span> \
-    </a> \
-  </span> \
-<% } %>"
+<% } %>" 
     ),
     events : {
       "click #loadImages" : "createImages",
@@ -100,10 +91,7 @@ $(function(){
       Images.bind('add',   this.loadOne, this);
       Images.bind('reset', this.loadAll, this);
       Images.bind('all',   this.render, this);
-      Images.fetch();
-      if(window.Images.length === 0){
-        this.createImages();
-      }
+      this.createImages();
     },
     render: function() {
       this.$('#image-stats').html(this.statsTemplate({

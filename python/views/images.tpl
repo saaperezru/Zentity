@@ -17,6 +17,17 @@
       .content{
         min-height:300px;
       }
+      a.deselected{
+       /* background :url( "http://cdn2.iconfinder.com/data/icons/bnw/128x128/apps/x.png");*/
+        background-color: #666;
+        background-size: cover;
+        z-index: -99999;
+      }
+      img.wrapper    {
+        opacity : 0.4;
+        filter: alpha(opacity=40); // msie
+        background-color: #000; 
+      }
     </style>
   </head>
   <body>
@@ -35,13 +46,13 @@
     -->
     <div class="container-fluid" id="imgapp">
       <div class="sidebar">
-        <button class="offset1 btn span4"> HOME </button>
+        <a href="/"><button class="offset1 btn span4"> HOME </button></a>
         <hr>
-        <button class="offset1 btn span4 primary"> IMAGES </button>
+        <a href="/images"><button class="offset1 btn span4 primary"> IMAGES </button></a>
         <hr>
-        <button class="offset1 btn span4"> LATENT TOPICS </button>
+        <a href="/latentTopics"><button class="offset1 btn span4"> LATENT TOPICS </button></a>
         <hr>
-        <button class="offset1 btn span4"> CODE GENERATION </button>
+        <a href="/latentTopics"><button class="offset1 btn span4"> CODE GENERATION </button></a>
       </div>
       <div class="content well">
         <div class="page-header">

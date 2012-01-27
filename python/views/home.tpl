@@ -17,13 +17,13 @@
         </div>
         <div class="container-fluid">
             <div class="sidebar">
-                <button class="offset1 btn span4 primary"> HOME </button>
+              <a href="/"><button class="offset1 btn span4 primary"> HOME </button></a>
                 <hr>
-                <button class="offset1 btn span4"> IMAGES </button>
+                <button class="offset1 disabled btn span4"> IMAGES </button>
                 <hr>
-                <button class="offset1 btn span4"> LATENT TOPICS </button>
+                <button class="offset1 disabled btn span4"> LATENT TOPICS </button>
                 <hr>
-                <button class="offset1 btn span4"> CODE GENERATION </button>
+                <button class="offset1 disabled btn span4"> CODE GENERATION </button>
             </div>
         <div class="content well">
         <form method="post" action="/" enctype="multipart/form-data">

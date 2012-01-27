@@ -24,8 +24,6 @@ def images(action):
     if action=="get":
         imgId = int(request.GET.get('id'))
         path,img = model.imagePath(imgId)
-        #img = img + ".png"
-	print "".join([path,img])
         return static_file(img, root=path)
     if action == "select":
         id = int(request.GET.get('id'))
