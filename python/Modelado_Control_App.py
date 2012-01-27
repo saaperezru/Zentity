@@ -18,7 +18,7 @@ def createModel():
     modelParameters = ME.CollectionParameters()
     modelParameters.setDocumentListPath(request.forms.DocumentsList)
     modelParameters.setDocumentListVariableName(request.forms.DocumentsListName)
-    modelParameters.setTextualFeaturesPath(request.forms.TextualFeaturesListName)
+    modelParameters.setTextualFeaturesPath(request.forms.TextualFeaturesList)
     modelParameters.setTextualFeaturesVariableName(request.forms.TextualFeaturesListName)
     modelParameters.setTermDocumentMatrixPath(request.forms.TermDocumentMatrix)
     modelParameters.setTermDocumentMatrixVariableName(request.forms.TermDocumentMatrixName)
