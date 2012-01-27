@@ -52,4 +52,3 @@ def showImages():
 def favicon():
     return static_file('favicon.ico', root='./')
 run(host='localhost', port=9090, debug=True)
-
