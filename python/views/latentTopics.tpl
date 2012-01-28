@@ -37,6 +37,12 @@
         filter: alpha(opacity=40); // msie
         background-color: #000; 
       }
+      div.selected{
+        background:green;
+      }
+      div.deselected{
+        background:red;
+      }
     </style>
   </head>
   <body>
