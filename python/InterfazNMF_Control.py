@@ -282,8 +282,8 @@ class ControlLatentTopic:
     Example
     -------
     """   
-    def __init__(self, id, H, F1, IF1, W1, IW1, F2, IF2, W2, IW2, CTLT):
-        self.__latentTopic=LatentTopic(id, "", H, F1, IF1, W1, IW1, F2, IF2, W2, IW2)
+    def __init__(self, id, H, HI, F1, IF1, W1, IW1, F2, IF2, W2, IW2, CTLT):
+        self.__latentTopic=LatentTopic(id, "", H, HI, F1, IF1, W1, IW1, F2, IF2, W2, IW2)
         self.__controlTypeLatentTopic=CTLT
 
     

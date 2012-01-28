@@ -154,7 +154,6 @@ class ControlNMF:
         ready = 0
         actualPos = 0
         resume = controlLatentTopic.getDocumentResume()
-        print resume
         while ready<tam and actualPos < len(resume):
             if documents[resume[actualPos]].getSelected():
                 ret.append(resume[actualPos])
