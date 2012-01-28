@@ -149,11 +149,12 @@ class ControlNMF:
 
     def images(self,controlLatentTopic,tam):
         """Return top <tam> most important string array for the given laten topic."""
-        documents = self.__controlCollection.getCollection.getDocuments()
+        documents = self.__controlCollection.getCollection().getDocuments()
         ret = []
         ready = 0
         actualPos = 0
         resume = controlLatentTopic.getDocumentResume()
+        print resume
         while ready<tam and actualPos < len(resume):
             if documents[resume[actualPos]].getSelected():
                 ret.append(resume[actualPos])
@@ -162,8 +163,8 @@ class ControlNMF:
         return ret
     
     def names(self,controlLatentTopic,tam):
-        """Retorn top <tam> most important string array for the given laten topic.
-        """
+        """Retorn top <tam> most important string array for the given laten topic."""
+        
         importatNames = controlLatentTopic.getModalResume()
         name = []
         for i in xrange(0,tam):
@@ -182,7 +183,8 @@ class ControlZentity:
         Attributes:
         
             - DMMName -- Name for the Data Model Module, it must be unique among the names of DMMs present in the Zentity instance
-            - RTName -- Name for the Resource Type that will shelter all the images in the collection. NOTE: It must be unque among all the Resource TYpes in all the Data Model Modules in the Zentity instance that will be used
+            - RTName -- Name for the Resource Type that will shelter all the images in the collection. NOTE: It must be unque among 
+            all the Resource TYpes in all the Data Model Modules in the Zentity instance that will be used
             - Conrtol -- An instance of the ControlCollection that creates this ControlZentity
             - xmlInfoPath
         """
@@ -225,24 +227,32 @@ class ControlZentity:
         #There must be one identifier property
         imageIdExtractor = Extractors.ImageIdExtractor()
         RT1.addProperty(ZEntidad.ScalarProperty("ImageID",ZEntidad.DataTypes.STRING,imageIdExtractor,True,False))
-        #There is one SP for each Visual LatentTopic 
-        for LT in self.controlCollection.getControlNMFVisual().getControlArrayLatentTopics():
-            LTExtractor = Extractors.LatentTopicExtractor(LT)
-            LTName = self.controlCollection.getControlNMFVisual().names(LT,LatentTopicsNameSize)
-            for i in range(min(LTNameTop,len(LTName))):
-                self.importantTags.add(LTName[i])
-            LTName.insert(0,"LTT")
-            RT1.addProperty(ZEntidad.ScalarProperty("_".join(LTName),ZEntidad.DataTypes.STRING,LTExtractor))
         #There is one SP for each Textual LatentTopic 
-
-        for LT in self.controlCollection.getControlNMFTextual().getControlArrayLatentTopics():
-            LTExtractor = Extractors.LatentTopicExtractor(LT)
-            LTName = self.controlCollection.getControlNMFTextual().names(LT,LatentTopicsNameSize)
-            for i in range(min(LTNameTop,len(LTName))):
-                self.importantTags.add(LTName[i])
-            LTName.insert(0,"LTV")
-            RT1.addProperty(ZEntidad.ScalarProperty("_".join(LTName),ZEntidad.DataTypes.STRING,LTExtractor))
-        
+        LTSList = self.controlCollection.getControlNMFTextual().getControlArrayLatentTopics()
+        LTSStatus = self.controlCollection.getCollection().getSelectedTextualLatentTopics()
+        for i in range(len(LTSList)):
+            selected = LTSStatus[i]
+            LT = LTSList[i]
+            if selected:
+                LTExtractor = Extractors.LatentTopicExtractor(LT)
+                LTName = self.controlCollection.getControlNMFTextual().names(LT,LatentTopicsNameSize)
+                for  j in range(min(LTNameTop,len(LTName))):
+                    self.importantTags.add(LTName[j])
+                LTName.insert(0,"LTT")
+                RT1.addProperty(ZEntidad.ScalarProperty("_".join(LTName),ZEntidad.DataTypes.STRING,LTExtractor))
+        #There is one SP for each Visual LatentTopic 
+        LTSList = self.controlCollection.getControlNMFVisual().getControlArrayLatentTopics()
+        LTSStatus = self.controlCollection.getCollection().getSelectedVisualLatentTopics()
+        for i in range(len(LTSList)):
+            selected = LTSStatus[i]
+            LT = LTSList[i]
+            if selected:
+                LTExtractor = Extractors.LatentTopicExtractor(LT)
+                LTName = self.controlCollection.getControlNMFVisual().names(LT,LatentTopicsNameSize)
+                for  j in range(min(LTNameTop,len(LTName))):
+                    self.importantTags.add(LTName[j])
+                LTName.insert(0,"LTV")
+                RT1.addProperty(ZEntidad.ScalarProperty("_".join(LTName),ZEntidad.DataTypes.STRING,LTExtractor))
         #There is one SP for each ImportantTag
         for tag in self.detectMostImportantTextualWords(topWords):
             tagExtractor = Extractors.TagExtractor(tag,self.controlCollection)

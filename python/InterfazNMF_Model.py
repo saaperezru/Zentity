@@ -54,10 +54,11 @@ class LatentTopic:
         sortedIndexResumeDocuments: array or matrix, 
             Vector of position index of the resumeDocuments in decreasing order.	
     """   
-    def __init__(self, ids, name, belongingVector, representativeWords, sortedIndexRepresentativeWords, representativeDocuments, sortedIndexRepresentativeDocuments, resumeWords, sortedIndexResumeWords, resumeDocuments, sortedIndexResumeDocuments):
+    def __init__(self, ids, name, belongingVector, sortedIndexBelongingVector, representativeWords, sortedIndexRepresentativeWords, representativeDocuments, sortedIndexRepresentativeDocuments, resumeWords, sortedIndexResumeWords, resumeDocuments, sortedIndexResumeDocuments):
         self.__id = ids
         self.__name = name
         self.__belongingVector = belongingVector
+        self.__sortedIndexBelongingVector = sortedIndexBelongingVector
         self.__representativeWords = representativeWords
         self.__sortedIndexRepresentativeWords = sortedIndexRepresentativeWords
         self.__representativeDocuments = representativeDocuments
@@ -82,6 +83,10 @@ class LatentTopic:
         """ Returns the belonging degree of a document in the LatentTopic.
         """
         return self.__belongingVector[id]
+    def getSortedIndexBelongingVector(self):
+        """ Returns a sort vector of indices in decrease order depending on the values of the representativeWords vector.
+        """
+        return self.__sortedIndexBelongingVector 
     def getRepresentativeWords(self, id):
         """ Returns the belonging degree of a word to the LatentTopic.
         """

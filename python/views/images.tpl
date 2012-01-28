@@ -52,7 +52,7 @@
         <hr>
         <a href="/latentTopics"><button class="offset1 btn span4"> LATENT TOPICS </button></a>
         <hr>
-        <a href="/latentTopics"><button class="offset1 btn span4"> CODE GENERATION </button></a>
+        <a href="/codeGenerator"><button class="offset1 btn span4"> CODE GENERATION </button></a>
       </div>
       <div class="content well">
         <div class="page-header">

@@ -85,6 +85,8 @@ class ControlTypeLatentTopic:
         #ControlLatentTopics creation.
         for i in xrange(H.shape[0]):
             belongingVector = self.normalize(H[i]).tolist()
+            sortedbelongingVector = self.sortVector(self.normalize(H[i])).tolist()
+            sortedbelongingVector.reverse() 
             representativeWords = np.transpose(F1)[i].tolist()
             sortedIndexRepresentativeWords = self.sortVector(np.array(np.transpose(F1)[i])).tolist()
             sortedIndexRepresentativeWords.reverse()
@@ -109,7 +111,7 @@ class ControlTypeLatentTopic:
             else:
                 resumeDocuments = None
                 sortedIndexResumeDocuments = None   
-            CLT=ControlLatentTopic(i, belongingVector, representativeWords, sortedIndexRepresentativeWords, representativeDocuments, sortedIndexRepresentativeDocuments, resumeWords, sortedIndexResumeWords, resumeDocuments, sortedIndexResumeDocuments, self)
+            CLT=ControlLatentTopic(i, belongingVector, sortedbelongingVector, representativeWords, sortedIndexRepresentativeWords, representativeDocuments, sortedIndexRepresentativeDocuments, resumeWords, sortedIndexResumeWords, resumeDocuments, sortedIndexResumeDocuments, self)
             self.__arrayControlLatentTopics.append(CLT)
                 
 
@@ -307,12 +309,13 @@ class ControlLatentTopic:
 
     
 
-    def getDocumentResume(self, type=True):
+    def getDocumentResume(self, type=1):
         """Return a sorted index list of the array representativeDocuments or resumeDocuments."""
-        if type:
-            return self.__latentTopic.getSortedIndexRepresentativeDocuments()
-        else:
-            return self.__latentTopic.getSortedIndexResumeDocuments()
+        if type == 1:
+            return self.__latentTopic.getSortedIndexBelongingVector()
+        if type == 2:
+            return self.__latentTopic.getSortedIndexReoresentativeDocuments()
+        return self.__latenTopic.getSortedIndexResumeDocuments()
         
 
     

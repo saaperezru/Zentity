@@ -26,7 +26,7 @@
                 <button class="offset1 btn span4 primary"> CODE GENERATION </button>
             </div>
         <div class="content well">
-            <form method="post" action="/home" enctype="multipart/form-data">
+            <form method="post" action="/codeGenerator" enctype="multipart/form-data">
                 <!--- TAG INFORMATION -->
                 <div class="page-header">
                     <h1>Tags information</h1>
@@ -134,7 +134,7 @@
                 </div>  
             </form>
             <div class="actions">
-                <input type="submit" class="btn primary" value="Save changes">&nbsp;<button type="reset" class="btn">Cancel</button>
+                <input type="submit" class="btn primary" value="Generate">&nbsp;<button type="reset" class="btn">Cancel</button>
             </div>
         </div><!-- /content-well -->
         <footer>

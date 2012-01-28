@@ -19,6 +19,9 @@ def imagesDefault():
 @route('/latentTopics')
 def latentTopDefault():
     return template('latentTopics')
+@route('/codeGenerator')
+def codeGeneratorDefault():
+    return template('codeGenerator')
 @route('/latentTopics/<action>')
 def latentTopics(action):
     s = request.environ.get('beaker.session')
@@ -45,15 +48,15 @@ def latentTopics(action):
         #Construction of Textual LTS information array
         LTSList = model.getControlNMFTextual().getControlArrayLatentTopics()
         LTSStatus = model.getCollection().getSelectedTextualLatentTopics()
-        cotrolLTS = model.getControlNMFTextual()
+        controlLT = model.getControlNMFTextual()
         for i in range(len(LTSList)):
-            LTS.append({"lid":i,"name": controlLTS.names(LTSLists[i],5),"type":"textual","selected":LTSStatus[i],"docs":controlLTS.images(LTSLists[i],numberOfImages)})
+            LTS.append({"lid":i,"name": controlLT.names(LTSList[i],5),"type":"textual","selected":LTSStatus[i],"docs":controlLT.images(LTSList[i],numberOfImages)})
         #Construction of Visual LTS information array
         LTSList = model.getControlNMFVisual().getControlArrayLatentTopics()
         LTSStatus = model.getCollection().getSelectedVisualLatentTopics()
-        cotrolLTS = model.getControlNMFVisual()
+        controlLT = model.getControlNMFVisual()
         for i in range(len(LTSList)):
-            LTS.append({"lid":i,"name": controlLTS.names(LTSLists[i],5),"type":"visual","selected":LTSStatus[i],"docs":controlLTS.images(LTSLists[i],numberOfImages)})
+            LTS.append({"lid":i,"name": controlLT.names(LTSList[i],5),"type":"visual","selected":LTSStatus[i],"docs":controlLT.images(LTSList[i],numberOfImages)})
         return {"LTS" : LTS}
     abort(400,"Bad GET parameters")
 
@@ -103,7 +106,7 @@ def home():
         return template('home')
     else:
         return template('home_initalized')
-@post('/codeGeneator')
+@post('/')
 def createModel():
     s = request.environ.get('beaker.session')
     modelParameters = ME.CollectionParameters()
@@ -133,12 +136,13 @@ def createModel():
         abort(400,"ERROR!!!!")
     redirect('/images')
 
-@post('/')
+@post('/codeGenerator')
 def createZentityModel():
     s = request.environ.get('beaker.session')
+    model = s.get('model',0)
     tagsC = ME.TagsConfig(request.forms.topWords, request.forms.LTNamesTop, request.forms.LTNamesSize)
     ZPathsC = ME.ZentityPathsConfig(request.forms.codeStoragePath, request.forms.zxmlFilesPath, request.forms.xmlInfoPath)
-    ControlZ = MC.ControlZentity(request.forms.dataModelName, request.forms.resourceTypeName,cC,tagsC,ZPathsC)
+    ControlZ = MC.ControlZentity(request.forms.dataModelName, request.forms.resourceTypeName,model,tagsC,ZPathsC)
     try:
         ControlZ.generateCode()
         ControlZ.generateUploadingCode()
