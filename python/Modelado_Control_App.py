@@ -16,6 +16,46 @@ app = SessionMiddleware(app(), session_opts)
 @route('/images')
 def imagesDefault():
     return template('images')
+@route('/latentTopics')
+def imagesDefault():
+    return template('latentTopics')
+@route('/latentTopics/<action>')
+def latentTopics(action):
+    s = request.environ.get('beaker.session')
+    model = s.get('model',0)
+    if action == "select":
+        id = int(request.GET.get('id'))
+        type = request.GET.get('type')
+        if request.GET.get('s')=="true":
+            value = True
+        else:
+            value = False
+        if id<0:
+            abort(400,"Bad GET parameters")
+        if type=="textual":
+            LTSStatus = model.getCollection().getSelectedTextualLatentTopics()
+        else:
+            LTSStatus = model.getCollection().getSelectedVisualLatentTopics()
+        return
+    if action == "list":
+        numberOfImages = 3
+        LTS = []
+        #setting json as MIME type
+        response.set_header('Content-Type','application/json')
+        #Construction of Textual LTS information array
+        LTSList = model.getControlNMFTextual().getControlArrayLatentTopics()
+        LTSStatus = model.getCollection().getSelectedTextualLatentTopics()
+        cotrolLTS = model.getControlNMFTextual()
+        for i in range(len(LTSList)):
+            LTS.append({"lid":i,"name": controlLTS.names(LTSLists[i],5),"type":"textual","selected":LTSStatus[i],"docs":controlLTS.images(LTSLists[i],numberOfImages)})
+        #Construction of Visual LTS information array
+        LTSList = model.getControlNMFVisual().getControlArrayLatentTopics()
+        LTSStatus = model.getCollection().getSelectedVisualLatentTopics()
+        cotrolLTS = model.getControlNMFVisual()
+        for i in range(len(LTSList)):
+            LTS.append({"lid":i,"name": controlLTS.names(LTSLists[i],5),"type":"visual","selected":LTSStatus[i],"docs":controlLTS.images(LTSLists[i],numberOfImages)})
+        return {"LTS" : LTS}
+    abort(400,"Bad GET parameters")
 
 @route('/images/<action>')
 def images(action):
@@ -36,7 +76,7 @@ def images(action):
         docsList = model.getDocumentsList()
         img = docsList[min(id,len(docsList))]
         img.setSelected(value)
-	return
+        return
     if action == "list":
         images = []
         #setting json as MIME type
@@ -50,17 +90,22 @@ def images(action):
 @route('/static/<filename>')
 def server_static(filename):
     return static_file(filename, root='./static/')
-@route('/')
+@get('/')
 def home():
     s = request.environ.get('beaker.session')
     model = s.get('model',0)
     print "[DEBUG]",model
+    if request.GET.get('action')=="reset":
+        s['model'] = 0
+        s.save()
+        redirect('/')
     if not model:
         return template('home')
     else:
-        redirect('/images')
+        return template('home_initalized')
 @post('/')
 def createModel():
+    s = request.environ.get('beaker.session')
     modelParameters = ME.CollectionParameters()
     modelParameters.setDocumentListPath(request.forms.DocumentsList)
     modelParameters.setDocumentListVariableName(request.forms.DocumentsListName)
@@ -82,12 +127,13 @@ def createModel():
     modelParameters.setVisualTextualFPath(request.forms.VisualTextualF)
     modelParameters.setVisualTextualFVariableName(request.forms.VisualTextualFName)
     try:
-        s = request.environ.get('beaker.session')
         s['model'] = MC.ControlCollection(modelParameters)
         s.save()
     except:
         abort(400,"ERROR!!!!")
     redirect('/images')
+
+
 
 @route('/favicon.ico')
 def favicon():

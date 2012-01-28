@@ -75,7 +75,7 @@ class ControlCollection:
                 k = k + 1
             if colectionParameters.getDocumentsPath()[len(colectionParameters.getDocumentsPath())-1] != '/':
                 colectionParameters.setDocumentsPath(colectionParameters.getDocumentsPath()+'/')
-            self.__collection = Entidad.Collection(documents, range(0,textualF.shape[1]), range(0,visualF.shape[1]), tF, orderedTags, termDocumentMatrix, colectionParameters.getDocumentsPath())
+            self.__collection = Entidad.Collection(documents, [True]*textualF.shape[1], [True]*visualF.shape[1], tF, orderedTags, termDocumentMatrix, colectionParameters.getDocumentsPath())
         except:
             print "Error-creation"
             #FALTA CREAR LA EXEPCION
@@ -94,9 +94,6 @@ class ControlCollection:
             return None
         else:
             return self.__collection.getDocumentsPath(),self.__collection.getDocuments()[position].getId()
-    
-    def latentTopicsInfo(self):
-        pass
     
     def getDocument(self, idm):
         """Returns the document instance."""
@@ -142,13 +139,27 @@ class ControlNMF:
         """Return the most important latent topic for a document"""
         return self.__controlLatentTopics.getMostImportantLatentTopicForImg(id)
     
-    def images(self,controlLatentTopic,tam):
+    def imagesInstances(self,controlLatentTopic,tam):
         """Return top <tam> most important string array for the given laten topic."""
-        importatNames = controlLatentTopic.getDocumentResume()
+        importatDocs = controlLatentTopic.getDocumentResume()
         images = []
         for i in xrange(0,tam):
-            images.append(self.__controlCollection.getCollection.getDocuments()[importatNames[i]])
+            images.append(self.__controlCollection.getCollection.getDocuments()[importatDocs[i]])
         return images   
+
+    def images(self,controlLatentTopic,tam):
+        """Return top <tam> most important string array for the given laten topic."""
+        documents = self.__controlCollection.getCollection.getDocuments()
+        ret = []
+        ready = 0
+        actualPos = 0
+        resume = controlLatentTopic.getDocumentResume()
+        while ready<tam and actualPos < len(resume):
+            if documents[resume[actualPos]].getSelected():
+                ret.append(resume[actualPos])
+                ready = ready+1
+            actualPos = actualPos+1
+        return ret
     
     def names(self,controlLatentTopic,tam):
         """Retorn top <tam> most important string array for the given laten topic.
