@@ -6,7 +6,7 @@ import Modelado_Entidad as ME
 
 session_opts = {
     'session.type': 'file',
-    'session.cookie_expires': 300,
+    'session.cookie_expires': 999,
     'session.data_dir': './sessions',
     'session.auto': True
 }
@@ -139,8 +139,8 @@ def createModel():
 
 @post('/codeGenerator/<action>')
 def createZentityModel(action):
+    s = request.environ.get('beaker.session')
     if action == "generate":
-        s = request.environ.get('beaker.session')
         model = s.get('model',0)
         tagsC = ME.TagsConfig(int(request.forms.topWords), int(request.forms.LTNamesTop), int(request.forms.LTNamesSize))
         ZPathsC = ME.ZentityPathsConfig(request.forms.codeStoragePath, request.forms.zxmlFilesPath, request.forms.xmlInfoPath)
@@ -149,6 +149,7 @@ def createZentityModel(action):
             ControlZ.generateCode()
             ControlZ.generateUploadingCode()
             ControlZ.generateZXMLFiles()
+            del ControlZ
             return template("codeGenerator_sucess")
         except:
             raise

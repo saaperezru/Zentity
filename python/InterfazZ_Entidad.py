@@ -2,7 +2,7 @@ from os.path import exists,isdir
 import errno
 from os import strerror
 class DataModelModule:
-    def __init__(self,name,resources=[]):
+    def __init__(self,name,resources=None):
         """Builds a DataModel Module with the ResourceTypes specified in the argument array resources
         
           Attributes
@@ -10,12 +10,15 @@ class DataModelModule:
             - name  --  Data Model Module Name, this must be unique among other DMM in the Zentity instance to be used.
             - resources -- An array with the ResourceType instances that have to be assigned to this DMM.
         """
-        self.name=name
-        self.resourceTypes = resources
+        self.name = name
+        if resources:
+            self.resourceTypes = resources
+        else:
+            self.resourceTypes = []
 
-    def addResourceType(self,resourceType):
+    def addResourceType(self,newResourceType):
         """Adds a resource type to the Data Model Module but returns nothing"""
-        self.resourceTypes.append(resourceType)
+        self.resourceTypes.append(newResourceType)
     
     def getResourceTypes(self):
         """Returns the array of resourceTypes associated with this DMM."""
@@ -30,7 +33,7 @@ class DataModelModule:
 
 
 class ResourceType:
-    def __init__(self,name,scalarProperties=[],XMLStruct=None,Instances=[],visualizationType=None):
+    def __init__(self,name,scalarProperties=None,XMLStruct=None,Instances=None,visualizationType=None):
         """Builds a ResourceType with the specified name and ScalarProperties 
         
           Attributes
@@ -42,9 +45,15 @@ class ResourceType:
             - visualizationType -- One of the values in the enum VisualizationTypes 
         """
         self.name = name
-        self.scalarProperties = scalarProperties
+        if scalarProperties:
+            self.scalarProperties = scalarProperties
+        else:
+            self.scalarProperties = []
+        if Instances:
+            self.Instancias = Instances
+        else:
+            self.Instancias = [] 
         self.XML = XMLStruct 
-        self.Instancias = Instances
         self.visual = visualizationType
         
     def getXMLStructure(self):

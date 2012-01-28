@@ -10,15 +10,15 @@ class Error(Exception):
         return repr(self.value)
 
 class CodeGenerator:
-    def __init__(self,DataModelModule,codeStoragePath):
+    def __init__(self,dataModelModule,codeStoragePath):
         """Creates a code generator that is capapble of building generation model code and code to upload data to this model
 
         Attributes:
 
-            - DataModelModule -- The DataModelModule for which all code will be generated
+            - dataModelModule -- The dataModelModule for which all code will be generated
             - codeStoragePath -- A valid path for a folder in which code and binaries will be stored.
           """
-        self.DataModelModule = DataModelModule
+        self.dataModelModule = dataModelModule
         self.setCodeStoragePath(codeStoragePath)
 
     def setCodeStoragePath(self,codeStoragePath ):
@@ -35,7 +35,7 @@ class CodeGenerator:
     def saveGenerationCode(self,filename="ModelCreator.cs"):
         if self.__checkCreationDMMParameters__():
             path = self.codeStoragePath
-            namespace = self.DataModelModule.getNombre()
+            namespace = self.dataModelModule.getNombre()
             # Create a file object:
             # in "write" mode
             FILE = open(join(path, filename),"w")
@@ -50,11 +50,11 @@ class CodeGenerator:
             FILE.write("\n\n  \t \t public void CreateDM() \n \t \t { ")
             FILE.write("\n \t \t    ZentityContext context = new ZentityContext(connectionString);")
             FILE.write("\n \t \t   //Create a new module.") 
-            FILE.write("\n\t \t    DataModelModule module = new DataModelModule { NameSpace = \"Zentity."+namespace+"\" };")
+            FILE.write("\n\t \t    dataModelModule module = new dataModelModule { NameSpace = \"Zentity."+namespace+"\" };")
             FILE.write("\n\t \t   // Create the Resources type.")
             FILE.write("\n\t \t    ResourceType resourceTypeResource = context.DataModel.Modules[\"Zentity.Core\"].ResourceTypes[\"Resource\"];")
             
-            for resourceType in self.DataModelModule.getResourceTypes():	    	
+            for resourceType in self.dataModelModule.getResourceTypes():	    	
                 FILE.write("\n\t \t    ResourceType "+ resourceType.name +" = new ResourceType { Name = \""+resourceType.name+"\", BaseType = resourceTypeResource };")
                 FILE.write("\n\t \t    module.ResourceTypes.Add("+resourceType.name+"); ")
                 FILE.write("\n\t \t    // Create some Scalar Properties.")
@@ -102,39 +102,38 @@ class CodeGenerator:
 
 
     def __checkInsertionDMMParameters__(self):
-        RTNames = set()
-        ZXMLPrefix = set()
-        for resource in self.DataModelModule.getResourceTypes():
+        RTNames = set([])
+        ZXMLPrefix = set([])
+        for resource in self.dataModelModule.getResourceTypes():
+            #Check each resource has a unique name
+            if resource.name in RTNames:
+                raise Error("[ERROR] In DMM "+self.dataModelModule.name+", the RT name " + resource.name  +  " is repeated") 
+            else:
+                RTNames.add(resource.name)
+            #Check XMLStructure 
+            if resource.getXMLStructure()==None:
+                raise Error("[ERROR] In DMM "+self.dataModelModule.name+", in the RT "+resource.name+" has no XMLStructure")
+            else:
+                prefix = resource.getXMLStructure().getFilesPrefix()
+                #Check each resource type as a unique FilesPrefix
+                if prefix in ZXMLPrefix:
+                    raise Error("[ERROR] In DMM "+self.dataModelModule.name+", the ZXML Prefix " + prefix + " is repeated")
+                else:
+                    ZXMLPrefix.add(prefix)
             #Find a identifier variable and set uniqueVariable if there is one
             identifierProperty = None
-            propNames = set()
+            propNames = set([])
             for prop in resource.getProperties():
             #For each resource type check that all its properties have unique names
                 if prop.name in propNames:
-                    print propNames
-                    raise Error("[ERROR] In DMM "+self.DataModelModule.name+", in the RT " + resource.name  +  ", the SP " + prop.name  + " has a repeated name") 
+                    raise Error("[ERROR] In DMM "+self.dataModelModule.name+", in the RT " + resource.name  +  ", the SP " + prop.name  + " has a repeated name") 
                 else:
                     propNames.add(prop.name)
                 if prop.isIdentifier():
                     identifierProperty = prop
             #Check that if the visualizationType is IMAGE there is one identifier property
             if identifierProperty == None and resource.getVisualizationType().vType == Entidad.VisualizationType.IMAGE:
-                raise Error("[ERROR] In DMM "+self.DataModelModule.name+", the RT " + resource.name  +  " doesn't have a unique identifier property but its Visualization Type is IMAGE") 
-            #Check each resource has a unique name
-            if resource.name in RTNames:
-                raise Error("[ERROR] In DMM "+self.DataModelModule.name+", the RT name " + resource.name  +  " is repeated") 
-            else:
-                RTNames.add(resource.name)
-            #Check XMLStructure 
-            if resource.getXMLStructure()==None:
-                raise Error("[ERROR] In DMM "+self.DataModelModule.name+", in the RT "+resource.name+" has no XMLStructure")
-            else:
-                prefix = resource.getXMLStructure().getFilesPrefix()
-                #Check each resource type as a unique FilesPrefix
-                if prefix in ZXMLPrefix:
-                    raise Error("[ERROR] In DMM "+self.DataModelModule.name+", the ZXML Prefix " + prefix + " is repeated")
-                else:
-                    ZXMLPrefix.add(prefix)
+                raise Error("[ERROR] In DMM "+self.dataModelModule.name+", the RT " + resource.name  +  " doesn't have a unique identifier property but its Visualization Type is IMAGE") 
         return True
 
     def writeImports(self,FILE):
@@ -145,7 +144,7 @@ class CodeGenerator:
         FILE.write("using System.Text;\n")
         FILE.write("using Zentity.Core;\n")
         FILE.write("using System.Xml.Serialization;")
-        FILE.write("using Zentity."+ self.DataModelModule.getNombre()+";\n")
+        FILE.write("using Zentity."+ self.dataModelModule.getNombre()+";\n")
 
     def writeGeneralMethods(self,FILE):
 
@@ -281,7 +280,7 @@ class CodeGenerator:
             - filename -- Filename for the generated code that will be stored in the codeStoragePath given in the constructor of the object
         """
         if self.__checkInsertionDMMParameters__():
-            namespace = self.DataModelModule.getNombre()
+            namespace = self.dataModelModule.getNombre()
             path = self.codeStoragePath
             if zxmlFilesStoragePath != None and ((not exists(zxmlFilesStoragePath)) or (not isdir(zxmlFilesStoragePath))):
                 raise OSError(errno.ENOENT,strerror(errno.ENOENT),zxmlFilesStoragePath)
@@ -296,7 +295,7 @@ class CodeGenerator:
             #Begin Deserialize Method
             self.writeGeneralMethods(FILE)
             #Begin LoadData Methods
-            for resource in self.DataModelModule.getResourceTypes():
+            for resource in self.dataModelModule.getResourceTypes():
                 loadDataMethodName = "load"+resource.getXMLStructure().getParentNodeName()+"Data"
                 dataVariableName = "data"+resource.getXMLStructure().getParentNodeName()
                 insertDataMethodName = "insertData_"+resource.name
@@ -312,7 +311,7 @@ class CodeGenerator:
             FILE.write(' \n \t\t\t\t ";')
 
             FILE.write(" \n \t\t\t DataInsert dataUploader = new DataInsert();")
-            for resource in self.DataModelModule.getResourceTypes():
+            for resource in self.dataModelModule.getResourceTypes():
                 if resource.getVisualizationType().vType == Entidad.VisualizationType.IMAGE:
                     imagesPath = resource.getVisualizationType().path
                 else:
@@ -367,7 +366,6 @@ class ZXMLGenerator:
     def extractInfo(self,path,idsArray,resourceType,xmlParentName,xmlChildName,imagesPerFile = 100):
         i = -1
         for i in range(0,len(idsArray)/imagesPerFile):
-            print "[DEBUG] Generating ZXML file #" + str(i)
             ElementTree(self.buildImageSTree(idsArray[i*imagesPerFile:((i+1)*imagesPerFile)],path,resourceType.scalarProperties,xmlParentName,xmlChildName)).write(join(path,resourceType.getEstructuraXML().getPrefijoXML()+str(i)+'.xml'))
         print "[DEBUG] Generating ZXML file #" + str(i)
         ElementTree(ElementTree(self.buildImageSTree(idsArray[((i+1)*imagesPerFile):],path,resourceType.getProperties(),xmlParentName,xmlChildName)).write(join(path,resourceType.getXMLStructure().getFilesPrefix()+str(i+1)+'.xml')))
