@@ -1,0 +1,144 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/bootstrap.min.css">
+        <style type="text/css">
+            body {
+                padding-top: 60px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="topbar">
+            <div class="topbar-inner">
+                <div class="container-fluid">
+                    <a class="brand" href="#">MODELADO</a>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+             <div class="sidebar">
+                <a href="/"><button class="offset1 btn span4"> HOME </button></a>
+            <hr>
+                <a href="/images"><button class="offset1 btn span4"> IMAGES </button></a>
+            <hr>
+                <a href="/latentTopics"><button class="offset1 btn span4"> LATENT TOPICS </button></a>
+            <hr>
+                <a href="/codeGenerator"><button class="offset1 btn span4 primary"> CODE GENERATION </button></a>
+            </div>
+       <div class="content well">
+            <form method="post" action="/codeGenerator/generate" enctype="multipart/form-data">
+                <!--- TAG INFORMATION -->
+                <div class="page-header">
+                    <h1>Tags information</h1>
+                    <small>FALTA INSTRUCCIONES.</small>
+                </div>
+                <div class="row">
+                    <div class="span8">
+                        <fieldset>
+                            <legend>Most important tags</legend>
+                            <p>Write the wanted amount of most importatn tags.</p> 
+                            <label for="fileInput">Amount</label>
+                            <div class="input">
+                                <input  id="topWords" name="topWords" type="text" value="5">
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="span4">
+                        <fieldset>
+                            <legend>Number of properties.</legend>
+                            <p>Type the desired number of properties.</p>
+                            <label for="fileInput">Amount</label>
+                            <div class="input">
+                                <input  id="LTNamesTop" name="LTNamesTop" type="text" value="2">
+                            </div>
+                        </fieldset>
+                    </div>           
+                </div>
+                <div class="row">
+                    <div class="span8">
+                        <fieldset>
+                            <legend>Latent topic size name</legend>
+                            <p>Write the amount of tags used for the latent topic name.</p>
+                            <label for="fileInput">Amount</label>
+                            <div class="input">
+                                <input  id="LTNamesSize" name="LTNamesSize" type="text" value="4">
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <!--- ZENTITY PATHS -->
+                <div class="page-header">
+                    <h1>Zentity paths</h1>
+                    <small>FALTA INSTRUCCIONES.</small>
+                </div>
+                <div class="row">
+                    <div class="span8">
+                        <fieldset>
+                            <legend>Code storage path</legend>
+                            <p>FALTA</p>
+                            <label for="fileInput">Path</label>
+                            <div class="input">
+                                <input  id="codeStoragePath" name="codeStoragePath" type="text" value="../data/code/">
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="span4">
+                        <fieldset>
+                            <legend>Zxml files path</legend>
+                            <p>FALTA</p>
+                            <label for="fileInput">Path</label>
+                            <div class="input">
+			    <input  id="zxmlFilesPath" name="zxmlFilesPath" type="text" value="../data/ZXML/">
+                            </div>
+                        </fieldset>
+                    </div>                         
+                </div>
+                <div class="row">
+                    <div class="span8">
+                        <fieldset>
+                            <legend>XML information path</legend>
+                            <p>FALTA</p>
+                            <label for="fileInput">Path</label>
+                            <div class="input">
+                                <input  id="xmlInfoPath" name="xmlInfoPath" type="text" value="">
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <!--- Zentity Information -->
+                <div class="page-header">
+                    <h1>Zentity Information</h1>
+                    <small>FALTA INSTRUCCIONES.</small>
+                </div>
+                <div class="row">
+                    <div class="span8">
+                        <fieldset>
+                            <legend>Data model module name</legend>
+                            <p>FALTA</p>
+                            <label for="fileInput">Name</label>
+                            <div class="input">
+                                <input  id="dataModelName" name="dataModelName" type="text" value="DMMTest1">
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="span4">
+                        <fieldset>
+                            <legend>Resource type name</legend>
+                            <p>FALTA</p>
+                            <label for="fileInput">Name</label>
+                            <div class="input">
+                                <input  id="resourceTypeName" name="resourceTypeName" type="text" value="RTTest1">
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>  
+            <div class="actions">
+                <input type="submit" class="btn primary" value="Generate">&nbsp;<button type="reset" class="btn">Cancel</button>
+            </div>
+            </form>
+        </div><!-- /content-well -->
+        <footer>
+            <p>&copy; Company 2011</p>
+        </footer>
+    </body>
+</html>
