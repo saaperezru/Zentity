@@ -37,12 +37,14 @@ $(function(){
     <% _.each(docs, function(img) { %> <li><a><img class='thumbnail' src='/images/get?id=<%= img %>'></a></li> <% }); %> \
     </ul> \
     <div class=\"clearfix\"></div> \
-    <a class=\"btn small danger\" href=\"#\">deselect</a> \
+    <div class='input-prepend'> \
+    <small> select </small><input type=\"checkbox\"  <%= selected ? 'checked' : '' %>/> \
+    </div> \
   </div> \
 </div>"
     ),
     events: {
-      "click a.btn"   : "toggleSelected",
+      "click input"   : "toggleSelected",
     },
     initialize: function() {
       this.model.bind('change', this.render, this);
