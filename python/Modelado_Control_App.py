@@ -17,7 +17,7 @@ app = SessionMiddleware(app(), session_opts)
 def imagesDefault():
     return template('images')
 @route('/latentTopics')
-def imagesDefault():
+def latentTopDefault():
     return template('latentTopics')
 @route('/latentTopics/<action>')
 def latentTopics(action):
@@ -103,7 +103,7 @@ def home():
         return template('home')
     else:
         return template('home_initalized')
-@post('/')
+@post('/codeGeneator')
 def createModel():
     s = request.environ.get('beaker.session')
     modelParameters = ME.CollectionParameters()
@@ -133,6 +133,19 @@ def createModel():
         abort(400,"ERROR!!!!")
     redirect('/images')
 
+@post('/')
+def createZentityModel():
+    s = request.environ.get('beaker.session')
+    tagsC = ME.TagsConfig(request.forms.topWords, request.forms.LTNamesTop, request.forms.LTNamesSize)
+    ZPathsC = ME.ZentityPathsConfig(request.forms.codeStoragePath, request.forms.zxmlFilesPath, request.forms.xmlInfoPath)
+    ControlZ = MC.ControlZentity(request.forms.dataModelName, request.forms.resourceTypeName,cC,tagsC,ZPathsC)
+    try:
+        ControlZ.generateCode()
+        ControlZ.generateUploadingCode()
+        ControlZ.generateZXMLFiles()
+    except:
+        abort(400,"ERROR!!!!")
+    redirect('/')
 
 
 @route('/favicon.ico')
