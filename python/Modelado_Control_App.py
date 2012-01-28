@@ -39,6 +39,7 @@ def latentTopics(action):
             LTSStatus = model.getCollection().getSelectedTextualLatentTopics()
         else:
             LTSStatus = model.getCollection().getSelectedVisualLatentTopics()
+        LTSStatus[id]=value
         return
     if action == "list":
         numberOfImages = 3
@@ -105,7 +106,7 @@ def home():
     if not model:
         return template('home')
     else:
-        return template('home_initalized')
+        return template('home_initialized')
 @post('/')
 def createModel():
     s = request.environ.get('beaker.session')
@@ -136,20 +137,22 @@ def createModel():
         abort(400,"ERROR!!!!")
     redirect('/images')
 
-@post('/codeGenerator')
-def createZentityModel():
-    s = request.environ.get('beaker.session')
-    model = s.get('model',0)
-    tagsC = ME.TagsConfig(request.forms.topWords, request.forms.LTNamesTop, request.forms.LTNamesSize)
-    ZPathsC = ME.ZentityPathsConfig(request.forms.codeStoragePath, request.forms.zxmlFilesPath, request.forms.xmlInfoPath)
-    ControlZ = MC.ControlZentity(request.forms.dataModelName, request.forms.resourceTypeName,model,tagsC,ZPathsC)
-    try:
-        ControlZ.generateCode()
-        ControlZ.generateUploadingCode()
-        ControlZ.generateZXMLFiles()
-    except:
-        abort(400,"ERROR!!!!")
-    redirect('/')
+@post('/codeGenerator/<action>')
+def createZentityModel(action):
+    if action == "generate":
+        s = request.environ.get('beaker.session')
+        model = s.get('model',0)
+        tagsC = ME.TagsConfig(int(request.forms.topWords), int(request.forms.LTNamesTop), int(request.forms.LTNamesSize))
+        ZPathsC = ME.ZentityPathsConfig(request.forms.codeStoragePath, request.forms.zxmlFilesPath, request.forms.xmlInfoPath)
+        ControlZ = MC.ControlZentity(request.forms.dataModelName, request.forms.resourceTypeName,model,tagsC,ZPathsC)
+        try:
+            ControlZ.generateCode()
+            ControlZ.generateUploadingCode()
+            ControlZ.generateZXMLFiles()
+            return template("codeGenerator_sucess")
+        except:
+            raise
+            abort(400,"ERROR!!!!")
 
 
 @route('/favicon.ico')

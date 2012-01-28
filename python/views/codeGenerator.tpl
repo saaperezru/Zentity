@@ -1,6 +1,6 @@
 <html>
     <head>
-        <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/bootstrap.min.css">
         <style type="text/css">
             body {
                 padding-top: 60px;
@@ -16,17 +16,17 @@
             </div>
         </div>
         <div class="container-fluid">
-            <div class="sidebar">
-                <button class="offset1 btn span4"> HOME </button>
-                <hr>
-                <button class="offset1 btn span4"> IMAGES </button>
-                <hr>
-                <button class="offset1 btn span4"> LATENT TOPICS </button>
-                <hr>
-                <button class="offset1 btn span4 primary"> CODE GENERATION </button>
+             <div class="sidebar">
+                <a href="/"><button class="offset1 btn span4"> HOME </button></a>
+            <hr>
+                <a href="/images"><button class="offset1 btn span4"> IMAGES </button></a>
+            <hr>
+                <a href="/latentTopics"><button class="offset1 btn span4"> LATENT TOPICS </button></a>
+            <hr>
+                <a href="/codeGenerator"><button class="offset1 btn span4 primary"> CODE GENERATION </button></a>
             </div>
-        <div class="content well">
-            <form method="post" action="/codeGenerator" enctype="multipart/form-data">
+       <div class="content well">
+            <form method="post" action="/codeGenerator/generate" enctype="multipart/form-data">
                 <!--- TAG INFORMATION -->
                 <div class="page-header">
                     <h1>Tags information</h1>
@@ -88,7 +88,7 @@
                             <p>FALTA</p>
                             <label for="fileInput">Path</label>
                             <div class="input">
-			    <input  id="zxmlFilesPath" name="zxmlFilesPath" type="text" value="..data/ZXML/">
+			    <input  id="zxmlFilesPath" name="zxmlFilesPath" type="text" value="../data/ZXML/">
                             </div>
                         </fieldset>
                     </div>                         
@@ -132,10 +132,10 @@
                         </fieldset>
                     </div>
                 </div>  
-            </form>
             <div class="actions">
                 <input type="submit" class="btn primary" value="Generate">&nbsp;<button type="reset" class="btn">Cancel</button>
             </div>
+            </form>
         </div><!-- /content-well -->
         <footer>
             <p>&copy; Company 2011</p>

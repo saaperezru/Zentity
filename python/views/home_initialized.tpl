@@ -17,194 +17,32 @@
         </div>
         <div class="container-fluid">
             <div class="sidebar">
-                <button class="offset1 btn span4 primary"> HOME </button>
-                <hr>
-                <button class="offset1 btn span4"> IMAGES </button>
-                <hr>
-                <button class="offset1 btn span4"> LATENT TOPICS </button>
-                <hr>
-                <button class="offset1 btn span4"> CODE GENERATION </button>
+                <a href="/"><button class="offset1 btn span4 primary"> HOME </button></a>
+            <hr>
+                <a href="/images"><button class="offset1 btn span4"> IMAGES </button></a>
+            <hr>
+                <a href="/latentTopics"><button class="offset1 btn span4"> LATENT TOPICS </button></a>
+            <hr>
+                <a href="/codeGenerator"><button class="offset1 btn span4"> CODE GENERATION </button></a>
             </div>
         <div class="content well">
         <div class="page-header">
             <h1>Load Matrices</h1>
             <p>FALTA INSTRUCCIONES.</p>
         </div>
-        <div class="row">
-            <h2>Load textual matrices</h2>
-            <!-- HT-->
-            <form><fieldset>
-                <legend>Representation matrix</legend>
-                <div class="row">
-                    <div class="span6">
-                        <label for="fileInput">File input</label>
-                        <div class="input">
-                            <input type="file" name="fileInput" id="fileInput" class="input-file">
-                        </div>
-                    </div>
-                    <div class="span6">
-                        <label for="xlInput">Variable name</label>
-                        <div class="input">
-                            <input style="height:20px" class="xlarge" id="xlInput" name="xlInput" size="40" type="text">
-                        </div>
-                    </div>
-                </div>     
-            </fieldset></form>
-            <!-- FT-->
-            <form><fieldset>
-                <legend>Basis matrix</legend>
-                <div class="row">
-                    <div class="span6">
-                        <label for="fileInput">File input</label>
-                        <div class="input">
-                            <input type="file" name="fileInput" id="fileInput" class="input-file">
-                        </div>
-                    </div>
-                    <div class="span6">
-                        <label for="xlInput">Variable name</label>
-                        <div class="input">
-                            <input tyle="height:20px" class="xlarge" id="xlInput" name="xlInput" size="40" type="text">
-                        </div>
-                    </div>
-                </div>     
-            </fieldset></form>
-            <!-- FTV-->
-            <form><fieldset>
-                <legend>asymmetric Basis Matrix</legend>
-                <div class="row">
-                    <div class="span6">
-                        <label for="fileInput">File input</label>
-                        <div class="input">
-                            <input type="file" name="fileInput" id="fileInput" class="input-file">
-                        </div>
-                    </div>
-                    <div class="span6">
-                        <label for="xlInput">Variable name</label>
-                        <div class="input">
-                            <input tyle="height:20px" class="xlarge" id="xlInput" name="xlInput" size="40" type="text">
-                        </div>
-                    </div>
-                </div>     
-            </fieldset></form>
-            <h2>Load visual matrices</h2>
-            <!-- HV-->
-            <form><fieldset>
-                <legend>Representation matrix</legend>
-                <div class="row">
-                    <div class="span6">
-                        <label for="fileInput">File input</label>
-                        <div class="input">
-                            <input type="file" name="fileInput" id="fileInput" class="input-file">
-                        </div>
-                    </div>
-                    <div class="span6">
-                        <label for="xlInput">Variable name</label>
-                        <div class="input">
-                            <input tyle="height:20px" class="xlarge" id="xlInput" name="xlInput" size="40" type="text">
-                        </div>
-                    </div>
-                </div>     
-            </fieldset></form>
-            <!-- FV-->
-            <form><fieldset>
-                <legend>Basis matrix</legend>
-                <div class="row">
-                    <div class="span6">
-                        <label for="fileInput">File input</label>
-                        <div class="input">
-                            <input type="file" name="fileInput" id="fileInput" class="input-file">
-                        </div>
-                    </div>
-                    <div class="span6">
-                        <label for="xlInput">Variable name</label>
-                        <div class="input">
-                            <input tyle="height:20px" class="xlarge" id="xlInput" name="xlInput" size="40" type="text">
-                        </div>
-                    </div>
-                </div>     
-            </fieldset></form>
-            <!-- FVT-->
-            <form><fieldset>
-                <legend>asymmetric Basis Matrix</legend>
-                <div class="row">
-                    <div class="span6">
-                        <label for="fileInput">File input</label>
-                        <div class="input">
-                            <input type="file" name="fileInput" id="fileInput" class="input-file">
-                        </div>
-                    </div>
-                    <div class="span6">
-                        <label for="xlInput">Variable name</label>
-                        <div class="input">
-                            <input tyle="height:20px" class="xlarge" id="xlInput" name="xlInput" size="40" type="text">
-                        </div>
-                    </div>
-                </div>     
-            </fieldset></form>
-            <h2>Load matrices</h2>
-            <!-- Textual world matrix -->
-            <form><fieldset>
-                <legend>Textual words</legend>
-                <div class="row">
-                    <div class="span6">
-                        <label for="fileInput">File input</label>
-                        <div class="input">
-                            <input type="file" name="fileInput" id="fileInput" class="input-file">
-                        </div>
-                    </div>
-                    <div class="span6">
-                        <label for="xlInput">Variable name</label>
-                        <div class="input">
-                            <input tyle="height:20px" class="xlarge" id="xlInput" name="xlInput" size="40" type="text">
-                        </div>
+            <div class=span16">
+                <div class="alert-message block-message error">
+                    <a class="close" href="#">×</a>
+                    <p><strong>Oh snap! You got an error!</strong> Change this and that and <a href="#">try again</a>.</p>
+                    <ul>
+                    <li>Duis mollis est non commodo luctus</li>
+                    <li>Nisi erat porttitor ligula</li>
+                    <li>Eget lacinia odio sem nec elit</li>
+                    </ul>
+                    <div class="alert-actions">
+                    <a class="btn small" href="/?action=reset">RESET</a> <a class="btn small" href="/images">Continue with the process</a>
                     </div>
                 </div>
-            </fieldset></form>
-            <!-- Documents id-->
-            <form><fieldset>
-                <legend>Documents id</legend>
-                <div class="row">
-                    <div class="span6">
-                        <label for="fileInput">File input</label>
-                        <div class="input">
-                            <input type="file" name="fileInput" id="fileInput" class="input-file">
-                        </div>
-                    </div>  
-                    <div class="span6">
-                        <label for="xlInput">Variable name</label>
-                        <div class="input">
-                            <input tyle="height:20px" class="xlarge" id="xlInput" name="xlInput" size="40" type="text">
-                        </div>
-                    </div>
-                </div>
-            </fieldset></form>
-            <form><fieldset>
-                <legend>Tags matrix</legend>
-                <div class="row">
-                    <div class="span6">
-                        <label for="fileInput">File input</label>
-                        <div class="input">
-                            <input type="file" name="fileInput" id="fileInput" class="input-file">
-                        </div>
-                    </div>  
-                    <div class="span6">
-                        <label for="xlInput">Variable name</label>
-                        <div class="input">
-                            <input tyle="height:20px" class="xlarge" id="xlInput" name="xlInput" size="40" type="text">
-                        </div>
-                    </div>
-                </div>
-            </fieldset></form>
-            <div class="row">
-                <form><fieldset>
-                    <legend>Images path</legend>
-                    <div class="clearfix">
-                        <label for="xlInput">Variable name</label>
-                        <div class="input">
-                            <input tyle="height:20px" class="xlarge" id="xlInput" name="xlInput" size="40" type="text">
-                        </div>
-                    </div>
-                </fieldset></form>
             </div>
         </div>
         <footer>

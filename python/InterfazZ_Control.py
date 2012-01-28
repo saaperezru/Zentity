@@ -111,6 +111,7 @@ class CodeGenerator:
             for prop in resource.getProperties():
             #For each resource type check that all its properties have unique names
                 if prop.name in propNames:
+                    print propNames
                     raise Error("[ERROR] In DMM "+self.DataModelModule.name+", in the RT " + resource.name  +  ", the SP " + prop.name  + " has a repeated name") 
                 else:
                     propNames.add(prop.name)
