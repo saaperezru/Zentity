@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Zentity.Core;
-using System.Xml.Serialization;using Zentity.DMMTest1;
+using System.Xml.Serialization;using Zentity.Modulo2;
 namespace DataInsert
 { 
  	 class DataInsert 
@@ -40,76 +40,49 @@ namespace DataInsert
  			//return the value in string format 
  			return newDateTime.ToLocalTime(); 
  		 } 
- 		 private ParentImagesdataParentImages; 
+ 		 private ParentImages dataParentImages; 
  		 private void loadParentImagesData(string xmlPath) 
  		 { 
- 			 data = Deserialize<ParentImages>(xmlPath); 
+ 			dataParentImages= Deserialize<ParentImages>(xmlPath); 
  		 } 
- 		 public void insertData_RTTest1(ZentityContext zenContext, string xmlPath, string imgPath) 
+ 		 public void insertData_Entidad2(ZentityContext zenContext, string xmlPath, string imgPath) 
  		 { 
  			 loadParentImagesData(xmlPath); 
  			 using (ZentityContext context = zenContext) 
  			 { 
- 				 foreach (ParentImagesImage p in data.Items) 
+ 				 foreach (ParentImagesImage p in dataParentImages.Items) 
  				 { 
  					 //WARNING : Comparing attribute should be changed to a unique key 
- 					 context.MetadataWorkspace.LoadFromAssembly(System.Reflection.Assembly.Load("Zentity.DMMTest1")); 
+ 					 context.MetadataWorkspace.LoadFromAssembly(System.Reflection.Assembly.Load("Zentity.Modulo2")); 
  					 var existingPres = (from pres in context.Resources 
- 						 where pres.Title.Equals(p.Title, StringComparison.OrdinalIgnoreCase) 
+ 						 where pres.ImageID.Equals(p.ImageID, StringComparison.OrdinalIgnoreCase) 
  						 select pres).FirstOrDefault(); 
  						 if (existingPres != null) 
  						 { 
- 							 Console.WriteLine("[WARNING] Image {0} already exists in database", p.Title); 
+ 							 Console.WriteLine("[WARNING] Image {0} already exists in database", p.ImageID); 
  							 continue; 
  						 } 
  						 // Create resources. 
  						 try 
  							 { 
- 							 RTTest1 img = new RTTest1 {
- 								  Title = (p.Title=="True"),
- 								  Description = (p.Description=="True"),
- 								  Main_Textual_Category = (p.Main_Textual_Category=="True"),
- 								  Main_Visual_Category = (p.Main_Visual_Category=="True"),
- 								  ImageID = (p.ImageID=="True"),
- 								  LTT_J_T_Q_E = (p.LTT_J_T_Q_E=="True"),
- 								  LTT_S_G_C_L = (p.LTT_S_G_C_L=="True"),
- 								  LTT_N_E_R_D = (p.LTT_N_E_R_D=="True"),
- 								  LTT_N_O_E_C = (p.LTT_N_O_E_C=="True"),
- 								  LTT_N_Q_A_G = (p.LTT_N_Q_A_G=="True"),
- 								  LTT_A_Q_O_F = (p.LTT_A_Q_O_F=="True"),
- 								  LTT_G_N_T_H = (p.LTT_G_N_T_H=="True"),
- 								  LTT_H_T_G_M = (p.LTT_H_T_G_M=="True"),
- 								  LTT_H_F_E_C = (p.LTT_H_F_E_C=="True"),
- 								  LTT_E_B_N_J = (p.LTT_E_B_N_J=="True"),
- 								  LTV_P_T_H_F = (p.LTV_P_T_H_F=="True"),
- 								  LTV_L_E_I_M = (p.LTV_L_E_I_M=="True"),
- 								  LTV_O_D_E_Q = (p.LTV_O_D_E_Q=="True"),
- 								  LTV_T_S_J_P = (p.LTV_T_S_J_P=="True"),
- 								  LTV_E_M_R_O = (p.LTV_E_M_R_O=="True"),
- 								  LTV_Q_T_C_R = (p.LTV_Q_T_C_R=="True"),
- 								  LTV_J_L_C_D = (p.LTV_J_L_C_D=="True"),
- 								  LTV_G_I_C_S = (p.LTV_G_I_C_S=="True"),
- 								  LTV_S_D_T_Q = (p.LTV_S_D_T_Q=="True"),
- 								  Tag_A = (p.Tag_A=="True"),
- 								  Tag_B = (p.Tag_B=="True"),
- 								  Tag_E = (p.Tag_E=="True"),
- 								  Tag_D = (p.Tag_D=="True"),
- 								  Tag_G = (p.Tag_G=="True"),
- 								  Tag_F = (p.Tag_F=="True"),
- 								  Tag_I = (p.Tag_I=="True"),
- 								  Tag_H = (p.Tag_H=="True"),
- 								  Tag_J = (p.Tag_J=="True"),
- 								  Tag_M = (p.Tag_M=="True"),
- 								  Tag_L = (p.Tag_L=="True"),
- 								  Tag_O = (p.Tag_O=="True"),
- 								  Tag_N = (p.Tag_N=="True"),
- 								  Tag_Q = (p.Tag_Q=="True"),
- 								  Tag_P = (p.Tag_P=="True"),
- 								  Tag_S = (p.Tag_S=="True"),
- 								  Tag_T = (p.Tag_T=="True"), 
+ 							 Entidad2 img = new Entidad2 {
+ 								  Title = p.Title,
+ 								  Description = p.Description,
+ 								  Main_Textual_Category = p.Main_Textual_Category,
+ 								  Main_Visual_Category = p.Main_Visual_Category,
+ 								  ImageID = p.ImageID,
+ 								  LTT_PERSONA_USUARIO_EJECUTIVO_ANIMAL = Convert.ToDouble(p.LTT_PERSONA_USUARIO_EJECUTIVO_ANIMAL),
+ 								  LTT_TIERRA_AGUA_ANIMAL_USUARIO = Convert.ToDouble(p.LTT_TIERRA_AGUA_ANIMAL_USUARIO),
+ 								  LTV_USUARIO_EJECUTIVO_PERSONA_TIERRA = Convert.ToDouble(p.LTV_USUARIO_EJECUTIVO_PERSONA_TIERRA),
+ 								  LTV_TIERRA_AGUA_ANIMAL_PERSONA = Convert.ToDouble(p.LTV_TIERRA_AGUA_ANIMAL_PERSONA),
+ 								  Tag_EJECUTIVO = (p.Tag_EJECUTIVO=="True"),
+ 								  Tag_PERSONA = (p.Tag_PERSONA=="True"),
+ 								  Tag_TIERRA = (p.Tag_TIERRA=="True"),
+ 								  Tag_AGUA = (p.Tag_AGUA=="True"),
+ 								  Tag_USUARIO = (p.Tag_USUARIO=="True"), 
  							 }; 
  							 context.AddToResources(img); 
- 							 string[] imagesInFolder = Directory.GetFiles(imgPath, p.Title + ".*"); 
+ 							 string[] imagesInFolder = Directory.GetFiles(imgPath, p.ImageID + ".*"); 
  							 // Create a Zentity file. 
  							 FileInfo ImageFile = new FileInfo(imagesInFolder[0]); 
  							 Zentity.Core.File fileResource = new Zentity.Core.File(); 
@@ -121,21 +94,21 @@ namespace DataInsert
  							 fileResource.MimeType = "image/" + fileResource.FileExtension.Replace(".", string.Empty); 
  							 // Add the file to context.     
  							 context.AddToResources(fileResource); 
- 							 Console.WriteLine("[INFO] Creating image {0}", p.Title); 
+ 							 Console.WriteLine("[INFO] Creating image {0}", p.ImageID); 
  							 context.SaveChanges(); 
  							 // Now upload the actual binary content of the file.     
  							 FileStream fStream = new FileStream(ImageFile.FullName, FileMode.Open, FileAccess.Read); 
- 							 Console.WriteLine("[INFO] Saving image {0} file", p.Title); 
+ 							 Console.WriteLine("[INFO] Saving image {0} file", p.ImageID); 
  							 context.UploadFileContent(fileResource, fStream); 
  							 //Asociate file with Resource 
  							 img.Files.Add(fileResource); 
  							 context.InsertResourceHasFile(fileResource.Id, img.Id); 
  							 //Save Changes in context 
- 							 Console.WriteLine("[INFO] Associating image {0} and file", p.Title); 
+ 							 Console.WriteLine("[INFO] Associating image {0} and file", p.ImageID); 
  							 context.SaveChanges(); 
  							 } 
  							 catch{ 
- 								 Console.WriteLine("[ERROR] During image {0} creation", p.Title); 
+ 								 Console.WriteLine("[ERROR] During image {0} creation", p.ImageID); 
  								 continue; 
  							 } 
  						 } 
@@ -144,7 +117,7 @@ namespace DataInsert
  		 static void Main(string[] args) 
  		 { 
  			 const string connectionString = @"provider=System.Data.SqlClient; 
- 				 metadata=../data/code/code/Zentity.DMMTest1.ExtendedCore.csdl|../data/code/code/Zentity.DMMTest1.csdl|../data/code/code/Zentity.DMMTest1.Consolidated.msl|../data/code/code/Zentity.DMMTest1.Consolidated.ssdl; 
+ 				 metadata=../data/code/code/Zentity.Modulo2.ExtendedCore.csdl|../data/code/code/Zentity.Modulo2.csdl|../data/code/code/Zentity.Modulo2.Consolidated.msl|../data/code/code/Zentity.Modulo2.Consolidated.ssdl; 
  				 provider connection string='Data Source=.; 
  				 Initial Catalog=Zentity;Integrated Security=True;MultipleActiveResultSets=True' 
  				 "; 
@@ -155,7 +128,7 @@ namespace DataInsert
  			 foreach (string a in ZXMLFiles) 
  			 { 
  				 ZentityContext zenContext = new ZentityContext(connectionString); 
- 				 dataUploader.insertData_RTTest1(zenContext, a, imgFolderPath); 
+ 				 dataUploader.insertData_Entidad2(zenContext, a, imgFolderPath); 
  			 }
 		 }
 	 }

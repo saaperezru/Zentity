@@ -50,7 +50,7 @@ class CodeGenerator:
             FILE.write("\n\n  \t \t public void CreateDM() \n \t \t { ")
             FILE.write("\n \t \t    ZentityContext context = new ZentityContext(connectionString);")
             FILE.write("\n \t \t   //Create a new module.") 
-            FILE.write("\n\t \t    dataModelModule module = new dataModelModule { NameSpace = \"Zentity."+namespace+"\" };")
+            FILE.write("\n\t \t    DataModelModule module = new DataModelModule { NameSpace = \"Zentity."+namespace+"\" };")
             FILE.write("\n\t \t   // Create the Resources type.")
             FILE.write("\n\t \t    ResourceType resourceTypeResource = context.DataModel.Modules[\"Zentity.Core\"].ResourceTypes[\"Resource\"];")
             
@@ -68,7 +68,7 @@ class CodeGenerator:
             FILE.write("\n\t \t    context.DataModel.Modules.Add(module);")
             FILE.write("\n\t \t    context.DataModel.Synchronize();\n")
             FILE.write("\n\t \t    // Generate Extensions Assembly.")
-            FILE.write("\n\t \t    using (FileStream fout = new FileStream(@\""+join(path, "code",namespace)+".dll\", FileMode.Create, FileAccess.Write))")
+            FILE.write("\n\t \t    using (FileStream fout = new FileStream(@\""+join(path,"Zentity."+namespace)+".dll\", FileMode.Create, FileAccess.Write))")
             FILE.write("\n\t \t \t {  \n")
             FILE.write("\t \t \t  byte[] rawAssembly = context.DataModel.GenerateExtensionsAssembly(")
             FILE.write("\n\t \t \t    \"Zentity."+namespace + "\", false, null, new string[] { \"Zentity."+namespace + "\" }, null); \n")
@@ -77,10 +77,10 @@ class CodeGenerator:
             FILE.write("\n\t\t      }")
             FILE.write("\n\t \t    // Generate Entity Framework artifacts.\n")
             FILE.write("\n\t \t    EFArtifactGenerationResults results = context.DataModel.GenerateEFArtifacts(\"Zentity."+namespace + "\");")
-            FILE.write("\n\t \t    results.Csdls.Where(tuple => tuple.Key == \"Zentity.Core\").First().Value.Save(@\""+join(path, "code","Zentity."+namespace)+".ExtendedCore.csdl\");")
-            FILE.write("\n\t \t    results.Csdls.Where(tuple => tuple.Key == \"Zentity."+namespace+"\").First().Value.Save(@\""+join(path, "code","Zentity."+namespace)+".csdl\");")
-            FILE.write("\n\t \t    results.Msl.Save(@\""+join(path, "code","Zentity."+namespace)+".Consolidated.msl\");")
-            FILE.write("\n\t \t    results.Ssdl.Save(@\""+join(path, "code","Zentity."+namespace)+".Consolidated.ssdl\");\n") 
+            FILE.write("\n\t \t    results.Csdls.Where(tuple => tuple.Key == \"Zentity.Core\").First().Value.Save(@\""+join(path, "Zentity."+namespace)+".ExtendedCore.csdl\");")
+            FILE.write("\n\t \t    results.Csdls.Where(tuple => tuple.Key == \"Zentity."+namespace+"\").First().Value.Save(@\""+join(path, "Zentity."+namespace)+".csdl\");")
+            FILE.write("\n\t \t    results.Msl.Save(@\""+join(path, "Zentity."+namespace)+".Consolidated.msl\");")
+            FILE.write("\n\t \t    results.Ssdl.Save(@\""+join(path, "Zentity."+namespace)+".Consolidated.ssdl\");\n") 
             #Closes createDM()
             FILE.write("\n\t\t }")
             FILE.write("\n\t\t static void Main(string[] args)")	
@@ -196,11 +196,11 @@ class CodeGenerator:
                 break
 
 
-        FILE.write(" \n \t\t private " + resource.getXMLStructure().getParentNodeName() + dataVariable + ";")
+        FILE.write(" \n \t\t private " + resource.getXMLStructure().getParentNodeName() + " " + dataVariable + ";")
         #Begin loadData Method
         FILE.write(" \n \t\t private void "+loadDataMethodName+"(string xmlPath)")
         FILE.write(" \n \t\t {")
-        FILE.write(" \n \t\t\t data = Deserialize<"+resource.getXMLStructure().getParentNodeName() +">(xmlPath);")
+        FILE.write(" \n \t\t\t" + dataVariable + "= Deserialize<"+resource.getXMLStructure().getParentNodeName() +">(xmlPath);")
         FILE.write(" \n \t\t }")
         #Finish loadData Method                   
    
@@ -211,7 +211,7 @@ class CodeGenerator:
         FILE.write(" \n \t\t\t using (ZentityContext context = zenContext)")
         FILE.write(" \n \t\t\t {")
         #Begin for
-        FILE.write(" \n \t\t\t\t foreach ("+resource.getXMLStructure().getParentNodeName() +resource.getXMLStructure().getChildNodeName() +" p in data.Items)")
+        FILE.write(" \n \t\t\t\t foreach ("+resource.getXMLStructure().getParentNodeName() +resource.getXMLStructure().getChildNodeName() +" p in " + dataVariable +".Items)")
         FILE.write(" \n \t\t\t\t {")
         FILE.write(" \n \t\t\t\t\t //WARNING : Comparing attribute should be changed to a unique key")
         FILE.write(' \n \t\t\t\t\t context.MetadataWorkspace.LoadFromAssembly(System.Reflection.Assembly.Load("Zentity.'+namespace+'"));')

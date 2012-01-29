@@ -43,37 +43,29 @@ class ControlTypeLatentTopic:
         #Review matrix type.
         
         if not self.correctClass(H):
-            print "Error-class"
-            return None
+            raise ClassError("H matrix is not a numpy array or a numpy matrix")
         if not self.correctClass(F1):
-            print "Error-class"
-            return None
+            raise ClassError("F matrix is not a numpy array or a numpy matrix")
         if not self.correctClass(LD):
-            print "Error-class"
-            return None
+            raise ClassError("The list of document is not a numpy array or a numpy matrix")
         if W1!=None:
             if not self.correctClass(W1):
-                print "Error-class"
-                return None
+                raise ClassError("W matrix is not a numpy array or a numpy matrix")
         if F2!=None:
             if not self.correctClass(F2):
-                print "Error-class"
-                return None
+                raise ClassError("Assymetric F matrix is not a numpy array or a numpy matrix")
         if W2!=None:
             if not self.correctClass(W2):
-                print "Error-class"
-                return None
+                raise ClassError("Assymetric W matrix is not a numpy array or a numpy matrix")
         
         if(LD.shape[0] < LD.shape[1]):
             LD = np.transpose(LD)
         if(LD.shape[1] != 1):
-            print "Document List is not a vector"
-            return None
+            raise SizeError("Document List is not a vector")
         
         #Review the dimensions of each matrix.
         if not self.correctDimensions(LD, H, F1, W1, F2, W2):
-            print "Error-shape"
-            return None
+            raise SizeError("Document List is not a vector")
 
         #Attributes initialization.  
         self.__arrayControlLatentTopics=[]
@@ -167,9 +159,7 @@ class ControlTypeLatentTopic:
 	    Mt=M/s
 	    return Mt
         else:
-            print "Error-class"
-            return None
-
+            raise ClassError("The given matrix is not a numpy matrx or a nupy array")
 
     def sortVector(self, M):
         """ Sort the index of a M vector depending on M.
@@ -179,8 +169,7 @@ class ControlTypeLatentTopic:
         if self.correctClass(M):
             return np.argsort(M) 
         else:
-            print "Error-class"
-            return None
+            raise ClassError("The given matrix is not a numpy matrx or a nupy array")
         
 
     def createDictionary(self, LD):

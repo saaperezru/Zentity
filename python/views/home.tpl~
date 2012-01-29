@@ -84,7 +84,7 @@
                           <div class="clearfix">
                             <label for="">Path</label>
                             <div class="input">
-                              <input class="xlarge" id="xlInput" name="DocumentsPath" size="30" type="text" value="../data/images/">
+                              <input class="xlarge" id="xlInput" name="DocumentsPath" size="30" type="text" value="C:\Users\tuareg\Desktop\prueba4\images\">
                             </div>
                           </div><!-- /clearfix -->
                 </fieldset>

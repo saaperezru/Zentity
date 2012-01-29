@@ -107,8 +107,7 @@ class VisualizationType:
 
 class DataTypes:
 
-    STRING,BOOLEAN,DECIMAL,DOUBLE,SINGLE,BYTE,INT16,INT32,INT64,DATETIME,BINARY = ["DataTypes.Boolean","DataTypes.String","DataTypes.Decimal","DataTypes.Double","DataTypes.Single","DataTypes.Byte","DataTypes.Int16","DataTypes.Int32","DataTypes.Int64","DataTypes.DateTime","DataTypes.Binary"]
-
+    BOOLEAN,STRING,DECIMAL,DOUBLE,SINGLE,BYTE,INT16,INT32,INT64,DATETIME,BINARY = ["DataTypes.Boolean","DataTypes.String","DataTypes.Decimal","DataTypes.Double","DataTypes.Single","DataTypes.Byte","DataTypes.Int16","DataTypes.Int32","DataTypes.Int64","DataTypes.DateTime","DataTypes.Binary"]
 
 class Extractor:
     def extract(self,id):

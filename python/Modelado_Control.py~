@@ -19,9 +19,9 @@ class ControlMatrix:
                A numpy array with all elements of the Matlab matrix.
         """
         return np.array(sio.loadmat(path)[name])
-        
+
 class ControlCollection:
-    
+
     def __init__(self, colectionParameters):
         """Is the control class of Modelado. It is responsible for building and modifying the data model.
            Parameters
@@ -38,8 +38,8 @@ class ControlCollection:
             textualH = ControlMatrix.InstanceMatrix(colectionParameters.getTextualHPath(), colectionParameters.getTextualHVariableName())
             textualVisualF = ControlMatrix.InstanceMatrix(colectionParameters.getTextualVisualFPath(), colectionParameters.getTextualVisualFVariableName())
             self.__controlNMFTextual = ControlNMF(self,textualF,textualH, textualVisualF, documentList, 1, "Textual", "Tex")
-
-	    visualF = ControlMatrix.InstanceMatrix(colectionParameters.getVisualFPath(), colectionParameters.getVisualFVariableName())
+            
+            visualF = ControlMatrix.InstanceMatrix(colectionParameters.getVisualFPath(), colectionParameters.getVisualFVariableName())
             visualH = ControlMatrix.InstanceMatrix(colectionParameters.getVisualHPath(), colectionParameters.getVisualHVariableName())
             visualTextualF = ControlMatrix.InstanceMatrix(colectionParameters.getVisualTextualFPath(), colectionParameters.getVisualTextualFVariableName())
             self.__controlNMFVisual = ControlNMF(self, visualF, visualH, visualTextualF, documentList, 2, "Visual", "Vis")
@@ -54,13 +54,12 @@ class ControlCollection:
                 raise
             tF=[]
             for i in  textualFeatures.tolist():
-	        tF.append(i[0][0])
+                tF.append(i[0][0])
             termDocumentMatrix = ControlMatrix.InstanceMatrix(colectionParameters.getTermDocumentMatrixPath(), colectionParameters.getTermDocumentMatrixVariableName())
-            
             #Lets create the ordered tags list
-            tagsOcurrence = np.dot(termDocumentMatrix,np.ones((termDocumentMatrix.shape[1],1)))
-            orderedTags = np.argsort(tagsOcurrence)
-            
+            tagsOcurrence = np.transpose(np.dot(termDocumentMatrix, np.ones(((termDocumentMatrix.shape[1]),1))))
+            orderedTags = np.argsort(tagsOcurrence[0]).tolist()
+            orderedTags.reverse()
             #Documents creation
             documents = []
             k = 0
@@ -80,7 +79,7 @@ class ControlCollection:
             print "Error-creation"
             #FALTA CREAR LA EXEPCION
             raise
-        
+ 
     def getDocumentsList(self):
         """Returns information about all documents in the model."""
         if(self.__collection == None):
@@ -140,7 +139,7 @@ class ControlNMF:
         return self.__controlLatentTopics.getMostImportantLatentTopicForImg(id)
     
     def imagesInstances(self,controlLatentTopic,tam):
-        """Return top <tam> most important string array for the given laten topic."""
+        """Return top <tam> most important documents for the given laten topic."""
         importatDocs = controlLatentTopic.getDocumentResume()
         images = []
         for i in xrange(0,tam):
@@ -154,7 +153,6 @@ class ControlNMF:
         ready = 0
         actualPos = 0
         resume = controlLatentTopic.getDocumentResume()
-        print resume
         while ready<tam and actualPos < len(resume):
             if documents[resume[actualPos]].getSelected():
                 ret.append(resume[actualPos])
@@ -162,10 +160,9 @@ class ControlNMF:
             actualPos = actualPos+1
         return ret
     
-    def names(self,controlLatentTopic,tam):
+    def names(self,controlLatentTopic,tam, clusteringTextual):
         """Retorn top <tam> most important string array for the given laten topic."""
-        
-        importatNames = controlLatentTopic.getModalResume()
+        importatNames = controlLatentTopic.getModalResume(type = clusteringTextual)
         name = []
         for i in xrange(0,tam):
             name.append(self.__controlCollection.getCollection().getTextualFeatures()[importatNames[i]])
@@ -215,18 +212,18 @@ class ControlZentity:
         #Now add al  the Scalar Properties to this RT1
         #Some basic SPs
         titleExtractor = Extractors.TitleExtractor(xmlInfoPath)
-        RT1.addProperty(ZEntidad.ScalarProperty("Title",ZEntidad.DataTypes.STRING,titleExtractor,False,True))
+        RT1.addProperty(ZEntidad.ScalarProperty("Title",ZEntidad.DataTypes.STRING,titleExtractor,True,False))
         descriptionExtractor = Extractors.DescriptionExtractor(xmlInfoPath)
-        RT1.addProperty(ZEntidad.ScalarProperty("Description",ZEntidad.DataTypes.STRING,descriptionExtractor,False,True))
+        RT1.addProperty(ZEntidad.ScalarProperty("Description",ZEntidad.DataTypes.STRING,descriptionExtractor,True,False))
         #A main textual category extractor
-        mainTextualCategoryExtractor = Extractors.MainCategoryExtractor(self.controlCollection.getControlNMFTextual(),LatentTopicsNameSize ) 
+        mainTextualCategoryExtractor = Extractors.MainCategoryExtractor(self.controlCollection.getControlNMFTextual(),LatentTopicsNameSize,True) 
         RT1.addProperty(ZEntidad.ScalarProperty("Main_Textual_Category",ZEntidad.DataTypes.STRING,mainTextualCategoryExtractor))
         #A main visual category extractor
-        mainVisualCategoryExtractor = Extractors.MainCategoryExtractor(self.controlCollection.getControlNMFVisual(),LatentTopicsNameSize ) 
+        mainVisualCategoryExtractor = Extractors.MainCategoryExtractor(self.controlCollection.getControlNMFVisual(),LatentTopicsNameSize,False) 
         RT1.addProperty(ZEntidad.ScalarProperty("Main_Visual_Category",ZEntidad.DataTypes.STRING,mainVisualCategoryExtractor))
         #There must be one identifier property
         imageIdExtractor = Extractors.ImageIdExtractor()
-        RT1.addProperty(ZEntidad.ScalarProperty("ImageID",ZEntidad.DataTypes.STRING,imageIdExtractor,True,False))
+        RT1.addProperty(ZEntidad.ScalarProperty("ImageID",ZEntidad.DataTypes.STRING,imageIdExtractor,False,True))
         #There is one SP for each Textual LatentTopic 
         LTSList = self.controlCollection.getControlNMFTextual().getControlArrayLatentTopics()
         LTSStatus = self.controlCollection.getCollection().getSelectedTextualLatentTopics()
@@ -235,11 +232,11 @@ class ControlZentity:
             LT = LTSList[i]
             if selected:
                 LTExtractor = Extractors.LatentTopicExtractor(LT)
-                LTName = self.controlCollection.getControlNMFTextual().names(LT,LatentTopicsNameSize)
+                LTName = self.controlCollection.getControlNMFTextual().names(LT,LatentTopicsNameSize,True)
                 for  j in range(min(LTNameTop,len(LTName))):
                     self.importantTags.add(LTName[j])
                 LTName.insert(0,"LTT")
-                RT1.addProperty(ZEntidad.ScalarProperty("_".join(LTName),ZEntidad.DataTypes.STRING,LTExtractor))
+                RT1.addProperty(ZEntidad.ScalarProperty("_".join(LTName),ZEntidad.DataTypes.DOUBLE,LTExtractor))
         #There is one SP for each Visual LatentTopic 
         LTSList = self.controlCollection.getControlNMFVisual().getControlArrayLatentTopics()
         LTSStatus = self.controlCollection.getCollection().getSelectedVisualLatentTopics()
@@ -248,19 +245,17 @@ class ControlZentity:
             LT = LTSList[i]
             if selected:
                 LTExtractor = Extractors.LatentTopicExtractor(LT)
-                LTName = self.controlCollection.getControlNMFVisual().names(LT,LatentTopicsNameSize)
+                LTName = self.controlCollection.getControlNMFVisual().names(LT,LatentTopicsNameSize,False)
                 for  j in range(min(LTNameTop,len(LTName))):
                     self.importantTags.add(LTName[j])
                 LTName.insert(0,"LTV")
-                RT1.addProperty(ZEntidad.ScalarProperty("_".join(LTName),ZEntidad.DataTypes.STRING,LTExtractor))
+                RT1.addProperty(ZEntidad.ScalarProperty("_".join(LTName),ZEntidad.DataTypes.DOUBLE,LTExtractor))
         #There is one SP for each ImportantTag
         for tag in self.detectMostImportantTextualWords(topWords):
             tagExtractor = Extractors.TagExtractor(tag,self.controlCollection)
-            RT1.addProperty(ZEntidad.ScalarProperty("Tag_"+tag,ZEntidad.DataTypes.STRING,tagExtractor))
+            RT1.addProperty(ZEntidad.ScalarProperty("Tag_"+tag,ZEntidad.DataTypes.BOOLEAN,tagExtractor))
         #Finally lets generate the Code Generator
         self.Gen = ZControl.CodeGenerator(self.DMM,self.codeStoragePath)
-        
-
     
     def generateCode(self):
         self.Gen.saveGenerationCode()

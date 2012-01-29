@@ -1,5 +1,5 @@
 from numpy import *
-
+from Modelado_Exceptions import ModeladoError 
 class Document:
      
     def __init__(self, id, tags, selected):
@@ -286,6 +286,8 @@ class TagsConfig:
     def __init__(self,topWords,LTNamesTop,LTNamesSize):
         """FALTA DOCUMENTAR"""
         self.topWords = topWords
+        if LTNamesTop>LTNamesSize:
+            raise ModeladoError("LTNamesTOp must be less than LTNAmesSize")
         self.LTNamesTop = LTNamesTop
         self.LTNamesSize = LTNamesSize
 

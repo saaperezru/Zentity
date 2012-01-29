@@ -43,6 +43,7 @@ def latentTopics(action):
         return
     if action == "list":
         numberOfImages = 3
+        numberOfWordsInLTName = 2
         LTS = []
         #setting json as MIME type
         response.set_header('Content-Type','application/json')
@@ -51,13 +52,13 @@ def latentTopics(action):
         LTSStatus = model.getCollection().getSelectedTextualLatentTopics()
         controlLT = model.getControlNMFTextual()
         for i in range(len(LTSList)):
-            LTS.append({"lid":i,"name": controlLT.names(LTSList[i],5),"type":"textual","selected":LTSStatus[i],"docs":controlLT.images(LTSList[i],numberOfImages)})
+            LTS.append({"lid":i,"name": controlLT.names(LTSList[i],numberOfWordsInLTName,True),"type":"textual","selected":LTSStatus[i],"docs":controlLT.images(LTSList[i],numberOfImages)})
         #Construction of Visual LTS information array
         LTSList = model.getControlNMFVisual().getControlArrayLatentTopics()
         LTSStatus = model.getCollection().getSelectedVisualLatentTopics()
         controlLT = model.getControlNMFVisual()
         for i in range(len(LTSList)):
-            LTS.append({"lid":i,"name": controlLT.names(LTSList[i],5),"type":"visual","selected":LTSStatus[i],"docs":controlLT.images(LTSList[i],numberOfImages)})
+            LTS.append({"lid":i,"name": controlLT.names(LTSList[i],numberOfWordsInLTName,False),"type":"visual","selected":LTSStatus[i],"docs":controlLT.images(LTSList[i],numberOfImages)})
         return {"LTS" : LTS}
     abort(400,"Bad GET parameters")
 
@@ -68,6 +69,9 @@ def images(action):
     if action=="get":
         imgId = int(request.GET.get('id'))
         path,img = model.imagePath(imgId)
+        if img[-3:].lower() != "jpg" and img[-3:].lower() != "png":
+            img = img + ".png"
+            print img
         return static_file(img, root=path)
     if action == "select":
         id = int(request.GET.get('id'))

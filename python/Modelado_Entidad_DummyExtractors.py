@@ -14,12 +14,13 @@ class DescriptionExtractor:
         return "No description"
 
 class MainCategoryExtractor:
-    def __init__(self,controlNMF,LTNameSize):
+    def __init__(self,controlNMF,LTNameSize,textualClustering):
         self.LTNameSize = LTNameSize
         self.controlNMF = controlNMF
+        self.textualClustering = textualClustering
         
     def extract(self,idm):
-        return "_".join(self.controlNMF.names(self.controlNMF.mostImportantLatentTopic(idm),self.LTNameSize))
+        return "_".join(self.controlNMF.names(self.controlNMF.mostImportantLatentTopic(idm),self.LTNameSize,self.textualClustering))
         
         
 class LatentTopicExtractor:
