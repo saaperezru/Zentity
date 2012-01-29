@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Zentity.Core;
-using System.Xml.Serialization;using Zentity.Modulo2;
+using System.Xml.Serialization;using Zentity.DMMTest1;
 namespace DataInsert
 { 
  	 class DataInsert 
@@ -45,7 +45,7 @@ namespace DataInsert
  		 { 
  			dataParentImages= Deserialize<ParentImages>(xmlPath); 
  		 } 
- 		 public void insertData_Entidad2(ZentityContext zenContext, string xmlPath, string imgPath) 
+ 		 public void insertData_RTTest1(ZentityContext zenContext, string xmlPath, string imgPath) 
  		 { 
  			 loadParentImagesData(xmlPath); 
  			 using (ZentityContext context = zenContext) 
@@ -53,7 +53,7 @@ namespace DataInsert
  				 foreach (ParentImagesImage p in dataParentImages.Items) 
  				 { 
  					 //WARNING : Comparing attribute should be changed to a unique key 
- 					 context.MetadataWorkspace.LoadFromAssembly(System.Reflection.Assembly.Load("Zentity.Modulo2")); 
+ 					 context.MetadataWorkspace.LoadFromAssembly(System.Reflection.Assembly.Load("Zentity.DMMTest1")); 
  					 var existingPres = (from pres in context.Resources 
  						 where pres.ImageID.Equals(p.ImageID, StringComparison.OrdinalIgnoreCase) 
  						 select pres).FirstOrDefault(); 
@@ -65,7 +65,7 @@ namespace DataInsert
  						 // Create resources. 
  						 try 
  							 { 
- 							 Entidad2 img = new Entidad2 {
+ 							 RTTest1 img = new RTTest1 {
  								  Title = p.Title,
  								  Description = p.Description,
  								  Main_Textual_Category = p.Main_Textual_Category,
@@ -117,7 +117,7 @@ namespace DataInsert
  		 static void Main(string[] args) 
  		 { 
  			 const string connectionString = @"provider=System.Data.SqlClient; 
- 				 metadata=../data/code/code/Zentity.Modulo2.ExtendedCore.csdl|../data/code/code/Zentity.Modulo2.csdl|../data/code/code/Zentity.Modulo2.Consolidated.msl|../data/code/code/Zentity.Modulo2.Consolidated.ssdl; 
+ 				 metadata=../data/code/code/Zentity.DMMTest1.ExtendedCore.csdl|../data/code/code/Zentity.DMMTest1.csdl|../data/code/code/Zentity.DMMTest1.Consolidated.msl|../data/code/code/Zentity.DMMTest1.Consolidated.ssdl; 
  				 provider connection string='Data Source=.; 
  				 Initial Catalog=Zentity;Integrated Security=True;MultipleActiveResultSets=True' 
  				 "; 
@@ -128,7 +128,7 @@ namespace DataInsert
  			 foreach (string a in ZXMLFiles) 
  			 { 
  				 ZentityContext zenContext = new ZentityContext(connectionString); 
- 				 dataUploader.insertData_Entidad2(zenContext, a, imgFolderPath); 
+ 				 dataUploader.insertData_RTTest1(zenContext, a, imgFolderPath); 
  			 }
 		 }
 	 }

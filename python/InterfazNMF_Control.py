@@ -79,25 +79,25 @@ class ControlTypeLatentTopic:
             belongingVector = self.normalize(H[i]).tolist()
             sortedbelongingVector = self.sortVector(self.normalize(H[i])).tolist()
             sortedbelongingVector.reverse() 
-            representativeWords = np.transpose(F1)[i].tolist()
+            representativeWords = self.normalize(np.transpose(F1)[i]).tolist()
             sortedIndexRepresentativeWords = self.sortVector(np.array(np.transpose(F1)[i])).tolist()
             sortedIndexRepresentativeWords.reverse()
             if W1!= None:
-                representativeDocuments = np.transpose(W1)[i].tolist()
+                representativeDocuments = self.normalize(np.transpose(W1)[i]).tolist()
                 sortedIndexRepresentativeDocuments = self.sortVector(np.transpose(W1)[i]).tolist()
                 sortedIndexRepresentativeDocuments.reverse()
             else:
                 representativeDocuments = None
                 sortedIndexRepresentativeDocuments = None
             if F2!=None:
-                resumeWords = np.transpose(F2)[i].tolist()
+                resumeWords = self.normalize(np.transpose(F2)[i]).tolist()
                 sortedIndexResumeWords = self.sortVector(np.transpose(F2)[i]).tolist()
                 sortedIndexResumeWords.reverse()
             else:
                 resumeWords = None
                 sortedIndexResumeWords = None
             if W2!=None:
-                resumeDocuments = np.transpose(W2)[i].tolist()
+                resumeDocuments = self.normalize(np.transpose(W2)[i]).tolist()
                 sortedIndexResumeDocuments = self.sortVector(np.transpose(W2)[i]).tolist()
                 sortedIndexResumeDocuments.reverse()
             else:
