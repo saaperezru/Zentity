@@ -70,10 +70,9 @@ class ControlTypeLatentTopic:
         #Attributes initialization.  
         self.__arrayControlLatentTopics=[]
         LLD =[]
-	for i in  LD.tolist():
-	    LLD.append(i[0][0])
-	self.__typeLatentTopic=TypeLatentTopic(id, name, abreviature, self.createDictionary(LLD))
-	
+        for i in  LD.tolist():
+            LLD.append(i[0][0])
+        self.__typeLatentTopic=TypeLatentTopic(id, name, abreviature, self.createDictionary(LLD))
         #ControlLatentTopics creation.
         for i in xrange(H.shape[0]):
             belongingVector = self.normalize(H[i]).tolist()

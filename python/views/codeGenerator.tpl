@@ -30,7 +30,7 @@
                 <!--- TAG INFORMATION -->
                 <div class="page-header">
                     <h1>Tags information</h1>
-                    <small>FALTA INSTRUCCIONES.</small>
+
                 </div>
                 <div class="row">
                     <div class="span8">
@@ -69,13 +69,12 @@
                 <!--- ZENTITY PATHS -->
                 <div class="page-header">
                     <h1>Zentity paths</h1>
-                    <small>FALTA INSTRUCCIONES.</small>
+                    <small>Please type all needed path.</small>
                 </div>
                 <div class="row">
                     <div class="span8">
                         <fieldset>
                             <legend>Code storage path</legend>
-                            <p>FALTA</p>
                             <label for="fileInput">Path</label>
                             <div class="input">
                                 <input  id="codeStoragePath" name="codeStoragePath" type="text" value="../data/code/">
@@ -85,7 +84,6 @@
                     <div class="span4">
                         <fieldset>
                             <legend>Zxml files path</legend>
-                            <p>FALTA</p>
                             <label for="fileInput">Path</label>
                             <div class="input">
 			    <input  id="zxmlFilesPath" name="zxmlFilesPath" type="text" value="../data/ZXML/">
@@ -97,7 +95,6 @@
                     <div class="span8">
                         <fieldset>
                             <legend>XML information path</legend>
-                            <p>FALTA</p>
                             <label for="fileInput">Path</label>
                             <div class="input">
                                 <input  id="xmlInfoPath" name="xmlInfoPath" type="text" value="">
@@ -108,13 +105,12 @@
                 <!--- Zentity Information -->
                 <div class="page-header">
                     <h1>Zentity Information</h1>
-                    <small>FALTA INSTRUCCIONES.</small>
+                    <small>Please type the wanted model and resource name.</small>
                 </div>
                 <div class="row">
                     <div class="span8">
                         <fieldset>
                             <legend>Data model module name</legend>
-                            <p>FALTA</p>
                             <label for="fileInput">Name</label>
                             <div class="input">
                                 <input  id="dataModelName" name="dataModelName" type="text" value="DMMTest1">
@@ -124,7 +120,6 @@
                     <div class="span4">
                         <fieldset>
                             <legend>Resource type name</legend>
-                            <p>FALTA</p>
                             <label for="fileInput">Name</label>
                             <div class="input">
                                 <input  id="resourceTypeName" name="resourceTypeName" type="text" value="RTTest1">

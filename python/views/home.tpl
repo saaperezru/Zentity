@@ -30,7 +30,7 @@
         <!--- GENERAL MATRICES -->
         <div class="page-header">
             <h1>General Matrices</h1>
-            <small>FALTA INSTRUCCIONES.</small>
+            <small>Please type the complite file path and name for each matrix.</small>
         </div>
         <div class="row">
               <div class="span8">
@@ -46,9 +46,10 @@
                   </div>
                 </fieldset>
               </div>
-              <div class="span4">
+              <div class="span6">
                 <fieldset>
                   <legend>Documents list</legend>
+                  <p>It must be a Matlab string cell array.</p>
                   <label for="fileInput">File input</label>
                   <div class="input">
                     <input id="DocumentsList" name="DocumentsList" type="text" value="../matlab/matrix/DocumentsList.mat">
@@ -64,6 +65,8 @@
               <div class="span8">
                 <fieldset>
                   <legend>Textual features list </legend>
+                     <p>It must be a Matlab string cell array.</p>
+
                            <div class="clearfix">
                             <label for="fileInput">File input</label>
                             <div class="input">
@@ -93,7 +96,7 @@
          <!--- TEXTUAL CLUSTERING MATRICES -->
         <div class="page-header">
             <h1>Textual Clustering Matrices</h1>
-            <small>FALTA INSTRUCCIONES.</small>
+            <small>Please type the complite file path and name for each matrix. Matrices dimensions must be agree with the NMF matices dimensions.</small>
         </div>
         <div class="row">
               <div class="span8">
@@ -153,7 +156,7 @@
         <!--- VISUAL CLUSTERING MATRICES -->
         <div class="page-header">
             <h1>Visual Clustering Matrices</h1>
-            <small>FALTA INSTRUCCIONES.</small>
+            <small>Please type the complite file path and name for each matrix. Matrices dimensions must be agree with the NMF matices dimensions.</small>
         </div>
         <div class="row">
               <div class="span8">

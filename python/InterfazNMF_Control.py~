@@ -77,11 +77,9 @@ class ControlTypeLatentTopic:
         #ControlLatentTopics creation.
         for i in xrange(H.shape[0]):
             belongingVector = self.normalize(H[i]).tolist()
-            print sum(belongingVector)
             sortedbelongingVector = self.sortVector(self.normalize(H[i])).tolist()
             sortedbelongingVector.reverse() 
             representativeWords = self.normalize(np.transpose(F1)[i]).tolist()
-            print sum(representativeWords)
             sortedIndexRepresentativeWords = self.sortVector(np.array(np.transpose(F1)[i])).tolist()
             sortedIndexRepresentativeWords.reverse()
             if W1!= None:
@@ -93,7 +91,6 @@ class ControlTypeLatentTopic:
                 sortedIndexRepresentativeDocuments = None
             if F2!=None:
                 resumeWords = self.normalize(np.transpose(F2)[i]).tolist()
-                print sum(resumeWords)
                 sortedIndexResumeWords = self.sortVector(np.transpose(F2)[i]).tolist()
                 sortedIndexResumeWords.reverse()
             else:

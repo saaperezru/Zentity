@@ -5,7 +5,7 @@ import Modelado_Entidad as ME
 
 
 session_opts = {
-    'session.type': 'file',
+    'session.type': 'memory',
     'session.cookie_expires': 999,
     'session.data_dir': './sessions',
     'session.auto': True
@@ -52,13 +52,13 @@ def latentTopics(action):
         LTSStatus = model.getCollection().getSelectedTextualLatentTopics()
         controlLT = model.getControlNMFTextual()
         for i in range(len(LTSList)):
-            LTS.append({"lid":i,"name": controlLT.names(LTSList[i],numberOfWordsInLTName),"type":"textual","selected":LTSStatus[i],"docs":controlLT.images(LTSList[i],numberOfImages)})
+            LTS.append({"lid":i,"name": controlLT.names(LTSList[i],numberOfWordsInLTName,True),"type":"textual","selected":LTSStatus[i],"docs":controlLT.images(LTSList[i],numberOfImages)})
         #Construction of Visual LTS information array
         LTSList = model.getControlNMFVisual().getControlArrayLatentTopics()
         LTSStatus = model.getCollection().getSelectedVisualLatentTopics()
         controlLT = model.getControlNMFVisual()
         for i in range(len(LTSList)):
-            LTS.append({"lid":i,"name": controlLT.names(LTSList[i],numberOfWordsInLTName),"type":"visual","selected":LTSStatus[i],"docs":controlLT.images(LTSList[i],numberOfImages)})
+            LTS.append({"lid":i,"name": controlLT.names(LTSList[i],numberOfWordsInLTName,False),"type":"visual","selected":LTSStatus[i],"docs":controlLT.images(LTSList[i],numberOfImages)})
         return {"LTS" : LTS}
     abort(400,"Bad GET parameters")
 
@@ -70,8 +70,7 @@ def images(action):
         imgId = int(request.GET.get('id'))
         path,img = model.imagePath(imgId)
         if img[-3:].lower() != "jpg" and img[-3:].lower() != "png":
-            img = img + ".png"
-            print img
+            img = img + ".jpeg"
         return static_file(img, root=path)
     if action == "select":
         id = int(request.GET.get('id'))
@@ -136,8 +135,10 @@ def createModel():
     modelParameters.setVisualTextualFVariableName(request.forms.VisualTextualFName)
     try:
         s['model'] = MC.ControlCollection(modelParameters)
+        s.persist()
         s.save()
     except:
+        raise
         abort(400,"ERROR!!!!")
     redirect('/images')
 

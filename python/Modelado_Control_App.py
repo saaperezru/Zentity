@@ -5,7 +5,7 @@ import Modelado_Entidad as ME
 
 
 session_opts = {
-    'session.type': 'file',
+    'session.type': 'memory',
     'session.cookie_expires': 999,
     'session.data_dir': './sessions',
     'session.auto': True
@@ -42,8 +42,8 @@ def latentTopics(action):
         LTSStatus[id]=value
         return
     if action == "list":
-        numberOfImages = 3
-        numberOfWordsInLTName = 2
+        numberOfImages = 5
+        numberOfWordsInLTName = 7
         LTS = []
         #setting json as MIME type
         response.set_header('Content-Type','application/json')
@@ -70,8 +70,7 @@ def images(action):
         imgId = int(request.GET.get('id'))
         path,img = model.imagePath(imgId)
         if img[-3:].lower() != "jpg" and img[-3:].lower() != "png":
-            img = img + ".png"
-            print img
+            img = img + ".jpeg"
         return static_file(img, root=path)
     if action == "select":
         id = int(request.GET.get('id'))
@@ -136,8 +135,10 @@ def createModel():
     modelParameters.setVisualTextualFVariableName(request.forms.VisualTextualFName)
     try:
         s['model'] = MC.ControlCollection(modelParameters)
+        s.persist()
         s.save()
     except:
+        raise
         abort(400,"ERROR!!!!")
     redirect('/images')
 

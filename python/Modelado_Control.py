@@ -60,6 +60,8 @@ class ControlCollection:
             tagsOcurrence = np.transpose(np.dot(termDocumentMatrix, np.ones(((termDocumentMatrix.shape[1]),1))))
             orderedTags = np.argsort(tagsOcurrence[0]).tolist()
             orderedTags.reverse()
+            #normalize termDocumentMatrix
+            termDocumentMatrix = np.dot(termDocumentMatrix,np.diag((1/(sum (termDocumentMatrix)))))
             #Documents creation
             documents = []
             k = 0
@@ -70,7 +72,7 @@ class ControlCollection:
                 for j in xrange(0, textualFeatures.shape[0]):
                     if(termDocumentMatrix[j,k]>0):
                         tags.append(tF[j])
-                documents.append(Entidad.Document(i[0][0],tags,True))
+                documents.append(Entidad.Document(str(i[0][0]),tags,True))
                 k = k + 1
             if colectionParameters.getDocumentsPath()[len(colectionParameters.getDocumentsPath())-1] != '/':
                 colectionParameters.setDocumentsPath(colectionParameters.getDocumentsPath()+'/')

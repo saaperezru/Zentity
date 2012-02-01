@@ -1,6 +1,8 @@
 from os.path import exists,isdir
 import errno
 from os import strerror
+def normalizeName(name):
+    return name.replace("-","__").replace("/","__").replace(".","__")
 class DataModelModule:
     def __init__(self,name,resources=None):
         """Builds a DataModel Module with the ResourceTypes specified in the argument array resources
@@ -10,7 +12,7 @@ class DataModelModule:
             - name  --  Data Model Module Name, this must be unique among other DMM in the Zentity instance to be used.
             - resources -- An array with the ResourceType instances that have to be assigned to this DMM.
         """
-        self.name = name
+        self.name = normalizeName(name)
         if resources:
             self.resourceTypes = resources
         else:
@@ -29,7 +31,7 @@ class DataModelModule:
         return self.name
 
     def setNombre(self,name):
-        self.name = name
+        self.name = normalizeName(name)
 
 
 class ResourceType:
@@ -44,7 +46,7 @@ class ResourceType:
             - Instances -- An array of the ids of the instances of this RT, this will be passed to the extractors of this RT ScalarProperties
             - visualizationType -- One of the values in the enum VisualizationTypes 
         """
-        self.name = name
+        self.name = normalizeName(name)
         if scalarProperties:
             self.scalarProperties = scalarProperties
         else:
@@ -166,7 +168,7 @@ class ScalarProperty:
             - inherit -- A boolean that specifies if either this ScalarProperty is inherited from the Zentity Base Class (True), or it is not (False). Default : False
             - identifier -- A boolean attribute that indicates wheter or not the value of this Scalar Property is unique among all the instances of the ResourceType to which it belongs. NOTE : If the Resource Type to which this Scalar Property belongs has a IMAGE visualization type, this identifier will be used to parse images and data, i.e. if this is a identifier Scalar Property is the identifier in a ResourceType visualiced with images, this identifier must identify all the images associated to the instances of this Resource Type
         """
-        self.name = name
+        self.name = normalizeName(name)
         self.dataType = dataType
         self.extractor = extractor
         self.inherit = inherit 

@@ -366,7 +366,7 @@ class ZXMLGenerator:
     def extractInfo(self,path,idsArray,resourceType,xmlParentName,xmlChildName,imagesPerFile = 100):
         i = -1
         for i in range(0,len(idsArray)/imagesPerFile):
-            ElementTree(self.buildImageSTree(idsArray[i*imagesPerFile:((i+1)*imagesPerFile)],path,resourceType.scalarProperties,xmlParentName,xmlChildName)).write(join(path,resourceType.getEstructuraXML().getPrefijoXML()+str(i)+'.xml'))
+            ElementTree(self.buildImageSTree(idsArray[i*imagesPerFile:((i+1)*imagesPerFile)],path,resourceType.getProperties(),xmlParentName,xmlChildName)).write(join(path,resourceType.getXMLStructure().getFilesPrefix()+str(i)+'.xml'))
         print "[DEBUG] Generating ZXML file #" + str(i)
         ElementTree(ElementTree(self.buildImageSTree(idsArray[((i+1)*imagesPerFile):],path,resourceType.getProperties(),xmlParentName,xmlChildName)).write(join(path,resourceType.getXMLStructure().getFilesPrefix()+str(i+1)+'.xml')))
     

@@ -68,7 +68,7 @@ class CodeGenerator:
             FILE.write("\n\t \t    context.DataModel.Modules.Add(module);")
             FILE.write("\n\t \t    context.DataModel.Synchronize();\n")
             FILE.write("\n\t \t    // Generate Extensions Assembly.")
-            FILE.write("\n\t \t    using (FileStream fout = new FileStream(@\""+join(path,"Zentity."+namespace+".dll\", FileMode.Create, FileAccess.Write))")
+            FILE.write("\n\t \t    using (FileStream fout = new FileStream(@\""+join(path,"Zentity."+namespace)+".dll\", FileMode.Create, FileAccess.Write))")
             FILE.write("\n\t \t \t {  \n")
             FILE.write("\t \t \t  byte[] rawAssembly = context.DataModel.GenerateExtensionsAssembly(")
             FILE.write("\n\t \t \t    \"Zentity."+namespace + "\", false, null, new string[] { \"Zentity."+namespace + "\" }, null); \n")
