@@ -4,7 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Zentity.Core;
+<<<<<<< HEAD
 using System.Xml.Serialization;using Zentity.Corel52;
+=======
+using System.Xml.Serialization;
+using Zentity.Modulo3;
+using System.Globalization;
+
+>>>>>>> 4385d83855d7103c4768822f8cd7f489e7aafb50
 namespace DataInsert
 { 
  	 class DataInsert 
@@ -45,7 +52,11 @@ namespace DataInsert
  		 { 
  			dataParentImages= Deserialize<ParentImages>(xmlPath); 
  		 } 
+<<<<<<< HEAD
  		 public void insertData_Corel5Image2(ZentityContext zenContext, string xmlPath, string imgPath) 
+=======
+ 		 public void insertData_Entidad2(ZentityContext zenContext, string xmlPath, string imgPath) 
+>>>>>>> 4385d83855d7103c4768822f8cd7f489e7aafb50
  		 { 
  			 loadParentImagesData(xmlPath); 
  			 using (ZentityContext context = zenContext) 
@@ -53,6 +64,7 @@ namespace DataInsert
  				 foreach (ParentImagesImage p in dataParentImages.Items) 
  				 { 
  					 //WARNING : Comparing attribute should be changed to a unique key 
+<<<<<<< HEAD
  					 context.MetadataWorkspace.LoadFromAssembly(System.Reflection.Assembly.Load("Zentity.Corel52")); 
  					 var existingPres = (from pres in context.Resources 
  						 where pres.ImageID.Equals(p.ImageID, StringComparison.OrdinalIgnoreCase) 
@@ -66,11 +78,21 @@ namespace DataInsert
  						 try 
  							 { 
  							 Corel5Image2 img = new Corel5Image2 {
+=======
+ 					 context.MetadataWorkspace.LoadFromAssembly(System.Reflection.Assembly.Load("Zentity.Modulo3")); 
+ 						 // Create resources. 
+                     NumberFormatInfo provider = new NumberFormatInfo();
+                     provider.NumberDecimalSeparator = ".";
+ 						 try 
+ 							 { 
+ 							 Entidad3 img = new Entidad3 {
+>>>>>>> 4385d83855d7103c4768822f8cd7f489e7aafb50
  								  Title = p.Title,
  								  Description = p.Description,
  								  Main_Textual_Category = p.Main_Textual_Category,
  								  Main_Visual_Category = p.Main_Visual_Category,
  								  ImageID = p.ImageID,
+<<<<<<< HEAD
  								  LTT_hills_dunes_road_canyon_antelope_caribou_palace = Convert.ToDouble(p.LTT_hills_dunes_road_canyon_antelope_caribou_palace),
  								  LTT_sunset_horizon_desert_valley_landscape_sunrise_palm = Convert.ToDouble(p.LTT_sunset_horizon_desert_valley_landscape_sunrise_palm),
  								  LTT_water_reflection_shore_zebra_park_restaurant_herd = Convert.ToDouble(p.LTT_water_reflection_shore_zebra_park_restaurant_herd),
@@ -291,6 +313,22 @@ namespace DataInsert
  								  Tag_sunset = (p.Tag_sunset=="True"), 
  							 }; 
  							 context.AddToResources(img); 
+=======
+ 								  LTT_PERSONA_USUARIO_EJECUTIVO_ANIMAL = Convert.ToDouble(p.LTT_PERSONA_USUARIO_EJECUTIVO_ANIMAL,provider),
+                                  LTT_TIERRA_AGUA_ANIMAL_USUARIO = Convert.ToDouble(p.LTT_TIERRA_AGUA_ANIMAL_USUARIO, provider),
+                                  LTV_USUARIO_EJECUTIVO_PERSONA_TIERRA = Convert.ToDouble(p.LTV_USUARIO_EJECUTIVO_PERSONA_TIERRA, provider),
+                                  LTV_TIERRA_AGUA_ANIMAL_PERSONA = Convert.ToDouble(p.LTV_TIERRA_AGUA_ANIMAL_PERSONA, provider),
+ 								  Tag_EJECUTIVO = (p.Tag_EJECUTIVO=="True"),
+ 								  Tag_PERSONA = (p.Tag_PERSONA=="True"),
+ 								  Tag_TIERRA = (p.Tag_TIERRA=="True"),
+ 								  Tag_AGUA = (p.Tag_AGUA=="True"),
+ 								  Tag_USUARIO = (p.Tag_USUARIO=="True"), 
+ 							 };
+                             Console.WriteLine("[INFO] Image " + img.ImageID + " - " + p.ImageID);
+                             Console.WriteLine("[INFO] LTT_PERSONA_USUARIO_EJECUTIVO_ANIMAL :  {0} - {1}", img.LTT_PERSONA_USUARIO_EJECUTIVO_ANIMAL,p.LTT_PERSONA_USUARIO_EJECUTIVO_ANIMAL);
+                             Console.Read();
+ 							 //context.AddToResources(img); 
+>>>>>>> 4385d83855d7103c4768822f8cd7f489e7aafb50
  							 string[] imagesInFolder = Directory.GetFiles(imgPath, p.ImageID + ".*"); 
  							 // Create a Zentity file. 
  							 FileInfo ImageFile = new FileInfo(imagesInFolder[0]); 
@@ -302,19 +340,19 @@ namespace DataInsert
  							 fileResource.FileExtension = ImageFile.Extension; 
  							 fileResource.MimeType = "image/" + fileResource.FileExtension.Replace(".", string.Empty); 
  							 // Add the file to context.     
- 							 context.AddToResources(fileResource); 
+ 							 //context.AddToResources(fileResource); 
  							 Console.WriteLine("[INFO] Creating image {0}", p.ImageID); 
- 							 context.SaveChanges(); 
+ 							 //context.SaveChanges(); 
  							 // Now upload the actual binary content of the file.     
  							 FileStream fStream = new FileStream(ImageFile.FullName, FileMode.Open, FileAccess.Read); 
  							 Console.WriteLine("[INFO] Saving image {0} file", p.ImageID); 
- 							 context.UploadFileContent(fileResource, fStream); 
+ 							 //context.UploadFileContent(fileResource, fStream); 
  							 //Asociate file with Resource 
  							 img.Files.Add(fileResource); 
- 							 context.InsertResourceHasFile(fileResource.Id, img.Id); 
+ 							 //context.InsertResourceHasFile(fileResource.Id, img.Id); 
  							 //Save Changes in context 
  							 Console.WriteLine("[INFO] Associating image {0} and file", p.ImageID); 
- 							 context.SaveChanges(); 
+ 							 //context.SaveChanges(); 
  							 } 
  							 catch{ 
  								 Console.WriteLine("[ERROR] During image {0} creation", p.ImageID); 
@@ -326,18 +364,26 @@ namespace DataInsert
  		 static void Main(string[] args) 
  		 { 
  			 const string connectionString = @"provider=System.Data.SqlClient; 
+<<<<<<< HEAD
  				 metadata=../data/code/code/Zentity.Corel52.ExtendedCore.csdl|../data/code/code/Zentity.Corel52.csdl|../data/code/code/Zentity.Corel52.Consolidated.msl|../data/code/code/Zentity.Corel52.Consolidated.ssdl; 
+=======
+ 				 metadata=C:\\Users\\tuareg\\Desktop\\prueba4\\code\\Zentity.Modulo3.ExtendedCore.csdl|C:\\Users\\tuareg\\Desktop\\prueba4\\code\\Zentity.Modulo3.csdl|C:\\Users\\tuareg\\Desktop\\prueba4\\code\\Zentity.Modulo3.Consolidated.msl|C:\\Users\\tuareg\\Desktop\\prueba4\\code\\Zentity.Modulo3.Consolidated.ssdl; 
+>>>>>>> 4385d83855d7103c4768822f8cd7f489e7aafb50
  				 provider connection string='Data Source=.; 
  				 Initial Catalog=Zentity;Integrated Security=True;MultipleActiveResultSets=True' 
  				 "; 
  			 DataInsert dataUploader = new DataInsert(); 
- 			 string imgFolderPath = "../data/images/"; 
- 			 string ZXMLPath = "../data/ZXML/"; 
+ 			 string imgFolderPath = "C:\\Users\\tuareg\\Desktop\\prueba4\\images\\"; 
+ 			 string ZXMLPath = "C:\\Users\\tuareg\\Desktop\\prueba4\\ZXML\\"; 
  			 string[] ZXMLFiles = Directory.GetFiles(ZXMLPath, "Images*.*"); 
  			 foreach (string a in ZXMLFiles) 
  			 { 
  				 ZentityContext zenContext = new ZentityContext(connectionString); 
+<<<<<<< HEAD
  				 dataUploader.insertData_Corel5Image2(zenContext, a, imgFolderPath); 
+=======
+ 				 dataUploader.insertData_Entidad2(zenContext, a, imgFolderPath); 
+>>>>>>> 4385d83855d7103c4768822f8cd7f489e7aafb50
  			 }
 		 }
 	 }
